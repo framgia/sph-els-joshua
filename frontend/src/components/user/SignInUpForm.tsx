@@ -2,11 +2,18 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 
+type FormValues  = {
+  name: any
+  email: string
+  password: string
+  setErrors?: React.Dispatch<React.SetStateAction<never[]>>
+}
+
 type Props = {
   isLoginPage: boolean
   actions: {
     handleSwitchForm: () => void
-    handleAuthSubmit: () => void
+    handleAuthSubmit: (data: FormValues) => void
   }
 }
 
@@ -21,7 +28,7 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
     formState,
     handleSubmit,
     formState: { errors }
-  } = useForm()
+  } = useForm<FormValues>()
 
   useEffect(() => {
     if (formState.isSubmitSuccessful) {

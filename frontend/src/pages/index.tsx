@@ -1,26 +1,47 @@
 import Head from 'next/head'
 import type { NextPage } from 'next'
+import { useAuth } from '~/hooks/auth'
 import React, { useState } from 'react'
 import { classNames } from '~/utils/classNames'
 import SignInUpForm from '~/components/user/SignInUpForm'
+import AuthValidationErrors from '~/components/AuthValidationErrors'
+
+type FormValues = {
+  name: string
+  email: string
+  password: string
+  setErrors?: React.Dispatch<React.SetStateAction<never[]>>
+}
 
 const Index: NextPage = (): JSX.Element => {
+  const [errors, setErrors] = useState([])
   let [isLoginPage, setIsLoginPage] = useState<boolean>(true)
+
+  const { register } = useAuth({
+    middleware: 'guest',
+    redirectIfAuthenticated: '/home',
+  })
 
   const handleSwitchForm = (): void => setIsLoginPage((isLoginPage = !isLoginPage))
 
-  const handleAuthSubmit = (): void => {
+  const handleAuthSubmit = (data: FormValues): void => {
+    const { name, email, password } = data
+
     if (isLoginPage) {
       alert('Logged In')
     } else {
-      alert('Good Registered')
+      register({
+        name, email, password, setErrors 
+      })
     }
   }
+
+  const title = isLoginPage ? 'Sign in' : 'Sign up'
 
   return (
     <div>
       <Head>
-        <title>ELearning | {isLoginPage ? 'Sign in' : 'Sign up'}</title>
+        <title>{`ELearning | ${title}`}</title>
       </Head>
       <div className="bg-white flex justify-center h-screen">
         <div
@@ -49,6 +70,7 @@ const Index: NextPage = (): JSX.Element => {
             </div>
 
             <div className="mt-8">
+              <AuthValidationErrors className="mb-4" errors={errors} />
               <SignInUpForm 
                 isLoginPage={isLoginPage}
                 actions={{ handleSwitchForm, handleAuthSubmit }}
