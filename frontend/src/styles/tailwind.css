@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .form-control {
+    @apply block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200;
+    @apply rounded-md focus:border-orange-400 dark:focus:border-orange-400 focus:ring-orange-400 focus:outline-none;
+    @apply focus:ring focus:ring-opacity-40 transition ease-in-out duration-150;
+  }
+  .form-label {
+    @apply block mb-2 text-sm text-gray-600;
+  }
+  .error {
+    @apply mt-1.5 ml-0.5 text-xs text-red-500 font-medium block text-left;
+  }
+  .link {
+    @apply block text-sm font-medium text-gray-500;
+    @apply hover:underline focus:outline-none hover:text-orange-600;
+    @apply transition ease-in-out duration-150;
+  }
+  .btn-submit {
+    @apply w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-orange-500 rounded-md;
+    @apply hover:bg-orange-400 focus:outline-none focus:bg-orange-400 focus:ring focus:ring-orange-300 focus:ring-opacity-50;
+    @apply transition ease-in-out duration-150;
+  }
+}
