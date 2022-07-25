@@ -59,10 +59,7 @@ export const useAuth = (props: any) => {
     await
       axios
         .post('/login', props)
-        .then(() => {
-          mutate()
-          toast.success('Successfully Logged in!')
-        })
+        .then(() => mutate())
         .catch(error => {
           if (error.response.status !== 422) throw error
 
