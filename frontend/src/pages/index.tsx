@@ -38,7 +38,7 @@ const Index: NextPage = (): JSX.Element => {
   const title = isLoginPage ? 'Sign in' : 'Sign up'
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>{`ELearning | ${title}`}</title>
       </Head>
@@ -78,7 +78,7 @@ const Index: NextPage = (): JSX.Element => {
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 
