@@ -1,12 +1,20 @@
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+import { Spinner } from '~/utils/Spinner'
+
+type FormValues  = {
+  name: any
+  email: string
+  password: string
+  setErrors?: React.Dispatch<React.SetStateAction<never[]>>
+}
 
 type Props = {
   isLoginPage: boolean
   actions: {
     handleSwitchForm: () => void
-    handleAuthSubmit: () => void
+    handleAuthSubmit: (data: FormValues) => void
   }
 }
 
@@ -16,18 +24,10 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
   const { handleSwitchForm, handleAuthSubmit } = actions
 
   const {
-    reset,
     register,
-    formState,
     handleSubmit,
-    formState: { errors }
-  } = useForm()
-
-  useEffect(() => {
-    if (formState.isSubmitSuccessful) {
-      reset({ name: '', email: '', password: '' })
-    }
-  }, [formState, reset])
+    formState: { isSubmitting, errors }
+  } = useForm<FormValues>()
 
   return (
     <form onSubmit={handleSubmit(handleAuthSubmit)}>
@@ -40,6 +40,7 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
             type="text"
             placeholder=""
             className="form-control"
+            disabled={isSubmitting}
             {...register('name', {
               required: 'Name is required',
               maxLength: {
@@ -64,6 +65,7 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
           type="email"
           placeholder=""
           className="form-control"
+          disabled={isSubmitting}
           tabIndex={2}
           {...register('email', {
             required: 'Email is required',
@@ -84,6 +86,7 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
           type="password"
           placeholder=""
           className="form-control"
+          disabled={isSubmitting}
           tabIndex={3}
           {...register('password', {
             required: 'Password is required',
@@ -107,9 +110,12 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
       <div className="mt-4">
         <button
           type="submit"
+          disabled={isSubmitting}
           className="btn-submit"
         >
-          {isLoginPage ? 'Login' : 'Register'}
+          {isSubmitting ? (
+            <Spinner className="w-6 h-6" />
+          ) : isLoginPage ? 'Login' : 'Register'}
         </button>
         {router.pathname !== '/admin' && (
           <div>

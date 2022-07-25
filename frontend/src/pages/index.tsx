@@ -1,39 +1,58 @@
 import Head from 'next/head'
 import type { NextPage } from 'next'
+import { useAuth } from '~/hooks/auth'
 import React, { useState } from 'react'
 import { classNames } from '~/utils/classNames'
 import SignInUpForm from '~/components/user/SignInUpForm'
+import AuthValidationErrors from '~/components/AuthValidationErrors'
+
+type FormValues = {
+  name: string
+  email: string
+  password: string
+  setErrors?: React.Dispatch<React.SetStateAction<never[]>>
+}
 
 const Index: NextPage = (): JSX.Element => {
+  const [errors, setErrors] = useState([])
   let [isLoginPage, setIsLoginPage] = useState<boolean>(true)
+
+  const { login, register } = useAuth({
+    middleware: 'guest',
+    redirectIfAuthenticated: '/home',
+  })
 
   const handleSwitchForm = (): void => setIsLoginPage((isLoginPage = !isLoginPage))
 
-  const handleAuthSubmit = (): void => {
+  const handleAuthSubmit = async (data: FormValues): Promise<void> => {
+    const { name, email, password } = data
+
     if (isLoginPage) {
-      alert('Logged In')
+      await login({ email, password, setErrors })
     } else {
-      alert('Good Registered')
+      await register({ name, email, password, setErrors })
     }
   }
 
+  const title = isLoginPage ? 'Sign in' : 'Sign up'
+
   return (
-    <div>
+    <React.Fragment>
       <Head>
-        <title>ELearning | {isLoginPage ? 'Sign in' : 'Sign up'}</title>
+        <title>{`ELearning | ${title}`}</title>
       </Head>
       <div className="bg-white flex justify-center h-screen">
         <div
           className={classNames(
             'relative hidden bg-cover lg:block lg:w-2/3',
-            'bg-[url(/img/1.jpg)]'
+            'bg-[url(/img/2.jpg)]'
           )}
         >
           <div className="absolute bg-black opacity-10 inset-0"></div>
           <div className="flex items-center h-full px-20">
             <div>
-              <h2 className="text-4xl font-bold text-white">ELearning Sun* App</h2>
-              <p className="max-w-xl mt-3 text-gray-900 text-lg">
+              <h2 className="text-5xl font-bold text-white">Sun* ELearning App</h2>
+              <p className="max-w-xl mt-3 text-white text-lg">
                 Where everything can be learn by yourself
               </p>
             </div>
@@ -49,6 +68,7 @@ const Index: NextPage = (): JSX.Element => {
             </div>
 
             <div className="mt-8">
+              <AuthValidationErrors className="mb-4" errors={errors} setErrors={setErrors} />
               <SignInUpForm 
                 isLoginPage={isLoginPage}
                 actions={{ handleSwitchForm, handleAuthSubmit }}
@@ -57,7 +77,7 @@ const Index: NextPage = (): JSX.Element => {
           </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }
 

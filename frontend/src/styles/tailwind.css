@@ -7,6 +7,7 @@
     @apply block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200;
     @apply rounded-md focus:border-orange-400 dark:focus:border-orange-400 focus:ring-orange-400 focus:outline-none;
     @apply focus:ring focus:ring-opacity-40 transition ease-in-out duration-150;
+    @apply disabled:cursor-not-allowed disabled:opacity-60;
   }
   .form-label {
     @apply block mb-2 text-sm text-gray-600;
@@ -22,6 +23,11 @@
   .btn-submit {
     @apply w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-orange-500 rounded-md;
     @apply hover:bg-orange-400 focus:outline-none focus:bg-orange-400 focus:ring focus:ring-orange-300 focus:ring-opacity-50;
-    @apply transition ease-in-out duration-150;
+    @apply transition ease-in-out duration-150 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-orange-500;
+    @apply flex justify-center;
+  }
+  .btn-dismiss {
+    @apply ml-auto -mx-1.5 -my-1.5 bg-red-100 dark:bg-red-200 text-red-500 rounded-lg focus:ring-2 focus:ring-red-400;
+    @apply p-1.5 hover:bg-red-200 dark:hover:bg-red-300 inline-flex h-8 w-8;
   }
 }
