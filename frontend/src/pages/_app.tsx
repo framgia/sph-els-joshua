@@ -1,11 +1,12 @@
 import React from 'react'
-import '~/styles/globals.css'
 import type { AppProps } from 'next/app'
 import { Slide, ToastContainer } from 'react-toastify'
 
+import '~/styles/globals.css'
+
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
-    <React.Fragment>
+    <>
       <ToastContainer
         position="top-right"
         autoClose={3000}
@@ -20,7 +21,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
         transition={Slide}
       />
       <Component {...pageProps} />
-    </React.Fragment>
+    </>
   )
 }
 

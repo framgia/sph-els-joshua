@@ -2,6 +2,7 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+
 import { classNames } from '~/utils/classNames'
 
 const NotFound: NextPage = (): JSX.Element => {

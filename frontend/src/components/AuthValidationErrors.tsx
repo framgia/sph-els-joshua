@@ -1,9 +1,10 @@
+import React from 'react'
 import { TiInfo } from 'react-icons/ti'
 import { IoClose } from 'react-icons/io5'
-import { classNames } from '~/utils/classNames'
-import React from 'react'
 
-interface Props {
+import { classNames } from '~/utils/classNames'
+
+type Props = {
   errors: any
   setErrors?: any
   className?: string
@@ -15,7 +16,7 @@ const AuthValidationErrors: React.FC<Props> = (props): JSX.Element => {
   const handleClose = (): void => setErrors([])
 
   return (
-    <React.Fragment>
+    <>
       {(errors?.length > 0) && (
         <div 
           className={classNames(
@@ -43,7 +44,7 @@ const AuthValidationErrors: React.FC<Props> = (props): JSX.Element => {
             </button>
         </div>
       )}
-    </React.Fragment>
+    </>
   )
 }
 

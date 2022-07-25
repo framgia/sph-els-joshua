@@ -1,5 +1,6 @@
 import React from 'react'
 import Head from 'next/head'
+
 import { useAuth } from '~/hooks/auth'
 import { authProtected } from '~/utils/auth-protected'
 
@@ -9,7 +10,7 @@ const Home = () => {
   })
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>Home</title>
       </Head>
@@ -20,7 +21,7 @@ const Home = () => {
           onClick={logout}
         >Logout</button>
       </main>
-    </React.Fragment>
+    </>
   )
 }
 

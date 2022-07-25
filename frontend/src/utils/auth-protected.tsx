@@ -1,6 +1,7 @@
-import { useAuth } from '~/hooks/auth'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
+
+import { useAuth } from '~/hooks/auth'
 
 export const authProtected = (Comp: any) => {
   return function AuthProtected(props: any) {
