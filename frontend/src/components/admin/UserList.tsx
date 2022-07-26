@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { IUser } from '~/data/interfaces'
 import { ImSearch } from 'react-icons/im'
 
-interface Props {
+type Props = {
   users: IUser[]
 }
 

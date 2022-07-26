@@ -44,7 +44,7 @@ const Header: React.FC<Props> = (props): JSX.Element => {
         <section className="header-section">
           <Menu as="div" className="header-menu">
             {({ open }) => (
-              <React.Fragment>
+              <>
                 <div>
                   <Menu.Button
                     type="button"
@@ -98,7 +98,7 @@ const Header: React.FC<Props> = (props): JSX.Element => {
                     </div>
                   </Menu.Items>
                 </Transition>
-              </React.Fragment>
+              </>
             )}
           </Menu>
         </section>

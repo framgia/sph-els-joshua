@@ -8,7 +8,7 @@ import { ISidebar } from '~/data/interfaces'
 import { classNames } from '~/utils/classNames'
 import { sidebarLinks } from '~/data/sidebarList'
 
-interface Props {
+type Props = {
   isOpen: Boolean
 }
 
