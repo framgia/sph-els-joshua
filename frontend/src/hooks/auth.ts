@@ -2,6 +2,7 @@ import useSWR from 'swr'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
+import { AxiosResponse } from 'axios'
 
 import axios from '~/lib/axios'
 
@@ -20,8 +21,8 @@ export const useAuth = (props: any) => {
   const { data: user, error, mutate } = useSWR('/api/user', () =>
     axios
       .get('/api/user')
-      .then((res: any) => res.data)
-      .catch((error: any) => {
+      .then((res: AxiosResponse) => res.data)
+      .catch((error) => {
         if (error.response.status !== 409) throw console.log(error?.response?.statusText)
         router.push('/verify-email')
       }), {
@@ -60,7 +61,7 @@ export const useAuth = (props: any) => {
     await
       axios
         .post('/login', props)
-        .then(() => mutate())
+        .then(async () => await mutate())
         .catch(error => {
           if (error.response.status !== 422) throw error
 
@@ -114,7 +115,10 @@ export const useAuth = (props: any) => {
         .then(() => mutate())
     }
 
-    window.location.pathname = '/'
+    if (router.pathname.includes('/admin'))
+      window.location.pathname = '/admin'
+    else 
+      window.location.pathname = '/'
   }
 
   useEffect(() => {
