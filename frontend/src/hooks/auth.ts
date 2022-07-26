@@ -112,7 +112,7 @@ export const useAuth = (props: any) => {
     if (! error) {
       await axios
         .post('/logout')
-        .then(() => mutate())
+        .then(async () => await mutate())
     }
 
     if (router.pathname.includes('/admin'))

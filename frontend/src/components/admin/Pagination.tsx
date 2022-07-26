@@ -1,24 +1,34 @@
 import React from 'react'
+import ReactPaginate from 'react-paginate'
 
-const Pagination = () => {
+interface Props {
+  length: number
+  pageNumber: number
+  pageCount: number
+  actions: {
+    changePage: any
+  }
+}
+
+const Pagination: React.FC<Props> = (props) => {
+  const { pageNumber, pageCount, actions, length } = props
+  const { changePage } = actions
+
   return (
-    <section className="paginate-section">
-      <nav>
-        <ul className="inline-flex -space-x-px">
-          <li>
-            <a href="#" className="paginate-link rounded-l-lg">Previous</a>
-          </li>
-          <li>
-            <a href="#" className="paginate-link">1</a>
-          </li>
-          <li>
-            <a href="#" className="paginate-link">2</a>
-          </li>
-          <li>
-            <a href="#" className="paginate-link rounded-r-lg">Next</a>
-          </li>
-        </ul>
-      </nav>
+    <section className="paginate-section flex justify-between text-gray-500">
+      <h1 className="text-xs text-gray-600 font-medium">Showing {pageNumber + 1} to {pageCount} of {length} results</h1>
+      <ReactPaginate
+        previousLabel="Previous"
+        nextLabel="Next"
+        pageCount={pageCount}
+        onPageChange={changePage}
+        pageRangeDisplayed={5}
+        containerClassName="inline-flex -space-x-px"
+        previousLinkClassName="paginate-link rounded-l-lg"
+        pageLinkClassName="paginate-link"
+        activeClassName="paginate-link-active"
+        nextLinkClassName="paginate-link rounded-r-lg"
+      />
     </section>
   )
 }

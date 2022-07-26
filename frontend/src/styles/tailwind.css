@@ -88,10 +88,35 @@
     @apply space-y-2 pb-2
   }
 
+  /* Pagination */
   .paginate-section {
-    @apply flex justify-end items-center py-5 px-4;
+    @apply flex justify-end items-center py-5 px-4 select-none;
   }
   .paginate-link {
-    @apply py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700;
+    @apply py-2 px-3 leading-tight bg-white border border-gray-300 hover:bg-gray-100;
   }
+  .paginate-link-active {
+    @apply text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700;
+  }
+
+  /* Admin UserList */
+  .table {
+    @apply w-full text-sm text-left text-gray-500;
+  }
+  .table-thead {
+    @apply text-xs text-gray-700 uppercase bg-gray-50;
+  }
+  .table-thead-th {
+    @apply py-3 px-6;
+  }
+  .table-tbody-tr {
+    @apply bg-white border-b hover:bg-gray-50;
+  }
+  .table-tbody-th {
+    @apply flex items-center py-4 px-6 text-gray-900 whitespace-nowrap;
+  }
+  .table-tbody-td {
+    @apply py-4 px-6;
+  }
+
 }
