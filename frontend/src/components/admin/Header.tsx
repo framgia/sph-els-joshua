@@ -1,5 +1,4 @@
 import Link from 'next/link'
-import Image from 'next/image'
 import React, { Fragment } from 'react'
 import { IoLogOut } from 'react-icons/io5'
 import { HiMenuAlt4 } from 'react-icons/hi'
@@ -7,6 +6,7 @@ import { IoSettings } from 'react-icons/io5'
 import { BiCaretDown } from 'react-icons/bi'
 import { Menu, Transition } from '@headlessui/react'
 
+import Avatar from './../Avatar'
 import { IUser } from '~/data/interfaces'
 import { classNames } from '~/utils/classNames'
 
@@ -50,7 +50,11 @@ const Header: React.FC<Props> = (props): JSX.Element => {
                     type="button"
                     className="header-menu-button"
                   >
-                    <Avatar url="https://i.pravatar.cc/60" />
+                    <Avatar 
+                      width={32} 
+                      height={32} 
+                      url="https://i.pravatar.cc/60" 
+                    />
                     {open ? <span className="text-sm font-medium">{admin?.name}</span> : <span className="text-sm font-medium">{admin?.name}</span>}
                     <BiCaretDown className="w-4 h-4" />
                   </Menu.Button>
@@ -104,23 +108,6 @@ const Header: React.FC<Props> = (props): JSX.Element => {
         </section>
       </main>
     </header>
-  )
-}
-
-function Avatar ({ url }: { url: string }) {
-  return (
-    <div className="p-0.5 rounded-full bg-gradient-to-tr from-yellow-400 to-fuchsia-600">
-      <div className="bg-white p-0.5 rounded-full flex flex-shrink-0 overflow-hidden">
-        <Image 
-          width={35}
-          height={35}
-          src={url}
-          objectFit="cover"
-          alt="avatar" 
-          layout="intrinsic"
-        />
-      </div>
-    </div>
   )
 }
 

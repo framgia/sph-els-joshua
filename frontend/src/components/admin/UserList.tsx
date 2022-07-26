@@ -1,7 +1,7 @@
 import React from 'react'
 import moment from 'moment'
-import Image from 'next/image'
 
+import Avatar from './../Avatar'
 import { IUser } from '~/data/interfaces'
 import { ImSearch } from 'react-icons/im'
 
@@ -59,16 +59,11 @@ const UserList: React.FC<Props> = (props): JSX.Element => {
       {users?.map((user: IUser) => (
         <tr key={user?.id} className="bg-white border-b hover:bg-gray-50">
           <th scope="row" className="flex items-center py-4 px-6 text-gray-900 whitespace-nowrap">
-            <div className="flex-shrink-0">
-              <Image 
-                width={35} 
-                height={35} 
-                className="rounded-full flex-shrink-0" 
-                layout="intrinsic"
-                src={`https://i.pravatar.cc/60?u=${user?.id}`} 
-                alt="Avatar" 
-              />
-            </div>
+            <Avatar 
+              width={32} 
+              height={32} 
+              url={`https://i.pravatar.cc/60?u=${user?.id}`}  
+            />
             <div className="pl-3">
               <div className="text-base font-semibold">{user?.name}</div>
             </div>  
