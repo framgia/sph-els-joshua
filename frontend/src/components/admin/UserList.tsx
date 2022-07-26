@@ -20,23 +20,20 @@ const UserList: React.FC<Props> = (props): JSX.Element => {
             <h1 className="font-semibold ">Users Table</h1>
             <p className="mt-1 text-sm font-normal text-gray-500">List of all users</p>
           </div>
-          <div>
-          <form action="#" method="GET">
-              <label htmlFor="topbar-search" className="sr-only">
-                Search
-              </label>
-              <div className="mt-1 relative lg:w-64">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <ImSearch className="w-4 h-4 text-gray-500" />
-                </div>
-                <input
-                  type="text"
-                  className="form-control pl-10 mt-0"
-                  placeholder="Search"
-                />
-              </div>
-            </form>
-          </div>
+          <form 
+            action="#" 
+            method="GET"  
+            className="mt-1 relative lg:w-64"
+          >
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <ImSearch className="w-4 h-4 text-gray-500" />
+            </div>
+            <input
+              type="text"
+              className="form-control pl-10 mt-0"
+              placeholder="Search"
+            />
+          </form>
         </div>
       </caption>
       <thead className="text-xs text-gray-700 uppercase bg-gray-50">
