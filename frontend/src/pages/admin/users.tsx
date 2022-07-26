@@ -1,5 +1,6 @@
 import React from 'react'
 import { NextPage } from 'next'
+
 import { useAuth } from '~/hooks/auth'
 import Layout from '~/layouts/adminLayout'
 import { adminProtected } from '~/utils/admin-protected'

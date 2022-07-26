@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import type { NextPage } from 'next'
-import { useAuth } from '~/hooks/auth'
 import React, { useState } from 'react'
+
+import { useAuth } from '~/hooks/auth'
 import { classNames } from '~/utils/classNames'
 import SignInUpForm from '~/components/user/SignInUpForm'
 import AuthValidationErrors from '~/components/AuthValidationErrors'
@@ -31,7 +32,7 @@ const Index: NextPage = (): JSX.Element => {
   }
 
   return (
-    <React.Fragment>
+    <>
       <Head>
         <title>{`ELearning Administrator`}</title>
       </Head>
@@ -69,7 +70,7 @@ const Index: NextPage = (): JSX.Element => {
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   )
 }
 

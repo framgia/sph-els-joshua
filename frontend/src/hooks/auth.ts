@@ -1,8 +1,9 @@
 import useSWR from 'swr'
-import axios from '~/lib/axios'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
+
+import axios from '~/lib/axios'
 
 type ParamProps = { 
   name?: string

@@ -1,6 +1,7 @@
-import { useAuth } from '~/hooks/auth'
 import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
+
+import { useAuth } from '~/hooks/auth'
 import { Spinner } from '~/utils/Spinner'
 
 export const adminProtected = (Comp: any) => {
