@@ -1,8 +1,9 @@
 import useSWR from 'swr'
-import axios from '~/lib/axios'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
+
+import axios from '~/lib/axios'
 
 type ParamProps = { 
   name?: string
@@ -59,10 +60,7 @@ export const useAuth = (props: any) => {
     await
       axios
         .post('/login', props)
-        .then(() => {
-          mutate()
-          toast.success('Successfully Logged in!')
-        })
+        .then(() => mutate())
         .catch(error => {
           if (error.response.status !== 422) throw error
 

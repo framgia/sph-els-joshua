@@ -1,6 +1,7 @@
+import React from 'react'
 import { useRouter } from 'next/router'
-import React, { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
+
 import { Spinner } from '~/utils/Spinner'
 
 type FormValues  = {
@@ -98,13 +99,15 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
         />
         {errors?.password && <span className="error">{`${errors?.password?.message}`}</span>}
       </div>
-      {isLoginPage && (
-        <a
-          href="#"
-          className="link mt-2 text-right"
-        >
-          Forgot your password?
-        </a>
+      {router.pathname !== '/admin' && (
+        isLoginPage && (
+          <a
+            href="#"
+            className="link mt-2 text-right"
+          >
+            Forgot your password?
+          </a>
+        )
       )}
 
       <div className="mt-4">
