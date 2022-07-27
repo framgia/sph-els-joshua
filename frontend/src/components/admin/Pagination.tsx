@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactPaginate from 'react-paginate'
 
-interface Props {
+type Props = {
   length: number
   pageNumber: number
   pageCount: number

@@ -79,21 +79,25 @@ function Captions ({ setSearchedVal }: { setSearchedVal: any }) {
 }
 
 function Thead () {
+  const theads = [
+    {
+      name: 'Name'
+    },
+    {
+      name: 'Role'
+    },
+    {
+      name: 'Email'
+    },
+    {
+      name: 'Date Created'
+    },
+  ]
+
   return (
     <thead className="table-thead">
       <tr>
-        <th scope="col" className="table-thead-th">
-          Name
-        </th>
-        <th scope="col" className="table-thead-th">
-          Role
-        </th>
-        <th scope="col" className="table-thead-th">
-          Email
-        </th>
-        <th scope="col" className="table-thead-th">
-          Date Created
-        </th>
+        {theads?.map(({ name }, i: number) => <th key={i} scope="col" className="table-thead-th">{name}</th>)}
       </tr>
     </thead>
   )
