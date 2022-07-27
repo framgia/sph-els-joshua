@@ -1,11 +1,13 @@
 import moment from 'moment'
 import React, { useState } from 'react'
-import { ImSearch } from 'react-icons/im'
 import { AiTwotoneEdit } from 'react-icons/ai'
 import { AiTwotoneDelete } from 'react-icons/ai'
 
+import Thead from './Thead'
+import TCaption from './Tcaption'
 import { ICategory } from '~/data/interfaces'
 import { classNames } from '~/utils/classNames'
+import { categoryTableHead } from '~/data/theads'
 
 type Props = {
   categories: ICategory[] 
@@ -14,12 +16,16 @@ type Props = {
 
 const CategoryList: React.FC<Props> = (props): JSX.Element => {
   const { categories, loading } = props
-  const [searchedVal, setSearchedVal] = useState('')
+  const [searchedVal, setSearchedVal] = useState<string>('')
 
   return (
     <table className="table">
-      <Captions setSearchedVal={setSearchedVal} />
-      <Thead />
+      <TCaption
+        title="Categories Table"
+        description="List of all categories"
+        setSearchedVal={setSearchedVal}
+      />
+      <Thead theads={categoryTableHead} />
       <tbody>
         {categories?.filter((row: ICategory) =>
             !searchedVal?.length || row?.title
@@ -63,58 +69,6 @@ const CategoryList: React.FC<Props> = (props): JSX.Element => {
         ))}
       </tbody>
     </table>
-  )
-}
-
-function Captions ({ setSearchedVal }: { setSearchedVal: any }) {
-  return (
-    <caption className="p-5 text-lg text-left text-gray-900 bg-white dark:text-white">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="font-semibold ">Categories Table</h1>
-          <p className="mt-1 text-sm font-normal text-gray-500">List of all categories</p>
-        </div>
-        <div className="mt-1 relative lg:w-64">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <ImSearch className="ml-0.5 w-4 h-4 text-gray-500" />
-          </div>
-          <input
-            type="text"
-            onChange={(e) => setSearchedVal(e.target.value)}
-            className="form-control pl-10 mt-0"
-            placeholder="Search"
-          />
-        </div>
-      </div>
-    </caption>
-  )
-}
-
-function Thead () {
-  const theads = [
-    {
-      name: 'ID'
-    },
-    {
-      name: 'Title'
-    },
-    {
-      name: 'Description'
-    },
-    {
-      name: 'Date Created'
-    },
-    {
-      name: 'Actions'
-    }
-  ]
-
-  return (
-    <thead className="table-thead">
-      <tr>
-        {theads?.map(({ name }, i: number) => <th key={i} scope="col" className="table-thead-th">{name}</th>)}
-      </tr>
-    </thead>
   )
 }
 

@@ -1,9 +1,11 @@
 import moment from 'moment'
 import React, { useState } from 'react'
-import { ImSearch } from 'react-icons/im'
 
+import Thead from './Thead'
 import Avatar from './../Avatar'
+import TCaption from './Tcaption'
 import { IUser } from '~/data/interfaces'
+import { userTableHead } from '~/data/theads'
 
 type Props = {
   users: IUser[] | any
@@ -12,12 +14,16 @@ type Props = {
 
 const UserList: React.FC<Props> = (props): JSX.Element => {
   const { users, loading } = props
-  const [searchedVal, setSearchedVal] = useState('')
+  const [searchedVal, setSearchedVal] = useState<string>('')
 
   return (
     <table className="table">
-      <Captions setSearchedVal={setSearchedVal} />
-      <Thead />
+      <TCaption
+        title="Users Table"
+        description="List of all users"
+        setSearchedVal={setSearchedVal}
+      />
+      <Thead theads={userTableHead} />
       <tbody>
         {users?.filter((row: IUser) =>
             !searchedVal?.length || row?.name
@@ -53,58 +59,6 @@ const UserList: React.FC<Props> = (props): JSX.Element => {
         ))}
       </tbody>
     </table>
-  )
-}
-
-function Captions ({ setSearchedVal }: { setSearchedVal: any }) {
-  return (
-    <caption className="p-5 text-lg text-left text-gray-900 bg-white dark:text-white">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="font-semibold ">Users Table</h1>
-          <p className="mt-1 text-sm font-normal text-gray-500">List of all users</p>
-        </div>
-        <div className="mt-1 relative lg:w-64">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <ImSearch className="ml-0.5 w-4 h-4 text-gray-500" />
-          </div>
-          <input
-            type="text"
-            onChange={(e) => setSearchedVal(e.target.value)}
-            className="form-control pl-10 mt-0"
-            placeholder="Search"
-          />
-        </div>
-      </div>
-    </caption>
-  )
-}
-
-function Thead () {
-  const theads = [
-    {
-      name: 'ID'
-    },
-    {
-      name: 'Name'
-    },
-    {
-      name: 'Role'
-    },
-    {
-      name: 'Email'
-    },
-    {
-      name: 'Date Created'
-    },
-  ]
-
-  return (
-    <thead className="table-thead">
-      <tr>
-        {theads?.map(({ name }, i: number) => <th key={i} scope="col" className="table-thead-th">{name}</th>)}
-      </tr>
-    </thead>
   )
 }
 
