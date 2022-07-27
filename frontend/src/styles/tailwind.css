@@ -99,7 +99,7 @@
     @apply text-blue-600 bg-blue-50 hover:bg-blue-100 hover:text-blue-700;
   }
 
-  /* Admin UserList */
+  /* Table */
   .table {
     @apply w-full text-sm text-left text-gray-500;
   }
@@ -117,6 +117,11 @@
   }
   .table-tbody-td {
     @apply py-4 px-6;
+  }
+  .table-tbody-td-btn {
+    @apply border;
+    @apply inline-flex items-center py-1 px-1.5 font-medium text-gray-600 bg-white;
+    @apply hover:bg-gray-100 active:scale-95 transition ease-in-out duration-150;
   }
 
 }

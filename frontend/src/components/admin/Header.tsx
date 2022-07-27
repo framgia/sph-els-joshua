@@ -10,7 +10,7 @@ import Avatar from './../Avatar'
 import { IUser } from '~/data/interfaces'
 import { classNames } from '~/utils/classNames'
 
-interface Props {
+type Props = {
   admin: IUser
   actions: { 
     logout: () => void

@@ -1,17 +1,19 @@
 import moment from 'moment'
 import React, { useState } from 'react'
 import { ImSearch } from 'react-icons/im'
+import { AiTwotoneEdit } from 'react-icons/ai'
+import { AiTwotoneDelete } from 'react-icons/ai'
 
-import Avatar from './../Avatar'
-import { IUser } from '~/data/interfaces'
+import { ICategory } from '~/data/interfaces'
+import { classNames } from '~/utils/classNames'
 
 type Props = {
-  users: IUser[] | any
+  categories: ICategory[] 
   loading: boolean
 }
 
-const UserList: React.FC<Props> = (props): JSX.Element => {
-  const { users, loading } = props
+const CategoryList: React.FC<Props> = (props): JSX.Element => {
+  const { categories, loading } = props
   const [searchedVal, setSearchedVal] = useState('')
 
   return (
@@ -19,35 +21,43 @@ const UserList: React.FC<Props> = (props): JSX.Element => {
       <Captions setSearchedVal={setSearchedVal} />
       <Thead />
       <tbody>
-        {users?.filter((row: IUser) =>
-            !searchedVal?.length || row?.name
+        {categories?.filter((row: ICategory) =>
+            !searchedVal?.length || row?.title
               .toString()
               .toLowerCase()
               .includes(searchedVal.toString().toLowerCase()) 
             )
-          ?.map((user: IUser) => (
+          ?.map((user: ICategory) => (
           <tr key={user?.id} className="table-tbody-tr">
             <td className="table-tbody-td">
               {user?.id}
             </td>
-            <th scope="row" className="table-tbody-th">
-              <Avatar 
-                width={32}
-                height={32}
-                url={`https://i.pravatar.cc/60?u=${user?.id}`} 
-              />
-              <div className="pl-3">
-                <div className="text-sm font-semibold">{user?.name}</div>
-              </div>  
-            </th>
-            <td className="table-tbody-td">
-              {user?.is_admin ? 'Admin' : 'User'}
+            <td className="table-tbody-td font-medium">
+              {user?.title}
             </td>
             <td className="table-tbody-td">
-              {user?.email}
+              <span className="line-clamp-2">{user?.description}</span>
             </td>
             <td className="table-tbody-td">
               {moment(user?.created_at).format("MMM Do YY")}
+            </td>
+            <td className="table-tbody-td">
+              <div className={classNames(
+                'inline-flex rounded-md'
+              )} role="group">
+                <button type="button" className={classNames(
+                  'table-tbody-td-btn rounded-l-lg hover:text-yellow-400',
+                  'active:yellow-400'
+                )}>
+                  <AiTwotoneEdit className="mr-2 w-4 h-4 fill-current" />
+                </button>
+                <button type="button" className={classNames(
+                  'table-tbody-td-btn rounded-r-lg hover:text-red-400',
+                  'active:yellow-400'
+                )}>
+                  <AiTwotoneDelete className="mr-2 w-4 h-4 fill-current" />
+                </button>
+              </div>
             </td>
           </tr>
         ))}
@@ -61,8 +71,8 @@ function Captions ({ setSearchedVal }: { setSearchedVal: any }) {
     <caption className="p-5 text-lg text-left text-gray-900 bg-white dark:text-white">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="font-semibold ">Users Table</h1>
-          <p className="mt-1 text-sm font-normal text-gray-500">List of all users</p>
+          <h1 className="font-semibold ">Categories Table</h1>
+          <p className="mt-1 text-sm font-normal text-gray-500">List of all categories</p>
         </div>
         <div className="mt-1 relative lg:w-64">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -86,17 +96,17 @@ function Thead () {
       name: 'ID'
     },
     {
-      name: 'Name'
+      name: 'Title'
     },
     {
-      name: 'Role'
-    },
-    {
-      name: 'Email'
+      name: 'Description'
     },
     {
       name: 'Date Created'
     },
+    {
+      name: 'Actions'
+    }
   ]
 
   return (
@@ -108,4 +118,4 @@ function Thead () {
   )
 }
 
-export default UserList
+export default CategoryList
