@@ -18,9 +18,7 @@ const Sidebar: React.FC<Props> = (props): JSX.Element => {
   
   const { logout } = useAuth({
     middleware: 'auth'
-  })
-
-  
+  })  
 
   return (
     <aside className={classNames(
@@ -30,7 +28,7 @@ const Sidebar: React.FC<Props> = (props): JSX.Element => {
         <main className="sidebar-main">
           <nav className="sidebar-nav">
             <ul className="sidebar-ul">
-              {sidebarLinks?.map(({ Icon, name, href }: ISidebar, i) => (
+              {sidebarLinks?.map(({ Icon, name, href }: ISidebar, i: number) => (
                 <li key={i}>
                   <Link href={href}>
                     <a
