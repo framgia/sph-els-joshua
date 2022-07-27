@@ -1,11 +1,12 @@
 import React from 'react'
+
 import { IThead } from '~/data/interfaces'
  
 type Props = {
   theads: IThead[]
 }
 
-const Thead: React.FC<Props> = ({ theads }) => {
+const THead: React.FC<Props> = ({ theads }) => {
   return (
     <thead className="table-thead">
       <tr>
@@ -15,4 +16,4 @@ const Thead: React.FC<Props> = ({ theads }) => {
   )
 }
 
-export default Thead
+export default THead

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { Spinner } from '~/utils/Spinner'
 
 type FormValues  = {
-  name: any
+  name: string
   email: string
   password: string
   setErrors?: React.Dispatch<React.SetStateAction<never[]>>

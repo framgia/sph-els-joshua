@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 
 import Caption from './Caption'
 import Avatar from './../Avatar'
-import TableHead from './Tablehead'
+import TableHead from './TableHead'
 import { IThead, IUser } from '~/data/interfaces'
 
 type Props = {
