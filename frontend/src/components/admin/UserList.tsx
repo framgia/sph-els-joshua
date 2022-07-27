@@ -1,11 +1,10 @@
 import moment from 'moment'
 import React, { useState } from 'react'
 
-import Thead from './Thead'
+import Caption from './Caption'
 import Avatar from './../Avatar'
-import TCaption from './Tcaption'
-import { IUser } from '~/data/interfaces'
-import { userTableHead } from '~/data/theads'
+import TableHead from './Tablehead'
+import { IThead, IUser } from '~/data/interfaces'
 
 type Props = {
   users: IUser[] | any
@@ -15,15 +14,32 @@ type Props = {
 const UserList: React.FC<Props> = (props): JSX.Element => {
   const { users, loading } = props
   const [searchedVal, setSearchedVal] = useState<string>('')
+  const tHeads: IThead[] = [
+    {
+      name: 'ID'
+    },
+    {
+      name: 'Name'
+    },
+    {
+      name: 'Role'
+    },
+    {
+      name: 'Email'
+    },
+    {
+      name: 'Date Created'
+    },
+  ]
 
   return (
     <table className="table">
-      <TCaption
+      <Caption
         title="Users Table"
         description="List of all users"
         setSearchedVal={setSearchedVal}
       />
-      <Thead theads={userTableHead} />
+      <TableHead theads={tHeads} />
       <tbody>
         {users?.filter((row: IUser) =>
             !searchedVal?.length || row?.name

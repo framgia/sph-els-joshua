@@ -3,11 +3,10 @@ import React, { useState } from 'react'
 import { AiTwotoneEdit } from 'react-icons/ai'
 import { AiTwotoneDelete } from 'react-icons/ai'
 
-import Thead from './Thead'
-import TCaption from './Tcaption'
-import { ICategory } from '~/data/interfaces'
+import Caption from './Caption'
+import TableHead from './Tablehead'
 import { classNames } from '~/utils/classNames'
-import { categoryTableHead } from '~/data/theads'
+import { ICategory, IThead } from '~/data/interfaces'
 
 type Props = {
   categories: ICategory[] 
@@ -17,15 +16,32 @@ type Props = {
 const CategoryList: React.FC<Props> = (props): JSX.Element => {
   const { categories, loading } = props
   const [searchedVal, setSearchedVal] = useState<string>('')
+  const tHeads: IThead[] = [
+    {
+      name: 'ID'
+    },
+    {
+      name: 'Title'
+    },
+    {
+      name: 'Description'
+    },
+    {
+      name: 'Date Created'
+    },
+    {
+      name: 'Actions'
+    }
+  ]
 
   return (
     <table className="table">
-      <TCaption
+      <Caption
         title="Categories Table"
         description="List of all categories"
         setSearchedVal={setSearchedVal}
       />
-      <Thead theads={categoryTableHead} />
+      <TableHead theads={tHeads} />
       <tbody>
         {categories?.filter((row: ICategory) =>
             !searchedVal?.length || row?.title

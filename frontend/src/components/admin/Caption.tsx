@@ -7,7 +7,7 @@ type Props = {
   setSearchedVal: React.Dispatch<React.SetStateAction<string>>
 }
 
-const TCaption: React.FC<Props> = (props) => {
+const Caption: React.FC<Props> = (props) => {
   const { title, description, setSearchedVal } = props
 
   return (
@@ -33,4 +33,4 @@ const TCaption: React.FC<Props> = (props) => {
   )
 }
 
-export default TCaption
+export default Caption
