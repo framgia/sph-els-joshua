@@ -13,6 +13,9 @@
   .form-label {
     @apply block mb-2 text-sm text-gray-600;
   }
+  .form-title {
+    @apply text-center font-extrabold text-xl text-gray-700;
+  }
   .error {
     @apply mt-1.5 ml-0.5 text-xs text-red-500 font-medium block text-left;
   }
@@ -124,4 +127,10 @@
     @apply hover:bg-gray-100 active:scale-95 transition ease-in-out duration-150;
   }
 
+  /* Buttons */
+  .btn-success {
+    @apply inline-flex items-center py-2 px-4 text-sm font-medium text-white bg-green-500 rounded-lg;
+    @apply hover:bg-green-600 transition ease-in-out duration-200 focus:bg-green-500;
+    @apply focus:z-20 focus:ring-4 focus:ring-green-400/50;
+  }
 }

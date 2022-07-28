@@ -34,7 +34,7 @@ const Sidebar: React.FC<Props> = (props): JSX.Element => {
                     <a
                       href="#"
                       className={classNames('group btn-sidebar-link',
-                        router.pathname === href
+                        router.pathname.includes(href)
                           ? 'text-orange-500 bg-gray-100'
                           : 'hover:text-orange-500 text-gray-600'
                       )}
@@ -42,7 +42,7 @@ const Sidebar: React.FC<Props> = (props): JSX.Element => {
                       <Icon
                         className={classNames(
                           'btn-sidebar-logo',
-                          router.pathname === href
+                          router.pathname.includes(href)
                             ? 'text-orange-500'
                             : 'group-hover:text-orange-500 text-gray-600'
                         )}

@@ -3,10 +3,12 @@ import type { AppProps } from 'next/app'
 import { Slide, ToastContainer } from 'react-toastify'
 
 import '~/styles/globals.css'
+import NextProgress from '~/lib/next-progress'
 
 const MyApp = ({ Component, pageProps }: AppProps) => {
   return (
     <>
+      <NextProgress />
       <ToastContainer
         position="top-right"
         autoClose={3000}

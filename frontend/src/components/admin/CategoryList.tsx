@@ -4,7 +4,7 @@ import { AiTwotoneEdit } from 'react-icons/ai'
 import { AiTwotoneDelete } from 'react-icons/ai'
 
 import Caption from './Caption'
-import TableHead from './Tablehead'
+import TableHead from './TableHead'
 import { classNames } from '~/utils/classNames'
 import { ICategory, IThead } from '~/data/interfaces'
 
