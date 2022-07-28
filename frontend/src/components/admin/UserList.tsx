@@ -56,7 +56,7 @@ const UserList: React.FC<Props> = (props): JSX.Element => {
               <Avatar 
                 width={32}
                 height={32}
-                url={`https://i.pravatar.cc/60?u=${user?.id}`} 
+                url={`${user ? user?.avatar_url : `https://i.pravatar.cc/60` }`} 
               />
               <div className="pl-3">
                 <div className="text-sm font-semibold">{user?.name}</div>

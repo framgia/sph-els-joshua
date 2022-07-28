@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class MustBeAdministrator
+class Administrator
 {
     /**
      * Handle an incoming request.
@@ -17,7 +17,7 @@ class MustBeAdministrator
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->is_admin !== 1) {
+        if (auth()->user()->is_admin == 0) {
             abort(Response::HTTP_FORBIDDEN);
         }
         return $next($request);
