@@ -1,31 +1,46 @@
-import React from 'react'
-import { NextPage } from 'next'
+import React, { useEffect, useState } from 'react'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 
 import Layout from '~/layouts/adminLayout'
+import { ICategory } from '~/data/interfaces'
+import { categories } from '~/data/categories'
 import { classNames } from '~/utils/classNames'
 import { CategoryFormValues } from '~/data/types'
 
-const CategoryCreate: NextPage = (): JSX.Element => {
+const CategoryUpdate = () => {
+  const router = useRouter()
+  const [categoryData, setCategoryData] = useState<ICategory>()
+
+  const { id } = router.query
+
+  useEffect(() => {
+    const getCategoryDataById = () => {
+      const newCategories = categories?.find((cat) => cat?.id?.toString() == id)
+      setCategoryData(newCategories)
+    }
+    getCategoryDataById()
+  }, [id])
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors }
   } = useForm<CategoryFormValues>()
 
-  const handleSave = (data: CategoryFormValues) => {
+  const handleUpdate = (data: CategoryFormValues) => {
     alert('Good')
   }
 
   return (
-    <Layout metaTitle="Category Create">
+    <Layout metaTitle="Category Update">
       <main className="pt-4 px-4">
         <section className={classNames(
           'overflow-x-auto relative rounded-2xl shadow-md bg-white',
           'max-w-lg mx-auto border'
         )}>
-          <form className="p-10" onSubmit={handleSubmit(handleSave)}>
-            <h1 className="form-title">Create Category</h1>
+          <form className="p-10" onSubmit={handleSubmit(handleUpdate)}>
+            <h1 className="form-title">Update Category</h1>
             <div className="mt-5">
               <label className="form-label">Title *</label>
               <input 
@@ -34,6 +49,7 @@ const CategoryCreate: NextPage = (): JSX.Element => {
                 placeholder="Title" 
                 {...register('title', { required: 'Title is required' })}
                 tabIndex={1}
+                defaultValue={categoryData?.title}
               />
               {errors?.title && <span className="error">{`${errors?.title?.message}`}</span>}
             </div>
@@ -45,6 +61,7 @@ const CategoryCreate: NextPage = (): JSX.Element => {
                 placeholder="Description"
                 {...register('description', { required: 'Description is required' })}
                 tabIndex={2}
+                defaultValue={categoryData?.description}
               >
               </textarea>
               {errors?.description && <span className="error">{`${errors?.description?.message}`}</span>}
@@ -65,4 +82,4 @@ const CategoryCreate: NextPage = (): JSX.Element => {
   )
 }
 
-export default CategoryCreate
+export default CategoryUpdate

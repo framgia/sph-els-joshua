@@ -1,10 +1,11 @@
 import moment from 'moment'
 import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import { AiTwotoneEdit } from 'react-icons/ai'
 import { AiTwotoneDelete } from 'react-icons/ai'
 
 import Caption from './Caption'
-import TableHead from './TableHead'
+import TableHead from './Tablehead'
 import { classNames } from '~/utils/classNames'
 import { ICategory, IThead } from '~/data/interfaces'
 
@@ -14,6 +15,7 @@ type Props = {
 }
 
 const CategoryList: React.FC<Props> = (props): JSX.Element => {
+  const router = useRouter()
   const { categories, loading } = props
   const [searchedVal, setSearchedVal] = useState<string>('')
   const tHeads: IThead[] = [
@@ -67,10 +69,14 @@ const CategoryList: React.FC<Props> = (props): JSX.Element => {
               <div className={classNames(
                 'inline-flex rounded-md'
               )} role="group">
-                <button type="button" className={classNames(
-                  'table-tbody-td-btn rounded-l-lg hover:text-yellow-400',
-                  'active:yellow-400'
-                )}>
+                <button 
+                  type="button" 
+                  onClick={() => router.push(`/admin/categories/update/${user?.id}`)}
+                  className={classNames(
+                    'table-tbody-td-btn rounded-l-lg hover:text-yellow-400',
+                    'active:yellow-400'
+                  )}
+                >
                   <AiTwotoneEdit className="mr-2 w-4 h-4 fill-current" />
                 </button>
                 <button type="button" className={classNames(

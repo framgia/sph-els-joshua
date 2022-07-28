@@ -10,7 +10,7 @@ type Props = {
   }
 }
 
-const Pagination: React.FC<Props> = (props) => {
+const Pagination: React.FC<Props> = (props): JSX.Element => {
   const { pageNumber, pageCount, actions, length } = props
   const { changePage } = actions
 

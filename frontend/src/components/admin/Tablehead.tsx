@@ -6,7 +6,7 @@ type Props = {
   theads: IThead[]
 }
 
-const THead: React.FC<Props> = ({ theads }) => {
+const TableHead: React.FC<Props> = ({ theads }): JSX.Element => {
   return (
     <thead className="table-thead">
       <tr>
@@ -16,4 +16,4 @@ const THead: React.FC<Props> = ({ theads }) => {
   )
 }
 
-export default THead
+export default TableHead

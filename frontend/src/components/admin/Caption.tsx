@@ -9,7 +9,7 @@ type Props = {
   setSearchedVal: React.Dispatch<React.SetStateAction<string>>
 }
 
-const Caption: React.FC<Props> = (props) => {
+const Caption: React.FC<Props> = (props): JSX.Element => {
   const router = useRouter()
   const { title, description, setSearchedVal } = props
 
