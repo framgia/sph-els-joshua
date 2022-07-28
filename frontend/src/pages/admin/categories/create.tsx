@@ -14,7 +14,6 @@ const CategoryCreate: NextPage = (): JSX.Element => {
   } = useForm<CategoryFormValues>()
 
   const handleSave = (data: CategoryFormValues) => {
-    console.log(data)
     alert('Good')
   }
 

@@ -29,7 +29,6 @@ const CategoryUpdate = () => {
   } = useForm<CategoryFormValues>()
 
   const handleUpdate = (data: CategoryFormValues) => {
-    console.log(data)
     alert('Good')
   }
 

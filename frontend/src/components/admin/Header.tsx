@@ -56,7 +56,7 @@ const Header: React.FC<Props> = (props): JSX.Element => {
                       url="https://i.pravatar.cc/60" 
                     />
                     <span className="text-sm font-medium">{admin?.name}</span>
-                    <BiCaretDown className={`w-4 h-4 ${open ? 'rotate-180' : ''}`} />
+                    <BiCaretDown className={`w-4 h-4 ${open && 'rotate-180'}`} />
                   </Menu.Button>
                 </div>
                 <Transition
