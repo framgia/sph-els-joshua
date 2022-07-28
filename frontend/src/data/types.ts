@@ -9,3 +9,9 @@ export type SignInUpFormValues  = {
   password: string
   setErrors?: React.Dispatch<React.SetStateAction<never[]>>
 }
+
+export type QuestionFormValues = {
+  id: string
+  value: string
+  category_id: number
+}

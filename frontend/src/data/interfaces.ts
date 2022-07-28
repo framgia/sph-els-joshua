@@ -28,3 +28,8 @@ export interface ICategory {
 export interface IThead {
   name: string
 }
+
+export interface IChoice {
+  id: string
+  value: string
+}
