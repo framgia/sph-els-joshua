@@ -7,7 +7,7 @@ type Props = {
   height?: number
 }
 
-const Avatar: React.FC<Props> = (props) => {
+const Avatar: React.FC<Props> = (props): JSX.Element => {
   const { url, width, height } = props
 
   return (

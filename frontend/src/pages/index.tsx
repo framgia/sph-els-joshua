@@ -4,15 +4,9 @@ import React, { useState } from 'react'
 
 import { useAuth } from '~/hooks/auth'
 import { classNames } from '~/utils/classNames'
+import { SignInUpFormValues } from '~/data/types'
 import SignInUpForm from '~/components/user/SignInUpForm'
 import AuthValidationErrors from '~/components/AuthValidationErrors'
-
-type FormValues = {
-  name: string
-  email: string
-  password: string
-  setErrors?: React.Dispatch<React.SetStateAction<never[]>>
-}
 
 const Index: NextPage = (): JSX.Element => {
   const [errors, setErrors] = useState([])
@@ -25,7 +19,7 @@ const Index: NextPage = (): JSX.Element => {
 
   const handleSwitchForm = (): void => setIsLoginPage((isLoginPage = !isLoginPage))
 
-  const handleAuthSubmit = async (data: FormValues): Promise<void> => {
+  const handleAuthSubmit = async (data: SignInUpFormValues): Promise<void> => {
     const { name, email, password } = data
 
     if (isLoginPage) {

@@ -3,19 +3,13 @@ import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 
 import { Spinner } from '~/utils/Spinner'
-
-type FormValues  = {
-  name: string
-  email: string
-  password: string
-  setErrors?: React.Dispatch<React.SetStateAction<never[]>>
-}
+import { SignInUpFormValues } from '~/data/types'
 
 type Props = {
   isLoginPage: boolean
   actions: {
     handleSwitchForm: () => void
-    handleAuthSubmit: (data: FormValues) => void
+    handleAuthSubmit: (data: SignInUpFormValues) => void
   }
 }
 
@@ -28,7 +22,7 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
     register,
     handleSubmit,
     formState: { isSubmitting, errors }
-  } = useForm<FormValues>()
+  } = useForm<SignInUpFormValues>()
 
   return (
     <form onSubmit={handleSubmit(handleAuthSubmit)}>
