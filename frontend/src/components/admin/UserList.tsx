@@ -1,13 +1,13 @@
-import moment from 'moment'
 import React, { useState } from 'react'
 
 import Caption from './Caption'
-import Avatar from './../Avatar'
+import UserItem from './UserItem'
 import TableHead from './Tablehead'
+import { Spinner } from '~/utils/Spinner'
 import { IThead, IUser } from '~/data/interfaces'
 
 type Props = {
-  users: IUser[] | any
+  users: IUser[]
   loading: boolean
 }
 
@@ -33,47 +33,27 @@ const UserList: React.FC<Props> = (props): JSX.Element => {
   ]
 
   return (
-    <table className="table">
+    <table className="table relative max-h-[40vh]">
       <Caption
         title="Users Table"
         description="List of all users"
         setSearchedVal={setSearchedVal}
       />
       <TableHead theads={tHeads} />
-      <tbody>
-        {users?.filter((row: IUser) =>
+      {loading ? (
+        <div className="absolute insert-0 flex justify-center w-full py-8">
+          <Spinner className="w-8 h-8" />
+        </div>
+      ) : (
+        <tbody>
+          {users?.filter((row: IUser) =>
             !searchedVal?.length || row?.name
               .toString()
               .toLowerCase()
-              .includes(searchedVal.toString().toLowerCase()) 
-            )
-          ?.map((user: IUser) => (
-          <tr key={user?.id} className="table-tbody-tr">
-            <td className="table-tbody-td">
-              {user?.id}
-            </td>
-            <th scope="row" className="table-tbody-th">
-              <Avatar 
-                width={32}
-                height={32}
-                url={`https://i.pravatar.cc/60?u=${user?.id}`}  // ${user?.avatar_url}
-              />
-              <div className="pl-3">
-                <div className="text-sm font-semibold">{user?.name}</div>
-              </div>  
-            </th>
-            <td className="table-tbody-td">
-              {user?.is_admin ? 'Admin' : 'User'}
-            </td>
-            <td className="table-tbody-td">
-              {user?.email}
-            </td>
-            <td className="table-tbody-td">
-              {moment(user?.created_at).format("MMM Do YY")}
-            </td>
-          </tr>
-        ))}
-      </tbody>
+              .includes(searchedVal.toString().toLowerCase()))
+            ?.map((user: IUser) => <UserItem key={user?.id} {...user} />)}
+        </tbody>
+      )}
     </table>
   )
 }

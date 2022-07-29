@@ -13,10 +13,12 @@ import { adminProtected } from '~/utils/admin-protected'
 const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
 
 const Users: NextPage = (): JSX.Element => {
-  const { data: users, error } = useSWR('/api/users', async () => fetcher('/api/users'), {
+  const { data: users } = useSWR('/api/users', async () => fetcher('/api/users'), {
     refreshInterval: 1000,
     revalidateOnMount: true
   })
+
+  const loading = !users?.data
 
   const [pageNumber, setPageNumber] = useState(0)
 
@@ -33,13 +35,15 @@ const Users: NextPage = (): JSX.Element => {
     <Layout metaTitle="Users">
       <main className="pt-4 px-4">
         <section className="overflow-x-auto relative shadow-md sm:rounded-lg">
-          <UserList users={displayUsers} loading={!error && !users?.data} />
-          <Pagination 
-            length={users?.length}
-            pageNumber={pageNumber}
-            pageCount={pageCount}
-            actions={{ changePage }}
-          />
+          <UserList users={displayUsers} loading={loading} />
+          {!loading && (
+            <Pagination 
+              length={users?.length}
+              pageNumber={pageNumber}
+              pageCount={pageCount}
+              actions={{ changePage }}
+            />
+          )}
         </section>
       </main>
     </Layout>
