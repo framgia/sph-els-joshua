@@ -5,7 +5,6 @@ import { AxiosResponse } from 'axios'
 import React, { useState } from 'react'
 
 import axios from '~/lib/axios'
-import { IUser } from '~/data/interfaces'
 import Layout from '~/layouts/adminLayout'
 import UserList from '~/components/admin/UserList'
 import Pagination from '~/components/admin/Pagination'
@@ -14,13 +13,10 @@ import { adminProtected } from '~/utils/admin-protected'
 const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
 
 const Users: NextPage = (): JSX.Element => {
-  
   const { data: users, error } = useSWR('/api/users', async () => fetcher('/api/users'), {
     refreshInterval: 1000,
     revalidateOnMount: true
   })
-
-  const [loading, setLoading] = useState(false)
 
   const [pageNumber, setPageNumber] = useState(0)
 
