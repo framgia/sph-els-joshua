@@ -33,7 +33,7 @@ const UserList: React.FC<Props> = (props): JSX.Element => {
   ]
 
   return (
-    <table className="table relative max-h-[40vh]">
+    <table className="table relative max-h-[40vh] min-h-[40vh]">
       <Caption
         title="Users Table"
         description="List of all users"
@@ -42,7 +42,7 @@ const UserList: React.FC<Props> = (props): JSX.Element => {
       <TableHead theads={tHeads} />
       {loading ? (
         <div className="absolute insert-0 flex justify-center w-full py-8">
-          <Spinner className="w-8 h-8" />
+          <Spinner className="w-8 h-8 text-gray-400" />
         </div>
       ) : (
         <tbody>
