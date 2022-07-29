@@ -21,8 +21,6 @@ const Avatar: React.FC<Props> = (props): JSX.Element => {
           alt="avatar" 
           className="rounded-full"
           layout="intrinsic"
-          placeholder="blur"
-          blurDataURL={url}
         />
       </div>
     </div>
