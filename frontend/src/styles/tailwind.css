@@ -133,4 +133,9 @@
     @apply hover:bg-green-600 transition ease-in-out duration-200 focus:bg-green-500;
     @apply focus:z-20 focus:ring-4 focus:ring-green-400/50;
   }
+  .btn-default {
+    @apply py-2.5 px-3 text-sm font-medium text-gray-700 bg-white border border-gray-200;
+    @apply hover:bg-gray-100 focus:z-20 focus:ring-2 focus:ring-orange-400/50 focus:outline-none;
+    @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white;
+  }
 }
