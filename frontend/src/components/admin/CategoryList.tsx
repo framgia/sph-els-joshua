@@ -1,4 +1,5 @@
 import moment from 'moment'
+import Link from 'next/link'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { AiTwotoneEdit } from 'react-icons/ai'
@@ -69,16 +70,15 @@ const CategoryList: React.FC<Props> = (props): JSX.Element => {
               <div className={classNames(
                 'inline-flex rounded-md'
               )} role="group">
-                <button 
-                  type="button" 
-                  onClick={() => router.push(`/admin/categories/update/${user?.id}`)}
-                  className={classNames(
-                    'table-tbody-td-btn rounded-l-lg hover:text-yellow-400',
-                    'active:yellow-400'
-                  )}
-                >
-                  <AiTwotoneEdit className="mr-2 w-4 h-4 fill-current" />
-                </button>
+                <Link href={`/admin/categories/update/${user?.id}`}>
+                  <a className={classNames(
+                      'table-tbody-td-btn rounded-l-lg hover:text-yellow-400',
+                      'active:yellow-400'
+                    )}
+                  >
+                    <AiTwotoneEdit className="mr-2 w-4 h-4 fill-current" />
+                  </a>
+                </Link>
                 <button type="button" className={classNames(
                   'table-tbody-td-btn rounded-r-lg hover:text-red-400',
                   'active:yellow-400'
