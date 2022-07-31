@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\Category;
+use App\Models\Choice;
+use App\Models\Question;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -16,7 +18,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         User::truncate();
-        Category::truncate();
 
         User::factory(60)->create();
         User::factory()->create([
@@ -26,7 +27,25 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('123456'),
             'is_admin' => true
         ]);
+        User::factory()->create([
+            'name' => 'Gilchrist Calunia',
+            'avatar_url' => 'https://avatars.githubusercontent.com/u/65806779?v=4',
+            'email' => 'gil@gmail.com',
+            'password' => bcrypt('123456'),
+            'is_admin' => false
+        ]);
 
-        Category::factory(60)->create();
+        Category::factory(60)
+                ->create()
+                ->each(function ($category) {
+                    Question::factory(3)
+                            ->create(['category_id' => $category->id])
+                            ->each(function ($question) {
+                                Choice::factory(4)
+                                      ->create([
+                                        'question_id' => $question->id
+                                    ]);
+                            });
+                });
     }
 }
