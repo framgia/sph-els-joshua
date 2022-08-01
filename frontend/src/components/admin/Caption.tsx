@@ -42,6 +42,16 @@ const Caption: React.FC<Props> = (props): JSX.Element => {
               Add
             </button>
           )}
+          {router.pathname.includes('/admin/questions') && (
+            <button 
+              type="button" 
+              className="btn-success"
+              onClick={() => router.push('/admin/questions/create')}
+            >
+              <MdAdd className="mr-1 w-4 h-4" />
+              Add
+            </button>
+          )}
         </div>
       </div>
     </caption>

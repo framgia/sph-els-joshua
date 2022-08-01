@@ -11,7 +11,7 @@ import { classNames } from '~/utils/classNames'
 import { QuestionFormValues } from '~/data/types'
 import { ICategory, IChoice } from '~/data/interfaces'
 
-const Questions: NextPage = (): JSX.Element => {
+const QuestionCreate: NextPage = (): JSX.Element => {
   /**
     * This will partially save your choices data
    */
@@ -181,4 +181,4 @@ const ChooseFields: React.FC<ChooseProps> = (props): JSX.Element => {
   ))
 }
 
-export default Questions
+export default QuestionCreate

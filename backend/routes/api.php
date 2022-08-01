@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\QuestionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -23,4 +24,5 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::middleware(['admin', 'auth'])->group(function () {
     Route::resource('users', UserController::class, ['only' => ['index']]);
     Route::resource('categories', CategoryController::class);
+    Route::resource('questions', QuestionController::class);
 });
