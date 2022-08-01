@@ -39,7 +39,16 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $rules = [
+            'title' => 'required|min:3',
+            'description' => 'required|min:4'
+        ];
+
+        $this->validate($request, $rules);
+
+        $newCategory = Category::create($request->all());
+
+        return $this->showOne($newCategory, 201);
     }
 
     /**
