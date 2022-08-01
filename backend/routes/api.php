@@ -20,6 +20,7 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('users', UserController::class, ['only' => ['index']])->middleware(['admin', 'auth']);
-
-Route::resource('categories', CategoryController::class)->middleware(['admin', 'auth']);
+Route::middleware(['admin', 'auth'])->group(function () {
+    Route::resource('users', UserController::class, ['only' => ['index']]);
+    Route::resource('categories', CategoryController::class);
+});
