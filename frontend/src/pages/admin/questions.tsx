@@ -6,10 +6,10 @@ import { useForm } from 'react-hook-form'
 import { GrFormSubtract } from 'react-icons/gr'
 
 import Layout from '~/layouts/adminLayout'
-import { ICategory, IChoice } from '~/data/interfaces'
 import { categories } from '~/data/categories'
 import { classNames } from '~/utils/classNames'
 import { QuestionFormValues } from '~/data/types'
+import { ICategory, IChoice } from '~/data/interfaces'
 
 const Questions: NextPage = (): JSX.Element => {
   /**
@@ -45,7 +45,7 @@ const Questions: NextPage = (): JSX.Element => {
   /**
     * This will remove dynamic choice field
    */
-  const handleRemoveField = (id: string) => {
+  const handleRemoveField = (id: string): void => {
     const values = [...choices]
     values.splice(
       values.findIndex((value) => value.id === id),
@@ -121,17 +121,17 @@ const Questions: NextPage = (): JSX.Element => {
 type ChooseProps = {
   choices: any
   actions: {
-    handleChangeInput: any
-    handleAddField: any
-    handleRemoveField: any
+    handleChangeInput: (id: string, event: React.ChangeEvent<HTMLInputElement>) => void
+    handleAddField: () => void
+    handleRemoveField: (id: string) => void
   }
 }
 
-const ChooseFields: React.FC<ChooseProps> = (props) => {
+const ChooseFields: React.FC<ChooseProps> = (props): JSX.Element => {
   const { choices, actions } = props
   const {handleChangeInput, handleAddField, handleRemoveField } = actions
 
-  const convertIndexToAlphabet = (num: number) => {
+  const convertIndexToAlphabet = (num: number): string | undefined => {
     let columnLetter = '',
     t;
     while (num > 0) {
@@ -180,6 +180,5 @@ const ChooseFields: React.FC<ChooseProps> = (props) => {
     </div>
   ))
 }
-
 
 export default Questions
