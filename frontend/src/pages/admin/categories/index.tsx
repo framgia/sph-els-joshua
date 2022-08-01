@@ -32,7 +32,7 @@ const Categories: NextPage = (): JSX.Element => {
   const changePage = ({ selected }: { selected: number }): void => setPageNumber(selected)
   
   const handleDelete = async (id: string): Promise<void> => {
-    let result = confirm('Are you sure you want to delete?')
+    const result = confirm('Are you sure you want to delete?')
     if (result) {
       await 
         axios
