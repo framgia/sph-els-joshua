@@ -1,20 +1,38 @@
-import React from 'react'
 import { NextPage } from 'next'
+import React, { useState } from 'react'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 
+import axios from '~/lib/axios'
+import { toast } from 'react-toastify'
+import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
 import { classNames } from '~/utils/classNames'
 import { CategoryFormValues } from '~/data/types'
+import AuthValidationErrors from '~/components/AuthValidationErrors'
 
 const CategoryCreate: NextPage = (): JSX.Element => {
+  const router = useRouter()
+  const [formErrors, setFormErrors]: any[] = useState([])
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors }
   } = useForm<CategoryFormValues>()
 
-  const handleSave = (data: CategoryFormValues) => {
-    alert('Good')
+  const handleSave = async (data: CategoryFormValues): Promise<void> => {
+    await 
+      axios
+        .post('/api/categories', data)
+        .then(() => {
+          toast.success('Added Category Successfully!')
+          router.push('/admin/categories')
+        })
+        .catch(error => {
+          if (error.response.status !== 422) throw error
+          setFormErrors(Object.values(error?.response?.data?.errors).flat())
+        })
   }
 
   return (
@@ -26,12 +44,14 @@ const CategoryCreate: NextPage = (): JSX.Element => {
         )}>
           <form className="p-10" onSubmit={handleSubmit(handleSave)}>
             <h1 className="form-title">Create Category</h1>
+            <AuthValidationErrors className="mt-4" errors={formErrors} setErrors={setFormErrors} />
             <div className="mt-5">
               <label className="form-label">Title *</label>
               <input 
                 type="text" 
                 className="form-control" 
                 placeholder="Title" 
+                disabled={isSubmitting}
                 {...register('title', { required: 'Title is required' })}
                 tabIndex={1}
               />
@@ -43,6 +63,7 @@ const CategoryCreate: NextPage = (): JSX.Element => {
                 rows={8} 
                 className="form-control" 
                 placeholder="Description"
+                disabled={isSubmitting}
                 {...register('description', { required: 'Description is required' })}
                 tabIndex={2}
               >
@@ -53,9 +74,12 @@ const CategoryCreate: NextPage = (): JSX.Element => {
               <button 
                 type="submit" 
                 tabIndex={3}
+                disabled={isSubmitting}
                 className="btn-success px-10 py-3"
               >
-                Save
+                {isSubmitting ? (
+                  <Spinner className="w-5 h-5" />
+                ) : 'Save'}
               </button>
             </div>
           </form>
