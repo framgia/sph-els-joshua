@@ -1,6 +1,7 @@
 import useSWR from 'swr'
 import { NextPage } from 'next'
 import { AxiosResponse } from 'axios'
+import { toast } from 'react-toastify'
 import React, { useState } from 'react'
 
 import axios from '~/lib/axios'
@@ -12,7 +13,7 @@ import CategoryList from '~/components/admin/CategoryList'
 const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
 
 const Categories: NextPage = (): JSX.Element => {
-  const { data: categories } = useSWR('/api/categories', async () => fetcher('/api/categories'), {
+  const { data: categories, mutate } = useSWR('/api/categories', async () => fetcher('/api/categories'), {
     refreshInterval: 1000,
     revalidateOnMount: true
   })
@@ -29,12 +30,29 @@ const Categories: NextPage = (): JSX.Element => {
   const pageCount = Math.ceil(categories?.data?.length / cagoryPerPage)
 
   const changePage = ({ selected }: { selected: number }): void => setPageNumber(selected)
+  
+  const handleDelete = async (id: string): Promise<void> => {
+    let result = confirm('Are you sure you want to delete?')
+    if (result) {
+      await 
+        axios
+          .delete(`/api/categories/${id}`)
+          .then(async () => {
+            await mutate()
+            toast.success('Deleted Successfully!')
+          })
+    }
+  }
 
   return (
     <Layout metaTitle="Categories">
       <main className="pt-4 px-4">
         <section className="overflow-x-auto relative shadow-md sm:rounded-lg">
-          <CategoryList categories={displayCategories} loading={loading} />
+          <CategoryList 
+            categories={displayCategories} 
+            loading={loading} 
+            actions={{ handleDelete }}
+          />
           {!loading && (
             <Pagination 
               length={categories?.length}

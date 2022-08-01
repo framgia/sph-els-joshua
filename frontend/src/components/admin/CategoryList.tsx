@@ -1,23 +1,23 @@
-import moment from 'moment'
-import Link from 'next/link'
 import React, { useState } from 'react'
-import { useRouter } from 'next/router'
-import { AiTwotoneEdit } from 'react-icons/ai'
-import { AiTwotoneDelete } from 'react-icons/ai'
 
 import Caption from './Caption'
 import TableHead from './Tablehead'
+import { Spinner } from '~/utils/Spinner'
+import CategoryItem from './CategoryItem'
 import { classNames } from '~/utils/classNames'
 import { ICategory, IThead } from '~/data/interfaces'
 
 type Props = {
   categories: ICategory[] 
   loading: boolean
+  actions: {
+    handleDelete: (id: string) => void
+  }
 }
 
 const CategoryList: React.FC<Props> = (props): JSX.Element => {
-  const router = useRouter()
-  const { categories, loading } = props
+  const { categories, loading, actions} = props
+  const { handleDelete } = actions
   const [searchedVal, setSearchedVal] = useState<string>('')
   const tHeads: IThead[] = [
     {
@@ -38,58 +38,30 @@ const CategoryList: React.FC<Props> = (props): JSX.Element => {
   ]
 
   return (
-    <table className="table">
+    <table className={classNames(
+      'table max-h-[40vh]',
+      loading ? 'relative min-h-[40vh]' : ''
+    )}>
       <Caption
         title="Categories Table"
         description="List of all categories"
         setSearchedVal={setSearchedVal}
       />
       <TableHead theads={tHeads} />
-      <tbody>
-        {categories?.filter((row: ICategory) =>
+      {loading ? (
+        <div className="absolute insert-0 flex justify-center w-full py-8">
+          <Spinner className="w-8 h-8 text-gray-400" />
+        </div>
+      ) : (
+        <tbody>
+          {categories?.filter((row: ICategory) =>
             !searchedVal?.length || row?.title
               .toString()
               .toLowerCase()
-              .includes(searchedVal.toString().toLowerCase()) 
-            )
-          ?.map((user: ICategory) => (
-          <tr key={user?.id} className="table-tbody-tr">
-            <td className="table-tbody-td">
-              {user?.id}
-            </td>
-            <td className="table-tbody-td font-medium">
-              {user?.title}
-            </td>
-            <td className="table-tbody-td">
-              <span className="line-clamp-2">{user?.description}</span>
-            </td>
-            <td className="table-tbody-td">
-              {moment(user?.created_at).format("MMM Do YY")}
-            </td>
-            <td className="table-tbody-td">
-              <div className={classNames(
-                'inline-flex rounded-md'
-              )} role="group">
-                <Link href={`/admin/categories/update/${user?.id}`}>
-                  <a className={classNames(
-                      'table-tbody-td-btn rounded-l-lg hover:text-yellow-400',
-                      'active:yellow-400'
-                    )}
-                  >
-                    <AiTwotoneEdit className="mr-2 w-4 h-4 fill-current" />
-                  </a>
-                </Link>
-                <button type="button" className={classNames(
-                  'table-tbody-td-btn rounded-r-lg hover:text-red-400',
-                  'active:yellow-400'
-                )}>
-                  <AiTwotoneDelete className="mr-2 w-4 h-4 fill-current" />
-                </button>
-              </div>
-            </td>
-          </tr>
-        ))}
-      </tbody>
+              .includes(searchedVal.toString().toLowerCase()))
+          ?.map((category: ICategory) => <CategoryItem key={category?.id} {...category} actions={{ handleDelete }} />)}
+        </tbody>
+      )}
     </table>
   )
 }
