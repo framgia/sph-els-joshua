@@ -70,7 +70,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
-        //
+        return $this->showOne($category);
     }
 
     /**
@@ -82,7 +82,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //
+        $category->fill($request->only([
+            'title',
+            'description'
+        ]));
+
+        if ($category->isClean()) {
+            return $this->errorResponse('You need to specify any different value to update.', 422);
+        }
+
+        $category->save();
+
+        return $this->showOne($category);
     }
 
     /**
