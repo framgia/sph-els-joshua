@@ -3,7 +3,7 @@ import moment from 'moment'
 import Avatar from './../Avatar'
 import { IUser } from '~/data/interfaces'
 
-const UserItem = ({ id, name, is_admin, email, created_at }: IUser): JSX.Element => {
+const UserItem = ({ id, name, is_admin, email, avatar_url, created_at }: IUser): JSX.Element => {
   return (
     <tr className="table-tbody-tr">
       <td className="table-tbody-td">
@@ -13,7 +13,7 @@ const UserItem = ({ id, name, is_admin, email, created_at }: IUser): JSX.Element
         <Avatar 
           width={32}
           height={32}
-          url={`https://i.pravatar.cc/60?u=${id}`}  // ${avatar_url}
+          url={`${avatar_url}`} 
         />
         <div className="pl-3">
           <div className="text-sm font-semibold">{name}</div>
