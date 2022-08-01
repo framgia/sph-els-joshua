@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
@@ -20,7 +21,7 @@ class UserFactory extends Factory
         return [
             'name' => fake()->unique()->name(),
             'email' => fake()->safeEmail(),
-            'avatar_url' => fake()->unique()->imageUrl(640, 480),
+            'avatar_url' => 'https://i.pravatar.cc/60?u=' . fake()->numberBetween(1,60),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
         ];
