@@ -14,4 +14,5 @@ export type QuestionFormValues = {
   id: string
   value: string
   category_id: number
+  choice_id: number
 }

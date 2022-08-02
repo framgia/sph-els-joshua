@@ -30,6 +30,26 @@ class QuestionController extends Controller
      */
     public function store(Request $request)
     {
-      
+        $categoryRules = [
+            'category_id' => 'required',
+            'value' => 'required'
+        ];
+
+        $this->validate($request, $categoryRules);
+
+        $newQuestion = Question::create($request->all());
+
+        $newChoices[] = '';
+        $choices = $request->input('choices');
+        foreach($choices as $item) 
+        {
+            $newChoices = Choice::create([
+                'question_id' => $newQuestion->id,
+                'value' => $item['value']
+            ]);
+            $newChoices->save();
+        }
+        
+        return $this->showOne($newQuestion, 201);
     }
 }
