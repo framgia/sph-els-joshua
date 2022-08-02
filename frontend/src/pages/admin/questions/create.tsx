@@ -80,12 +80,14 @@ const QuestionCreate: NextPage = (): JSX.Element => {
     * This will Save all the data seelcted
    */
   const handleSave = async (data: QuestionFormValues): Promise<void> => {
+    const { category_id, value, choice_id } = data
+
     await 
       axios
         .post('/api/questions', {
-          category_id: data?.category_id,
-          value: data?.value,
-          choice_id: data?.choice_id,
+          category_id,
+          value,
+          choice_id,
           choices
         })
         .then(() => {
