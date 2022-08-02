@@ -86,7 +86,7 @@ const QuestionCreate: NextPage = (): JSX.Element => {
           category_id: data?.category_id,
           value: data?.value,
           choice_id: data?.choice_id,
-          choices: choices
+          choices
         })
         .then(() => {
           toast.success('Added Question Successfully!')
