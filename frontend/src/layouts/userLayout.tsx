@@ -10,7 +10,7 @@ type Props = {
   metaTitle: string
 }
 
-const Layout: React.FC<Props> = ({ children, metaTitle }) => {
+const Layout: React.FC<Props> = ({ children, metaTitle }): JSX.Element => {
   return (
     <>
       <Head>
