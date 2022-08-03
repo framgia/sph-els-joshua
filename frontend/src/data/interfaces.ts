@@ -40,3 +40,8 @@ export interface IQuestion {
   choice_id: number
   value: string
 }
+
+export interface IHeaderLink {
+  name: string
+  href: string
+}
