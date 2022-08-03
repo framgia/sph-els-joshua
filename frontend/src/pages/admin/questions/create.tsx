@@ -4,10 +4,8 @@ import { v4 as uuidv4 } from 'uuid'
 import { AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
-import { FiPlus } from 'react-icons/fi'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { GrFormSubtract } from 'react-icons/gr'
 
 import axios from '~/lib/axios'
 import { Spinner } from '~/utils/Spinner'
@@ -15,6 +13,7 @@ import Layout from '~/layouts/adminLayout'
 import { classNames } from '~/utils/classNames'
 import { QuestionFormValues } from '~/data/types'
 import { ICategory, IChoice } from '~/data/interfaces'
+import ChooseFields from '~/components/admin/ChooseFields'
 import AuthValidationErrors from '~/components/AuthValidationErrors'
 
 const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
@@ -181,71 +180,6 @@ const QuestionCreate: NextPage = (): JSX.Element => {
       </main>
     </Layout>
   )
-}
-
-type ChooseProps = {
-  choices: any
-  actions: {
-    handleChangeInput: (id: string, event: React.ChangeEvent<HTMLInputElement>) => void
-    handleAddField: () => void
-    handleRemoveField: (id: string) => void
-  }
-  isSubmitting: boolean
-}
-
-const ChooseFields: React.FC<ChooseProps> = (props): JSX.Element => {
-  const { choices, actions, isSubmitting } = props
-  const {handleChangeInput, handleAddField, handleRemoveField } = actions
-
-  const convertIndexToAlphabet = (num: number): string | undefined => {
-    let columnLetter = '',
-    t;
-    while (num > 0) {
-      t = (num - 1) % 26;
-      columnLetter = String.fromCharCode(65 + t) + columnLetter;
-      num = (num - t) / 26 | 0;
-    }
-    return columnLetter || undefined;
-  }
-
-  return choices?.map((choice: IChoice, i: number) => (
-    <div
-      key={choice?.id}
-      className="flex items-center space-x-1 space-y-2">
-      <div className="relative flex items-center flex-1">
-        <div className="absolute flex items-center px-4 pt-2">
-          <span className="font-bold text-green-500 pr-3 border-r">{convertIndexToAlphabet(i+1)}</span>
-        </div>
-        <input
-          type="text"
-          name="value"
-          required
-          disabled={isSubmitting}
-          value={choice?.value}
-          onChange={(event) => handleChangeInput(choice?.id, event)}
-          className="form-control pl-12"
-        />
-      </div>
-      <div className="inline-flex rounded-md shadow-sm" role="group">
-        <button 
-          type="button" 
-          className="btn-default rounded-l-sm"
-          onClick={() => handleRemoveField(choice?.id)}
-          disabled={choices?.length === 1 || isSubmitting}
-        >
-          <GrFormSubtract className="w-5 h-5 text-gray-600" />
-        </button>
-        <button 
-          type="button" 
-          className="btn-default rounded-r-sm"
-          onClick={handleAddField}
-          disabled={choices?.length >= 7 || isSubmitting}
-        >
-          <FiPlus className="w-5 h-5 text-gray-600" />
-        </button>
-      </div>
-    </div>
-  ))
 }
 
 export default QuestionCreate
