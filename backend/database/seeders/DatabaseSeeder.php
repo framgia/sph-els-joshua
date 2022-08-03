@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'is_admin' => false
         ]);
 
-        Category::factory(60)
+        Category::factory(4)
                 ->create()
                 ->each(function ($category) {
                     Question::factory(3)
