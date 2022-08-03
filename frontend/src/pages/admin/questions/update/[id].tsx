@@ -1,55 +1,60 @@
-import useSWR from 'swr'
 import { NextPage } from 'next'
 import { v4 as uuidv4 } from 'uuid'
 import { AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
-import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import React, { useEffect, useState } from 'react'
 
 import axios from '~/lib/axios'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
 import { classNames } from '~/utils/classNames'
 import { QuestionFormValues } from '~/data/types'
-import { ICategory, IChoice } from '~/data/interfaces'
 import ChooseFields from '~/components/admin/ChooseFields'
-import AuthValidationErrors from '~/components/AuthValidationErrors'
+import { ICategory, IChoice, IQuestion } from '~/data/interfaces'
 
 const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
 
-const QuestionCreate: NextPage = (): JSX.Element => {
+const QuestionUpdate: NextPage = (): JSX.Element => {
   const router = useRouter()
-  const [formErrors, setFormErrors]: any[] = useState([])
 
-  const { data: categories } = useSWR('/api/categories', async () => fetcher('/api/categories'), {
-    refreshInterval: 1000,
-    revalidateOnMount: true
-  })
+  const { id } = router.query
+  
+  const [formError, setFormError]: any = useState()
 
+  const [category, setCategory] = useState<ICategory>()
+  const [question, setQuestion] = useState<IQuestion>()
+  const [choices, setChoices] = useState<IChoice[]>([])
 
-  /**
-    * This will partially save your choices data
-   */
-  const [choices, setChoices] = useState<IChoice[]>([
-    {
-      id: uuidv4(),
-      value: ''
+  useEffect(() => {
+    const getQuestionById = async () => {
+      const { category, question } = await fetcher(`/api/questions/${id}`)
+      setCategory(category)
+      setQuestion(question)
+      setChoices(question?.choices)
     }
-  ])
+    getQuestionById()
+  }, [id])
   
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors }
-  } = useForm<QuestionFormValues>()
-
+  } = useForm<QuestionFormValues>({
+    mode: 'onChange',
+    defaultValues: {
+      category_id: question?.category_id,
+      choice_id: question?.choice_id,
+      value: question?.value
+    }
+  })
 
   /**
     * This will handle dynamic input field
-   */
+    */
   const handleChangeInput = (id: string, event: React.ChangeEvent<HTMLInputElement>) => {
-    const newInputFields = choices.map((i: any) => {
+    const newInputFields = choices?.map((i: any) => {
       if (id === i.id) {
         i[event.target.name] = event.target.value
       }
@@ -60,7 +65,7 @@ const QuestionCreate: NextPage = (): JSX.Element => {
 
   /**
     * This will remove dynamic choice field
-   */
+    */
   const handleRemoveField = (id: string): void => {
     const values = [...choices]
     values.splice(
@@ -72,58 +77,52 @@ const QuestionCreate: NextPage = (): JSX.Element => {
 
   /**
     * This will add dynamic choice field
-   */
+    */
   const handleAddField = (): void => setChoices([...choices, { id: uuidv4(), value: '' }])
 
-    /**
-    * This will Save all the data seelcted
-   */
-  const handleSave = async (data: QuestionFormValues): Promise<void> => {
-    const { category_id, value, choice_id } = data
-
+  const handleUpdate = async (data: QuestionFormValues): Promise<void> => {
+    const { value, choice_id } = data
     await 
       axios
-        .post('/api/questions', {
-          category_id,
+        .patch(`/api/questions/${id}`, {
           value,
           choice_id,
           choices
         })
         .then(() => {
-          toast.success('Added Question Successfully!')
+          toast.success('Updated Category Successfully!')
           router.push('/admin/questions')
         })
         .catch(error => {
-          if (error.response.status !== 422) throw error
-          setFormErrors(Object.values(error?.response?.data?.errors).flat())
+          if (error.response.status !== 422) throw EvalError
+          setFormError(Object.values(error?.response?.data?.error).flat())
         })
   }
 
   return (
-    <Layout metaTitle="Questions">
+    <Layout metaTitle="Category Update">
       <main className="pt-4 px-4">
         <section className={classNames(
           'overflow-x-auto relative rounded-2xl shadow-md bg-white',
           'max-w-lg mx-auto border'
         )}>
-          {!categories ? (
-             <div className="py-5 flex flex-col justify-center items-center">
+          {(!category && !question) ? (
+            <div className="py-5 flex flex-col justify-center items-center">
               <Spinner className="w-6 h-6" />
               <p className="mt-2 text-xs">Loading...</p>
             </div>
           ) : (
-            <form className="p-10" onSubmit={handleSubmit(handleSave)}>
-              <h1 className="text-center font-extrabold text-lg text-gray-700">Add Question</h1>
-              <AuthValidationErrors className="mt-4" errors={formErrors} setErrors={setFormErrors} />
+            <form className="p-10" onSubmit={handleSubmit(handleUpdate)}>
+              <h1 className="form-title">Update Question</h1>
               <div className="mt-3">
-                <label className="form-label">Categories *</label>
+                <label className="form-label">Category *</label>
                 <select 
                   className="form-control" 
                   tabIndex={1}
                   disabled={isSubmitting}
                   {...register('category_id', { required: 'Category is required' })}
                 >
-                {categories?.data?.map(({ id, title }: ICategory) => <option key={id} value={id}>{title}</option>)}
+                  <option value={category?.id}>{category?.title}</option>
                 </select>
                 {errors?.category_id && <span className="error">{`${errors?.category_id?.message}`}</span>}
               </div>
@@ -135,6 +134,7 @@ const QuestionCreate: NextPage = (): JSX.Element => {
                   placeholder="Write your question"
                   tabIndex={2}
                   disabled={isSubmitting}
+                  defaultValue={question?.value}
                   {...register('value', { required: 'Question is required' })}
                 />
                 {errors?.value && <span className="error">{`${errors?.value?.message}`}</span>}
@@ -147,7 +147,9 @@ const QuestionCreate: NextPage = (): JSX.Element => {
                   disabled={isSubmitting}
                   {...register('choice_id', { required: 'Right Answer is required'})}
                 >
-                {choices?.map(({ id, value }: IChoice, i: number) => <option key={id} value={i+1}>{value}</option>)}
+                {choices?.map(({ id, value }: IChoice, i: number) => 
+                  <option key={id} value={i+1} selected={question?.choice_id == i+1}>{value}</option>
+                )}
                 </select>
                 {errors?.choice_id && <span className="error">{`${errors?.choice_id?.message}`}</span>}
               </div>
@@ -166,6 +168,7 @@ const QuestionCreate: NextPage = (): JSX.Element => {
               <div className="mt-4 flex justify-end">
                 <button 
                   type="submit" 
+                  tabIndex={3}
                   disabled={isSubmitting}
                   className="btn-success px-10 py-3"
                 >
@@ -182,4 +185,4 @@ const QuestionCreate: NextPage = (): JSX.Element => {
   )
 }
 
-export default QuestionCreate
+export default QuestionUpdate
