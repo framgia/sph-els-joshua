@@ -1,12 +1,12 @@
-import React from 'react'
 import Head from 'next/head'
+import React, { ReactNode } from 'react'
 
 import Header from '~/components/user/Header'
 import Footer from '~/components/admin/Footer'
 import { classNames } from '~/utils/classNames'
 
 type Props = {
-  children: React.ReactNode
+  children: ReactNode
   metaTitle: string
 }
 

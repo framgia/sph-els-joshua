@@ -3,6 +3,7 @@ import React from 'react'
 import Avatar from '~/components/Avatar'
 import Layout from '~/layouts/userLayout'
 import { classNames } from '~/utils/classNames'
+import ActivityList from '~/components/user/ActivityList'
 
 const Profile = (): JSX.Element => {
   return (
@@ -48,30 +49,11 @@ const Profile = (): JSX.Element => {
             <h1 className="font-bold">Activities</h1>
           </div>        
           <div className="pt-2 pb-4 px-6 divide-y space-y-2">
-            {[0,1,2,3,4,5,6,7,8,9,10].map((i) => <ActivityList key={i} />)}
+            <ActivityList activities={[0,1,2,3,4,5,6,7,8,9,10]} />
           </div>
         </section>
       </div>
     </Layout>
-  )
-}
-
-const ActivityList = () => {
-  return (
-    <div className="pt-2 flex items-center space-x-4">
-      <Avatar 
-          url="https://avatars.githubusercontent.com/u/38458781?v=4" 
-          width={40}
-          height={40}
-      />
-      <div className="text-sm">
-        <div className="flex items-center space-x-2">
-          <a href="#" className="link text-orange-500 mr-2 line-clamp-2">You</a> learned 20 of 20 words in 
-          <a href="#" className="link text-orange-500">Basic 500</a>
-        </div>
-        <span className="text-xs font-medium text-gray-600">2 days ago</span>
-      </div>
-    </div>
   )
 }
 
