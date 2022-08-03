@@ -100,4 +100,17 @@ class QuestionController extends Controller
     {
         return $this->showOne($choice);
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Models\Category  $category
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Question $question)
+    {
+        $question->delete();
+        
+        return $this->showOne($question);
+    }
 }

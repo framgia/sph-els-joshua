@@ -1,6 +1,7 @@
 import useSWR from 'swr'
 import { NextPage } from 'next'
 import { AxiosResponse } from 'axios'
+import { toast } from 'react-toastify'
 import React, { useState } from 'react'
 
 import axios from '~/lib/axios'
@@ -12,7 +13,7 @@ import QuestionList from '~/components/admin/QuestionList'
 const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
 
 const Questions: NextPage = (): JSX.Element => {
-  const { data: questions } = useSWR('/api/questions', async () => fetcher('/api/questions'), {
+  const { data: questions, mutate } = useSWR('/api/questions', async () => fetcher('/api/questions'), {
     refreshInterval: 1000,
     revalidateOnMount: true
   })
@@ -30,7 +31,18 @@ const Questions: NextPage = (): JSX.Element => {
 
   const changePage = ({ selected }: { selected: number }): void => setPageNumber(selected)
   
-  const handleDelete = async (id: string): Promise<void> => {}
+  const handleDelete = async (id: string): Promise<void> => {
+    const result = confirm('Are you sure you want to delete?')
+    if (result) {
+      await 
+        axios
+          .delete(`/api/questions/${id}`)
+          .then(async () => {
+            await mutate()
+            toast.success('Deleted Successfully!')
+          })
+    }
+  }
 
   return (
     <Layout metaTitle="Categories">
