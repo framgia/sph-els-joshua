@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
     {
         User::truncate();
 
-        User::factory(60)->create();
+        User::factory(4)->create();
         User::factory()->create([
             'name' => 'Joshua Galit',
             'avatar_url' => 'https://avatars.githubusercontent.com/u/108642414?v=4',
