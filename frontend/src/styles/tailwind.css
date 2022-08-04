@@ -151,4 +151,9 @@
     @apply hover:bg-gray-100 focus:z-20 focus:ring-2 focus:ring-orange-400/50 focus:outline-none;
     @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white;
   }
+
+  /* Radio */
+  .form-radio-button {
+    @apply w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 focus:ring-orange-400;
+  }
 }
