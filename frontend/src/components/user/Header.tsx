@@ -10,7 +10,11 @@ const Header = (): JSX.Element => {
   const router = useRouter()
 
   return (
-    <header className="bg-white border-b shadow-sm">
+    <header className={classNames(
+      'bg-white border-b shadow-sm',
+      router.pathname.includes('/categories/questions') ?
+      'cursor-not-allowed opacity-50' : ''
+    )}>
       <nav className={classNames(
         'max-w-4xl mx-auto px-4 py-4',
         'flex items-center justify-between'
@@ -23,13 +27,21 @@ const Header = (): JSX.Element => {
         <ul className="flex items-centers space-x-4">
           {headerLinks?.map(({ name, href }: IHeaderLink, i: number) => (
             <li key={i}>
-              <Link href={href}>
-                <a className={classNames(
-                  'font-medium text-sm hover:text-orange-500',
+              {router.pathname.includes('/categories/questions') ? (
+                <span className={classNames(
+                  'font-medium text-sm',
                   router.pathname.includes(href) ? 
                   'text-orange-500 font-bold' : ''
-                )}>{name}</a>
-              </Link>
+                )}>{name}</span>
+              ) : (
+                <Link href={href}>
+                  <a className={classNames(
+                    'font-medium text-sm hover:text-orange-500',
+                    router.pathname.includes(href) ? 
+                    'text-orange-500 font-bold' : ''
+                  )}>{name}</a>
+                </Link>
+              )}
             </li>
           ))}
         </ul>
