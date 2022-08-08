@@ -3,10 +3,9 @@ import React, { useState } from 'react'
 import Caption from './Caption'
 import TableHead from './Tablehead'
 import { Spinner } from '~/utils/Spinner'
-import CategoryItem from './CategoryItem'
-import { classNames } from '~/utils/classNames'
-import { ICategory, IQuestion, IThead } from '~/data/interfaces'
 import QuestionItem from './QuestionItem'
+import { classNames } from '~/utils/classNames'
+import { IQuestion, IThead } from '~/data/interfaces'
 
 type Props = {
   questions: IQuestion[] 

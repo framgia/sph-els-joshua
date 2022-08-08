@@ -1,16 +1,13 @@
 import useSWR from 'swr'
 import React from 'react'
-import { AxiosResponse } from 'axios'
 import { MdVerified } from 'react-icons/md'
 
-import axios from '~/lib/axios'
+import { fetcher } from '~/lib/fetcher'
 import Avatar from '~/components/Avatar'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/userLayout'
 import { IUser } from '~/data/interfaces'
 import { classNames } from '~/utils/classNames'
-
-const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
 
 const UserList = (): JSX.Element => {
   const { data: users } = useSWR('/api/user-privilege', async () => fetcher('/api/user-privilege'), {

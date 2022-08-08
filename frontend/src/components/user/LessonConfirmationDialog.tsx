@@ -10,11 +10,11 @@ import { classNames } from '~/utils/classNames'
 type Props = {
   isOpen: boolean
   closeModal: () => void
-  categories: number[]
+  category_id: number
 }
 
 const LessonConfirmationDialog: React.FC<Props> = (props) => {
-  const { isOpen, closeModal, categories } = props
+  const { isOpen, closeModal, category_id } = props
   return (
     <DialogBox isOpen={isOpen} closeModal={closeModal}>
       <Dialog.Panel className={classNames(
@@ -35,7 +35,7 @@ const LessonConfirmationDialog: React.FC<Props> = (props) => {
         </div>
 
         <div className="mt-4 flex justify-end">
-          <Link href={`/categories/questions/${categories}`}>
+          <Link href={`/categories/questions/${category_id}`}>
             <a className="btn-primary inline-flex items-center space-x-2">
               <RiUserSharedLine className="w-4 h-4" />
               <span>Take the quiz</span>

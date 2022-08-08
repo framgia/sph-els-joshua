@@ -1,15 +1,12 @@
 import useSWR from 'swr'
 import { NextPage } from 'next'
-import { AxiosResponse } from 'axios'
 import React, { useState } from 'react'
 
-import axios from '~/lib/axios'
+import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/adminLayout'
 import UserList from '~/components/admin/UserList'
 import Pagination from '~/components/admin/Pagination'
 import { adminProtected } from '~/utils/admin-protected'
-
-const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
 
 const Users: NextPage = (): JSX.Element => {
   const { data: users } = useSWR('/api/users', async () => fetcher('/api/users'), {
