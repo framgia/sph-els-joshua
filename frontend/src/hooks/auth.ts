@@ -1,8 +1,8 @@
 import useSWR from 'swr'
 import { useEffect } from 'react'
+import { AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
-import { AxiosResponse } from 'axios'
 
 import axios from '~/lib/axios'
 

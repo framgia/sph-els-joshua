@@ -1,27 +1,30 @@
-import Link from 'next/link'
 import React, { useState } from 'react'
 
+import { ICategory } from '~/data/interfaces'
+import { classNames } from '~/utils/classNames'
 import LessonConfirmationDialog from './LessonConfirmationDialog'
 
 type Props = {
-  i: number
+  category: ICategory
 }
 
-const CategoryCard: React.FC<Props> = ({ i }): JSX.Element => {
+const CategoryCard: React.FC<Props> = ({ category }): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false)
 
   const closeModal = () => setIsOpen(false)
-
   const openModal = () => setIsOpen(true)
 
   return (
-    <div className="bg-white rounded-lg shadow-md border">
-      <div className="px-5 py-5">
-          <div className="space-y-3">
-            <h5 className="text-lg font-semibold tracking-tight text-gray-900">Basic 500</h5>
-            <p className="text-sm line-clamp-6">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusamus possimus ab cum ipsam non eum perferendis adipisci qui impedit, modi quaerat sed. Necessitatibus nostrum quo sit provident esse sapiente perspiciatis! Lorem ipsum, dolor sit amet consectetur adipisicing elit. Ea culpa at cum nisi quod est odio voluptate quo, possimus non quas nostrum quibusdam! Odio blanditiis, architecto magni ea itaque totam.</p>
+    <div className={classNames(
+      'bg-white rounded-lg shadow-sm border hover:shadow-xl',
+      'transition ease-in-out duration-200'
+    )}>
+      <div className="flex flex-col justify-between px-5 py-5">
+          <div className="space-y-3 min-h-[160px]">
+            <h5 className="text-lg font-semibold tracking-tight">{category?.title}</h5>
+            <p className="text-sm line-clamp-6">{category?.description}</p>
           </div>
-          <div className="mt-3 flex justify-end items-center">
+          <div className="mt-3 flex justify-end">
             <button 
               type="button"
               onClick={openModal}
@@ -31,7 +34,7 @@ const CategoryCard: React.FC<Props> = ({ i }): JSX.Element => {
             <LessonConfirmationDialog 
               isOpen={isOpen}
               closeModal={closeModal}
-              categories={[i]}
+              category_id={category?.id}
             />
           </div>
       </div>

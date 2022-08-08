@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\User\UserPrivilegeController;
+use App\Http\Controllers\User\CategoryPrivilegeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,4 +31,5 @@ Route::middleware(['admin', 'auth'])->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('user-privilege', UserPrivilegeController::class, ['only' => ['index']]);
+    Route::resource('category-privilege', CategoryPrivilegeController::class, ['only' => ['index']]);
 });

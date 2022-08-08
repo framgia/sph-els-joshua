@@ -16,7 +16,10 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::all();
+        $users = User::latest()
+                    ->orderBy('id', 'desc')
+                    ->get();
+                    
         return $this->showAll($users);        
     }
 }

@@ -19,7 +19,10 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        $questions = Question::all();
+        $questions = Question::latest()
+                        ->orderBy('id', 'desc')
+                        ->get();
+
         return $this->showAll($questions);
     }
 

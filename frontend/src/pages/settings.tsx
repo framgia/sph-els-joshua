@@ -2,7 +2,6 @@ import React from 'react'
 
 import Avatar from '~/components/Avatar'
 import Layout from '~/layouts/userLayout'
-import { classNames } from '~/utils/classNames'
 
 type Props = {
   children: React.ReactNode
