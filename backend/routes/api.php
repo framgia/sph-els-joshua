@@ -30,6 +30,6 @@ Route::middleware(['admin', 'auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('user-privilege', UserPrivilegeController::class, ['only' => ['index']]);
+    Route::resource('user-privilege', UserPrivilegeController::class, ['only' => ['index', 'show']]);
     Route::resource('category-privilege', CategoryPrivilegeController::class, ['only' => ['index']]);
 });

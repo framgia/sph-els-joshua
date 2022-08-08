@@ -1,16 +1,20 @@
+import React from 'react'
+
 import Avatar from './../Avatar'
+import { IUser } from '~/data/interfaces'
 
 type Props = {
   activities: number[]
+  user: IUser
 }
 
-const ActivityList: React.FC<Props> = ({ activities }): JSX.Element => {
+const ActivityList: React.FC<Props> = ({ activities, user }): JSX.Element => {
   return (
     <>
       {activities?.map((i) => (
         <div key={i} className="pt-2 flex items-center space-x-4">
           <Avatar 
-            url="https://avatars.githubusercontent.com/u/38458781?v=4" 
+            url={`${user ? user?.avatar_url : `https://i.pravatar.cc/60`}`}
             width={40}
             height={40}
           />
