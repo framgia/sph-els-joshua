@@ -23,7 +23,6 @@ class UserChangePasswordController extends Controller
 
         $user = User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
         
-        // return $this->showOne($user);
         return response()->json([
             'data' => $user
         ]);
