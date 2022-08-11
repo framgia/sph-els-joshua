@@ -17,7 +17,7 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
         <div className="flex flex-col items-center pb-3">
             <div className="inline-flex rounded-full shadow-lg">
               <Avatar 
-                url={`${user?.avatar_url}`}
+                url={`${user ? user?.avatar_url : 'https://i.stack.imgur.com/l60Hf.png'}`}
                 width={112}
                 height={112}
               />
