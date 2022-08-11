@@ -45,6 +45,20 @@ class UserPrivilegeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::findOrFail($id);
+        
+        $user->fill($request->only([
+            'name',
+            'email'
+        ]));
+
+        if ($user->isClean()) {
+            return $this->errorResponse('You need to specify any different details to update.', 422);
+        }
+
+        $user->save();
+
+        return $this->showOne($user);
     }
+    
 }

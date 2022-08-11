@@ -26,6 +26,8 @@ export const useAuth = (props: any) => {
         if (error.response.status !== 409) throw console.log(error?.response?.statusText)
         router.push('/verify-email')
       }), {
+        refreshInterval: 1000,
+        revalidateOnMount: true,
         revalidateIfStale: false,
         revalidateOnFocus: false,
         revalidateOnReconnect: false
@@ -42,8 +44,8 @@ export const useAuth = (props: any) => {
     await 
       axios
         .post('/register', props)
-        .then(() => {
-          mutate()
+        .then(async () => {
+          await mutate()
           toast.success('Successfully Register!')
         })
         .catch(error => {

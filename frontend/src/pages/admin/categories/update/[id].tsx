@@ -1,8 +1,6 @@
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
-import { TiInfo } from 'react-icons/ti'
 import { useForm } from 'react-hook-form'
-import { IoClose } from 'react-icons/io5'
 import React, { useEffect, useState } from 'react'
 
 import axios from '~/lib/axios'
@@ -13,6 +11,7 @@ import Layout from '~/layouts/adminLayout'
 import { ICategory } from '~/data/interfaces'
 import { classNames } from '~/utils/classNames'
 import { CategoryFormValues } from '~/data/types'
+import ValidationError from '~/components/user/ValidationError'
 
 const CategoryUpdate: NextPage = (): JSX.Element => {
   const router = useRouter()
@@ -115,41 +114,6 @@ const CategoryUpdate: NextPage = (): JSX.Element => {
         </section>
       </main>
     </Layout>
-  )
-}
-
-type ValidationProps = {
-  error: string
-  className?: string
-  setFormError: () => any
-}
-
-const ValidationError: React.FC<ValidationProps> = ({ className, error, setFormError }) => {
-  const handleClose = (): void => setFormError()
-  return (
-    <>
-      {error && (
-        <div 
-          className={classNames(
-            'flex p-4 mb-4 bg-red-100 border-t-4',
-            'border-red-500 dark:bg-red-200',
-            `${className}`
-          )} 
-          role="alert"
-        >
-            <TiInfo className="flex-shrink-0 w-5 h-5 text-red-700" />
-            <p className="ml-3 text-sm font-medium text-red-700">{error}</p>
-            <button 
-              type="button" 
-              onClick={handleClose}
-              className="btn-dismiss"  
-            >
-              <span className="sr-only">Dismiss</span>
-              <IoClose className="w-5 h-5" />
-            </button>
-        </div>
-      )}
-    </>
   )
 }
 

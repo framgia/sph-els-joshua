@@ -2,11 +2,9 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 
 import { fetcher } from '~/lib/fetcher'
-import Avatar from '~/components/Avatar'
 import Layout from '~/layouts/userLayout'
 import { IUser } from '~/data/interfaces'
 import { Spinner } from '~/utils/Spinner'
-import { classNames } from '~/utils/classNames'
 import ActivityList from '~/components/user/ActivityList'
 import ProfileCard from '~/components/user/ProfileCard'
 
@@ -25,7 +23,7 @@ const UserProfile = (): JSX.Element => {
   }, [id])
 
   return (
-    <Layout metaTitle={`${user?.name}`}>
+    <Layout metaTitle={`${user ? user?.name : ''}`}>
       <div className="flex pt-5 space-x-4 overflow-hidden">
         {!user ? (
           <div className="flex justify-center w-full py-8">

@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\User\UserPrivilegeController;
 use App\Http\Controllers\User\CategoryPrivilegeController;
+use App\Http\Controllers\User\UserChangePasswordController;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +31,7 @@ Route::middleware(['admin', 'auth'])->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('user-privilege', UserPrivilegeController::class, ['only' => ['index', 'show']]);
+    Route::resource('user-privilege', UserPrivilegeController::class, ['only' => ['index', 'show', 'update']]);
+    Route::resource('user-change-password', UserChangePasswordController::class, ['only' => ['update']]);
     Route::resource('category-privilege', CategoryPrivilegeController::class, ['only' => ['index']]);
 });
