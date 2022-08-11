@@ -16,3 +16,14 @@ export type QuestionFormValues = {
   category_id: number
   choice_id: number
 }
+
+export type UserDetailsFormValues = {
+  name: string
+  email: string
+}
+
+export type UserChangePasswordFormValues = {
+  current_password: string
+  new_password: string
+  confirm_password: string
+}

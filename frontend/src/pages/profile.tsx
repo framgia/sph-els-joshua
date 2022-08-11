@@ -3,16 +3,16 @@ import React from 'react'
 import { useAuth } from '~/hooks/auth'
 import Layout from '~/layouts/userLayout'
 import { Spinner } from '~/utils/Spinner'
-import ActivityList from '~/components/user/ActivityList'
 import ProfileCard from '~/components/user/ProfileCard'
+import ActivityList from '~/components/user/ActivityList'
 
 const Profile = (): JSX.Element => {
   const { user } = useAuth({
-    middleware: 'admin'
+    middleware: 'auth'
   })
 
   return (
-    <Layout metaTitle="Profile">
+    <Layout metaTitle={`${user ? user?.name : 'Profile'}`}>
       <div className="flex pt-5 space-x-4 overflow-hidden">
         {!user ? (
             <div className="flex justify-center w-full py-8">
