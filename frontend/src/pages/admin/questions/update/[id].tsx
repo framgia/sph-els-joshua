@@ -1,20 +1,18 @@
 import { NextPage } from 'next'
 import { v4 as uuidv4 } from 'uuid'
-import { AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import React, { useEffect, useState } from 'react'
 
 import axios from '~/lib/axios'
+import { fetcher } from '~/lib/fetcher'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
 import { classNames } from '~/utils/classNames'
 import { QuestionFormValues } from '~/data/types'
 import ChooseFields from '~/components/admin/ChooseFields'
 import { ICategory, IChoice, IQuestion } from '~/data/interfaces'
-
-const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
 
 const QuestionUpdate: NextPage = (): JSX.Element => {
   const router = useRouter()

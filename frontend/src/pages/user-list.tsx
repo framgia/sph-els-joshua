@@ -1,5 +1,6 @@
 import useSWR from 'swr'
 import React from 'react'
+import Link from 'next/link'
 import { MdVerified } from 'react-icons/md'
 
 import { fetcher } from '~/lib/fetcher'
@@ -24,7 +25,7 @@ const UserList = (): JSX.Element => {
           </div>
         ) : (
           <>
-            {users?.data?.map(({ name, email, avatar_url }: IUser, i: number) => (
+            {users?.data?.map(({ id, name, email, avatar_url }: IUser, i: number) => (
               <li 
                 key={i}
                 className={classNames(
@@ -39,17 +40,23 @@ const UserList = (): JSX.Element => {
                   )}
                 >
                   <div className="relative rounded-full overflow-hidden">
-                    <Avatar
-                      url={`${avatar_url}`} 
-                      width={32}
-                      height={32}
-                    />
+                    <Link href={`/profile/${id}`}>
+                      <a className="link text-gray-900 flex flex-row items-center space-x-1">
+                        <Avatar
+                          url={`${avatar_url}`} 
+                          width={32}
+                          height={32}
+                        />
+                      </a>
+                    </Link>
                   </div>
                   <div className="flex flex-col">
-                    <div className="flex flex-row items-center space-x-1">
-                      <span className="text-sm font-bold capitalize">{name}</span>
-                      <MdVerified className="w-4 h-4 text-[#20d5ec]" />
-                    </div>
+                    <Link href={`/profile/${id}`}>
+                      <a className="link text-gray-900 flex flex-row items-center space-x-1">
+                        <span className="text-sm font-bold capitalize">{name}</span>
+                        <MdVerified className="w-4 h-4 text-[#20d5ec]" />
+                      </a>
+                    </Link>
                       <h1 className={classNames(
                         'text-xs font-medium text-left',
                         'text-gray-600 lowercase'

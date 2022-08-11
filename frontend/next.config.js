@@ -8,7 +8,8 @@ const nextConfig = {
   images: {
     domains: [
       'i.pravatar.cc',
-      'avatars.githubusercontent.com'
+      'avatars.githubusercontent.com',
+      'i.stack.imgur.com'
     ]
   }
 }

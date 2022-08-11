@@ -1,5 +1,4 @@
 import { NextPage } from 'next'
-import { AxiosResponse } from 'axios'
 import { useRouter } from 'next/router'
 import { TiInfo } from 'react-icons/ti'
 import { useForm } from 'react-hook-form'
@@ -8,13 +7,12 @@ import React, { useEffect, useState } from 'react'
 
 import axios from '~/lib/axios'
 import { toast } from 'react-toastify'
+import { fetcher } from '~/lib/fetcher'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
 import { ICategory } from '~/data/interfaces'
 import { classNames } from '~/utils/classNames'
 import { CategoryFormValues } from '~/data/types'
-
-const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
 
 const CategoryUpdate: NextPage = (): JSX.Element => {
   const router = useRouter()
