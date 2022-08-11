@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
+use App\Models\UserRelationship;
 use Illuminate\Support\Facades\Auth;
 
 class UserPrivilegeController extends Controller
@@ -18,9 +20,11 @@ class UserPrivilegeController extends Controller
      */
     public function index()
     {
-        $users = User::where('id', '!=', Auth::user()->id)
+        $users = User::with(['following', 'followers'])
+                    ->where('id', '!=', Auth::user()->id)
                     ->orderBy('id', 'desc')
                     ->get();
+
         return $this->showAll($users);
     }
 
@@ -32,7 +36,7 @@ class UserPrivilegeController extends Controller
      */
     public function show($id)
     {
-        $user  = User::findOrFail($id);
+        $user  = User::with(['following', 'followers'])->findOrFail($id);
         return $this->showOne($user);
     }
 
