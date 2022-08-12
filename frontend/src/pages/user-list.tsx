@@ -1,17 +1,26 @@
 import useSWR from 'swr'
-import React from 'react'
 import Link from 'next/link'
+import React, { useState } from 'react'
 import { MdVerified } from 'react-icons/md'
 
+import { useAuth } from '~/hooks/auth'
 import { fetcher } from '~/lib/fetcher'
 import Avatar from '~/components/Avatar'
+import { IUser } from '~/data/interfaces'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/userLayout'
-import { IUser } from '~/data/interfaces'
+import { useFollow } from '~/helpers/follow'
 import { classNames } from '~/utils/classNames'
 
 const UserList = (): JSX.Element => {
-  const { data: users } = useSWR('/api/user-privilege', async () => fetcher('/api/user-privilege'), {
+  const [loading, setLoading] = useState<boolean>(false)
+  
+  const { followStatus, handleFollow } = useFollow()
+  const { user: author } = useAuth({
+    middleware: 'auth'
+  })
+  
+  const { data: users, mutate } = useSWR('/api/user-privilege', async () => fetcher('/api/user-privilege'), {
     refreshInterval: 1000,
     revalidateOnMount: true
   })
@@ -19,13 +28,13 @@ const UserList = (): JSX.Element => {
   return (
     <Layout metaTitle="Accounts">
       <ul className="mt-3 divide-y divide-gray-100">
-        {!users ? (
+        {(!users && author) ? (
           <div className="flex justify-center w-full py-8">
             <Spinner className="w-6 h-6 text-orange-500" />
           </div>
         ) : (
           <>
-            {users?.data?.map(({ id, name, email, avatar_url }: IUser, i: number) => (
+            {users?.data?.map((user: IUser, i: number) => (
               <li 
                 key={i}
                 className={classNames(
@@ -40,10 +49,10 @@ const UserList = (): JSX.Element => {
                   )}
                 >
                   <div className="relative rounded-full overflow-hidden">
-                    <Link href={`/profile/${id}`}>
+                    <Link href={`/profile/${user?.id}`}>
                       <a className="link text-gray-900 flex flex-row items-center space-x-1">
                         <Avatar
-                          url={`${avatar_url}`} 
+                          url={`${user?.avatar_url}`} 
                           width={32}
                           height={32}
                         />
@@ -51,26 +60,28 @@ const UserList = (): JSX.Element => {
                     </Link>
                   </div>
                   <div className="flex flex-col">
-                    <Link href={`/profile/${id}`}>
+                    <Link href={`/profile/${user?.id}`}>
                       <a className="link text-gray-900 flex flex-row items-center space-x-1">
-                        <span className="text-sm font-bold capitalize">{name}</span>
+                        <span className="text-sm font-bold capitalize">{user?.name}</span>
                         <MdVerified className="w-4 h-4 text-[#20d5ec]" />
                       </a>
                     </Link>
                       <h1 className={classNames(
                         'text-xs font-medium text-left',
                         'text-gray-600 lowercase'
-                      )}>{email}</h1>
+                      )}>{user?.email}</h1>
                   </div>
                 </div>
                 <button 
-                  type="button" 
+                  type="submit" 
+                  disabled={loading}
                   className={classNames(
                     'btn-default rounded-full px-5 py-1',
                     'font-semibold text-xs'
                   )}
+                  onClick={() => handleFollow({ user, author, mutate, setLoading })}
                 >
-                  Follow
+                  {followStatus({ user, author })}
                 </button>
               </li>
             ))}

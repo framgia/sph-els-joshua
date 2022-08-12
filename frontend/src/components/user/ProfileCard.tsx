@@ -1,15 +1,26 @@
-import React from 'react'
+import { KeyedMutator } from 'swr'
+import React, { useState } from 'react'
 
 import Avatar from '../Avatar'
+import { useAuth } from '~/hooks/auth'
 import { IUser } from '~/data/interfaces'
+import { useFollow } from '~/helpers/follow'
 import { classNames } from '~/utils/classNames'
 
 type Props = {
   user: IUser
+  mutate: KeyedMutator<any>
+  isAuthor: boolean
 }
 
 const ProfileCard: React.FC<Props> = (props): JSX.Element => {
-  const { user } = props
+  const { user, mutate, isAuthor } = props
+  const [loading, setLoading] = useState<boolean>(false)
+  
+  const { followStatus, handleFollow } = useFollow()
+  const { user: author } = useAuth({
+    middleware: 'auth'
+  })
 
   return (
     <section className="w-1/2 min-h-[20vh]">
@@ -25,21 +36,25 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
             <h5 className="mt-3 text-xl font-medium text-gray-900 pb-3">{user?.name}</h5>
             <div className="flex items-center space-x-8 border-t pt-4">
               <div className="flex items-center flex-col space-y-2">
-                <p className="text-xs font-bold">50</p>
+                <p className="text-xs font-bold">{user?.followers?.length}</p>
                 <span className="text-xs font-medium">Followers</span>
               </div>
               <div className="flex items-center flex-col space-y-2">
-                <p className="text-xs font-bold">20</p>
+                <p className="text-xs font-bold">{user?.following?.length}</p>
                 <span className="text-xs font-medium">Following</span>
               </div>
             </div>
             <div className="flex flex-col py-5">
-              <button 
-                type="button"
-                className="btn-default rounded-full px-12 py-1"
-              >
-                Follow
-              </button>
+              {!isAuthor && (
+                <button 
+                  type="submit"
+                  disabled={loading}
+                  onClick={() => handleFollow({ user, author, mutate, setLoading })}
+                  className="btn-default rounded-full px-12 py-1"
+                >
+                  {followStatus({ user, author })}
+                </button>
+              )}
               <a href="#" className={classNames(
                 'link font-semibold text-xs text-center mt-5'
               )}>Learned 20 words</a>

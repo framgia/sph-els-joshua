@@ -6,7 +6,13 @@ import { classNames } from '~/utils/classNames'
 import { IHeaderLink } from '~/data/interfaces'
 import { headerLinks } from '~/data/headerLinks'
 
-const Header = (): JSX.Element => {
+type Props = {
+  actions: {
+    logout: () => void
+  }
+}
+
+const Header: React.FC<Props> = ({ actions: { logout } }): JSX.Element => {
   const router = useRouter()
 
   return (
@@ -44,6 +50,13 @@ const Header = (): JSX.Element => {
               )}
             </li>
           ))}
+          <button
+            type="button"
+            className="text-sm font-medium hover:text-orange-500"
+            onClick={(logout)}
+          >
+            Logout
+          </button>
         </ul>
       </nav>
     </header>

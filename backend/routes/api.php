@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\User\FollowController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\User\UserPrivilegeController;
@@ -34,4 +35,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user-privilege', UserPrivilegeController::class, ['only' => ['index', 'show', 'update']]);
     Route::resource('user-change-password', UserChangePasswordController::class, ['only' => ['update']]);
     Route::resource('category-privilege', CategoryPrivilegeController::class, ['only' => ['index']]);
+    Route::resource('follows', FollowController::class, ['only' => ['store', 'update']]);
 });

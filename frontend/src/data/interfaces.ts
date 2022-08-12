@@ -6,7 +6,7 @@ export interface ISidebar {
   href: string
 }
 
-export interface IUser {
+export interface IUser extends IUserRelationship {
   id: number
   name: string
   avatar_url?: string
@@ -44,4 +44,25 @@ export interface IQuestion {
 export interface IHeaderLink {
   name: string
   href: string
+}
+
+export interface IFollow {
+  id?: number
+  follower_id: number
+  following_id: number
+}
+
+export interface IUserRelationship extends IFollow {
+  followers?: IFollower[]
+  following?: IFollowing[]
+}
+
+export interface IFollower {
+  id: number
+  follower_id: number
+}
+
+export interface IFollowing {
+  id: number
+  following_id: number
 }

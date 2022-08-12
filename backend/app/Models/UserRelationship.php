@@ -9,6 +9,11 @@ class UserRelationship extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'follower_id',
+        'following_id'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
