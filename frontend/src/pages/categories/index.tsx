@@ -5,6 +5,7 @@ import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/userLayout'
 import { Spinner } from '~/utils/Spinner'
 import { ICategory } from '~/data/interfaces'
+import { authProtected } from '~/utils/auth-protected'
 import CategoryCard from '~/components/user/CategoryCard'
 
 const Categories = (): JSX.Element => {
@@ -30,4 +31,4 @@ const Categories = (): JSX.Element => {
   )
 }
 
-export default Categories
+export default authProtected(Categories)

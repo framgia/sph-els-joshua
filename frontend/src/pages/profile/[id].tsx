@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/userLayout'
 import { Spinner } from '~/utils/Spinner'
+import { authProtected } from '~/utils/auth-protected'
 import ProfileCard from '~/components/user/ProfileCard'
 import ActivityList from '~/components/user/ActivityList'
 
@@ -50,4 +51,4 @@ const UserProfile: NextPage = (): JSX.Element => {
   )
 }
 
-export default UserProfile
+export default authProtected(UserProfile)
