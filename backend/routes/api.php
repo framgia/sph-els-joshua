@@ -35,5 +35,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('user-privilege', UserPrivilegeController::class, ['only' => ['index', 'show', 'update']]);
     Route::resource('user-change-password', UserChangePasswordController::class, ['only' => ['update']]);
     Route::resource('category-privilege', CategoryPrivilegeController::class, ['only' => ['index']]);
-    Route::resource('follow', FollowController::class, ['only' => ['store', 'update']]);
+    Route::resource('follows', FollowController::class, ['only' => ['store', 'update']]);
 });

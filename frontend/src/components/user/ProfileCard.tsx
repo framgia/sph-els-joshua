@@ -1,60 +1,26 @@
-import { useSWRConfig } from 'swr'
-import { toast } from 'react-toastify'
+import { KeyedMutator } from 'swr'
 import React, { useState } from 'react'
 
 import Avatar from '../Avatar'
-import axios from '~/lib/axios'
 import { useAuth } from '~/hooks/auth'
 import { IUser } from '~/data/interfaces'
+import { useFollow } from '~/helpers/follow'
 import { classNames } from '~/utils/classNames'
 
 type Props = {
   user: IUser
-  mutate: any
+  mutate: KeyedMutator<any>
   isAuthor: boolean
 }
 
 const ProfileCard: React.FC<Props> = (props): JSX.Element => {
   const { user, mutate, isAuthor } = props
   const [loading, setLoading] = useState<boolean>(false)
-
+  
+  const { followStatus, handleFollow } = useFollow()
   const { user: author } = useAuth({
     middleware: 'auth'
   })
-
-  const userFollowStatus = (user: IUser): string => {
-    const current_id = user?.followers?.map(({ id }) => id)
-    return current_id == author?.id ? 'Unfollow' : 'Follow'
-  }
-
-  const handleFollow = async (user: IUser): Promise<void> => {
-    setLoading(true)
-    const current_id = user?.followers?.map(({ id }) => id)
-
-    if (current_id == author?.id) {
-      // UNFOLLOW
-      return await 
-              axios
-                .patch(`/api/follow/${user?.id}`, { following_id: user?.id })
-                .then(async () => {
-                  await mutate()
-                  toast.success(`You unfollow ${user?.name}`)
-                })
-                .finally(() => setLoading(false))
-    } else {
-      // FOLLOW
-      return await 
-              axios
-                .post('/api/follow', {
-                  following_id: user?.id
-                })
-                .then(async () => {
-                  await mutate()
-                  toast.success(`You follow ${user?.name}`)
-                })
-                .finally(() => setLoading(false))
-    }
-  }
 
   return (
     <section className="w-1/2 min-h-[20vh]">
@@ -83,10 +49,10 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
                 <button 
                   type="submit"
                   disabled={loading}
-                  onClick={() => handleFollow(user)}
+                  onClick={() => handleFollow({ user, author, mutate, setLoading })}
                   className="btn-default rounded-full px-12 py-1"
                 >
-                  {userFollowStatus(user)}
+                  {followStatus({ user, author })}
                 </button>
               )}
               <a href="#" className={classNames(

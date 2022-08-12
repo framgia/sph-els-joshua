@@ -1,21 +1,21 @@
 import useSWR from 'swr'
 import Link from 'next/link'
-import { toast } from 'react-toastify'
 import React, { useState } from 'react'
 import { MdVerified } from 'react-icons/md'
 
-import axios from '~/lib/axios'
 import { useAuth } from '~/hooks/auth'
 import { fetcher } from '~/lib/fetcher'
 import Avatar from '~/components/Avatar'
 import { IUser } from '~/data/interfaces'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/userLayout'
+import { useFollow } from '~/helpers/follow'
 import { classNames } from '~/utils/classNames'
 
 const UserList = (): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false)
-
+  
+  const { followStatus, handleFollow } = useFollow()
   const { user: author } = useAuth({
     middleware: 'auth'
   })
@@ -24,40 +24,6 @@ const UserList = (): JSX.Element => {
     refreshInterval: 1000,
     revalidateOnMount: true
   })
-
-  const handleFollow = async (user: IUser): Promise<void> => {
-    setLoading(true)
-    const current_id = user?.followers?.map(({ id }) => id)
-
-    if (current_id == author?.id) {
-      // UNFOLLOW
-      return await 
-              axios
-                .patch(`/api/follow/${user?.id}`, { following_id: user?.id })
-                .then(async () =>{
-                  await mutate()
-                  toast.success(`You unfollow ${user?.name}`)
-                })
-                .finally(() => setLoading(false))
-    } else {
-      // FOLLOW
-      return await 
-              axios
-                .post('/api/follow', {
-                  following_id: user?.id
-                })
-                .then(async () => {
-                  await mutate()
-                  toast.success(`You follow ${user?.name}`)
-                })
-                .finally(() => setLoading(false))
-    }
-  }
-
-  const userFollowStatus = (user: IUser): string => {
-    const current_id = user?.followers?.map(({ id }) => id)
-    return current_id == author?.id ? 'Unfollow' : 'Follow'
-  }
 
   return (
     <Layout metaTitle="Accounts">
@@ -113,9 +79,9 @@ const UserList = (): JSX.Element => {
                     'btn-default rounded-full px-5 py-1',
                     'font-semibold text-xs'
                   )}
-                  onClick={() => handleFollow(user)}
+                  onClick={() => handleFollow({ user, author, mutate, setLoading })}
                 >
-                  {userFollowStatus(user)}
+                  {followStatus({ user, author })}
                 </button>
               </li>
             ))}
