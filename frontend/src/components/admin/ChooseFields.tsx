@@ -2,6 +2,7 @@ import { FiPlus } from 'react-icons/fi'
 import { GrFormSubtract } from 'react-icons/gr'
 
 import { IChoice } from '~/data/interfaces'
+import { convertIndexToAlphabet } from '~/utils/convertIndexToAlphabet'
 
 type ChooseProps = {
   choices: any
@@ -16,17 +17,6 @@ type ChooseProps = {
 const ChooseFields: React.FC<ChooseProps> = (props): JSX.Element => {
   const { choices, actions, isSubmitting } = props
   const {handleChangeInput, handleAddField, handleRemoveField } = actions
-
-  const convertIndexToAlphabet = (num: number): string | undefined => {
-    let columnLetter = '',
-    t;
-    while (num > 0) {
-      t = (num - 1) % 26;
-      columnLetter = String.fromCharCode(65 + t) + columnLetter;
-      num = (num - t) / 26 | 0;
-    }
-    return columnLetter || undefined;
-  }
 
   return choices?.map((choice: IChoice, i: number) => (
     <div

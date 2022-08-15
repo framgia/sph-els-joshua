@@ -30,7 +30,7 @@ const Header: React.FC<Props> = ({ actions: { logout } }): JSX.Element => {
             'font-semibold text-lg text-gray-900'
           )}>Sun<span className="text-orange-500">*</span> ELearning App</h1>
         </div>
-        <ul className="flex items-centers space-x-4">
+        <ul className="flex items-center space-x-4">
           {headerLinks?.map(({ name, href }: IHeaderLink, i: number) => (
             <li key={i}>
               {router.pathname.includes('/categories/questions') ? (
@@ -50,13 +50,20 @@ const Header: React.FC<Props> = ({ actions: { logout } }): JSX.Element => {
               )}
             </li>
           ))}
-          <button
-            type="button"
-            className="text-sm font-medium hover:text-orange-500"
-            onClick={(logout)}
-          >
-            Logout
-          </button>
+           {router.pathname.includes('/categories/questions') ? (
+            <span className="text-sm font-medium">
+              Logout
+            </span>
+           ) : (
+           
+            <button
+              type="button"
+              className="text-sm font-medium hover:text-orange-500"
+              onClick={(logout)}
+            >
+              Logout
+            </button>
+           )}
         </ul>
       </nav>
     </header>

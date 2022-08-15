@@ -1,5 +1,6 @@
 import useSWR from 'swr'
 import Link from 'next/link'
+import { NextPage } from 'next'
 import React, { useState } from 'react'
 import { MdVerified } from 'react-icons/md'
 
@@ -13,7 +14,7 @@ import { useFollow } from '~/helpers/follow'
 import { classNames } from '~/utils/classNames'
 import { authProtected } from '~/utils/auth-protected'
 
-const UserList = (): JSX.Element => {
+const UserList: NextPage = (): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false)
   
   const { followStatus, handleFollow } = useFollow()
