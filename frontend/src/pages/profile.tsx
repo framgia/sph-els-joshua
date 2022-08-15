@@ -1,16 +1,16 @@
 import useSWR from 'swr'
 import React from 'react'
+import { NextPage } from 'next'
 
 import { useAuth } from '~/hooks/auth'
 import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/userLayout'
-import { IUser } from '~/data/interfaces'
 import { Spinner } from '~/utils/Spinner'
 import { authProtected } from '~/utils/auth-protected'
 import ProfileCard from '~/components/user/ProfileCard'
 import ActivityList from '~/components/user/ActivityList'
 
-const Profile = (): JSX.Element => {
+const Profile: NextPage = (): JSX.Element => {
   const { user: author } = useAuth({
     middleware: 'auth'
   })

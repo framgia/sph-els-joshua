@@ -1,4 +1,5 @@
 import React from 'react'
+import { NextPage } from 'next'
 
 import { useAuth } from '~/hooks/auth'
 import Avatar from '~/components/Avatar'
@@ -12,7 +13,7 @@ type Props = {
   children: React.ReactNode
 }
 
-const Settings = (): JSX.Element => {
+const Settings: NextPage = (): JSX.Element => {
   const { user } = useAuth({
     middleware: 'auth'
   })

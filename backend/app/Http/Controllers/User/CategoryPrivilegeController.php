@@ -4,9 +4,7 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
-use App\Models\Question;
 use App\Traits\ApiResponser;
-use Illuminate\Http\Request;
 
 class CategoryPrivilegeController extends Controller
 {
@@ -18,7 +16,7 @@ class CategoryPrivilegeController extends Controller
      */
     public function index()
     {
-        $categories = Category::latest()
+        $categories = Category::with(['lessons'])
                             ->orderBy('id', 'desc')
                             ->get();
                             
