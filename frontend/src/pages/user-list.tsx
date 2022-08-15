@@ -11,6 +11,7 @@ import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/userLayout'
 import { useFollow } from '~/helpers/follow'
 import { classNames } from '~/utils/classNames'
+import { authProtected } from '~/utils/auth-protected'
 
 const UserList = (): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false)
@@ -93,4 +94,4 @@ const UserList = (): JSX.Element => {
 }
 
 
-export default UserList
+export default authProtected(UserList)

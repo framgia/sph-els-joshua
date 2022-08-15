@@ -4,6 +4,7 @@ import { useAuth } from '~/hooks/auth'
 import Avatar from '~/components/Avatar'
 import Layout from '~/layouts/userLayout'
 import { Spinner } from '~/utils/Spinner'
+import { authProtected } from '~/utils/auth-protected'
 import UserDetailsForm from '~/components/user/UserDetailsForm'
 import UserChangePasswordForm from '~/components/user/UserChangePasswordForm'
 
@@ -65,4 +66,4 @@ const Title = ({ children }: Props) => <h5 className="text-xl font-bold text-gra
 
 const Card = ({ children }: Props) => <div className="mt-2 bg-white rounded-lg border border-gray-200 p-6">{children}</div>
 
-export default Settings
+export default authProtected(Settings)

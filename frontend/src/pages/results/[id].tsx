@@ -6,6 +6,7 @@ import { BsFillCheckCircleFill } from 'react-icons/bs'
 import { results } from '~/data/results'
 import Layout from '~/layouts/userLayout'
 import { classNames } from '~/utils/classNames'
+import { authProtected } from '~/utils/auth-protected'
 
 const Results = (): JSX.Element => {
   const router = useRouter()
@@ -44,4 +45,4 @@ const Results = (): JSX.Element => {
 }
 
 
-export default Results
+export default authProtected(Results)

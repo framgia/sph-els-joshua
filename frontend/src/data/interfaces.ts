@@ -66,3 +66,7 @@ export interface IFollowing {
   id: number
   following_id: number
 }
+
+export interface ICategoryQuestion extends IQuestion {
+  choices: IChoice[]
+}
