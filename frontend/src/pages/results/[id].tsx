@@ -75,4 +75,4 @@ const Results: NextPage = (): JSX.Element => {
   )
 }
 
-export default Results
+export default authProtected(Results)

@@ -33,14 +33,15 @@ const UserProfile: NextPage = (): JSX.Element => {
               mutate={mutate} 
               isAuthor={false} 
             />
-            <section className="w-full max-h-[60vh] overflow-hidden overflow-y-auto shadow-sm border rounded-lg">
+            <section className="w-full overflow-hidden shadow-sm border rounded-lg">
               <div className="py-4 px-6 border-b">
                 <h1 className="font-bold">Activities</h1>
               </div>        
-              <div className="pt-2 pb-4 px-6 divide-y space-y-2">
+              <div className="pt-2 pb-4 px-6 divide-y space-y-2 max-h-[50vh] overflow-y-auto">
                 <ActivityList 
+                  activities={user?.activities} 
                   user={user?.data} 
-                  activities={[0,1,2,3,4,5,6,7,8,9,10]} 
+                  isAuthor={false}
                 />
               </div>
             </section>

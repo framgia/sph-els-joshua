@@ -54,7 +54,7 @@ const UserList: NextPage = (): JSX.Element => {
                     <Link href={`/profile/${user?.id}`}>
                       <a className="link text-gray-900 flex flex-row items-center space-x-1">
                         <Avatar
-                          url={`${user?.avatar_url}`} 
+                          url={`${user?.avatar_url === null ? 'https://i.stack.imgur.com/l60Hf.png' : user?.avatar_url}`} 
                           width={32}
                           height={32}
                         />

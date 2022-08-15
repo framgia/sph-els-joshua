@@ -17,7 +17,7 @@ const CategoryCard: React.FC<Props> = ({ category, author }): JSX.Element => {
 
   const get_author_lessons = category?.lessons?.map(({ user_id }: ILesson) => user_id === author?.id)
 
-  const is_already_taken = get_author_lessons?.filter(value => value)
+  const is_already_taken: any = get_author_lessons?.filter(value => value)
 
   return (
     <div className={classNames(

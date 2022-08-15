@@ -1,32 +1,67 @@
 import React from 'react'
+import moment from 'moment'
+import Link from 'next/link'
 
 import Avatar from './../Avatar'
-import { IUser } from '~/data/interfaces'
+import { IAnswer, IUser } from '~/data/interfaces'
 
 type Props = {
-  activities: number[]
+  activities: any[]
   user: IUser
+  isAuthor: boolean
 }
 
-const ActivityList: React.FC<Props> = ({ activities, user }): JSX.Element => {
+const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Element => {
   return (
     <>
-      {activities?.map((i) => (
-        <div key={i} className="pt-2 flex items-center space-x-4">
-          <Avatar 
-            url={`${user ? user?.avatar_url : `https://i.pravatar.cc/60`}`}
-            width={40}
-            height={40}
-          />
-          <div className="text-sm">
-            <div className="flex items-center space-x-2">
-              <a href="#" className="link text-orange-500 mr-2 line-clamp-2">You</a> learned 20 of 20 words in 
-              <a href="#" className="link text-orange-500">Basic 500</a>
-            </div>
-            <span className="text-xs font-medium text-gray-600">2 days ago</span>
-          </div>
+      {activities?.length === 0 ? (
+        <div className="pt-2 ">
+          <p className="text-sm text-gray-500">No activities yet.</p>
         </div>
-      ))}
+      ) : (
+        <>
+          {activities?.map((activity, i: number) => {
+            const getCountCorrectAnswer = activity?.lessons?.answers?.filter((answer: IAnswer) => answer?.choice_id === answer?.question?.choice_id).length
+            const getQuestionCount = activity?.lessons?.answers?.length
+            const questions = activity?.lessons?.answers?.map((answer: IAnswer) => answer?.question)
+            const getCategoryTitle = questions?.map((cat: any) => cat?.category?.title)
+
+            return (
+              <div key={i} className="pt-2 flex items-center space-x-4">
+                <Avatar 
+                  url={`${user?.avatar_url === null ? 'https://i.stack.imgur.com/l60Hf.png' : user?.avatar_url}`}
+                  width={40}
+                  height={40}
+                />
+                <div className="text-sm">
+                  <div className="flex items-center space-x-2">
+                    <a href="#" className="link text-orange-500 mr-2 line-clamp-2">
+                      {isAuthor ? 'You' : user?.name}
+                    </a> 
+                    {activity?.following_user ? 'followed' : 'learned'} 
+                    {activity?.following_user && (
+                      <Link href={`/profile/${activity?.following_user?.id}`}>
+                        <a className="link text-orange-500">
+                          {activity?.following_user?.name}
+                        </a>
+                      </Link>
+                    )}
+                    {activity?.lessons && (
+                      <div className="flex">
+                        <span>{`${getCountCorrectAnswer} of ${getQuestionCount} words in `}</span>
+                        <a href="#" className="ml-2 text-orange-500 link">
+                          {getCategoryTitle[0]}
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                  <span className="text-xs font-medium text-gray-600">{moment(activity?.created_at).fromNow()}</span>
+                </div>
+              </div>
+            )
+          })}
+        </>
+      )}
     </>
   )
 }

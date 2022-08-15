@@ -22,7 +22,7 @@ const Header: React.FC<Props> = ({ actions: { logout } }): JSX.Element => {
       'cursor-not-allowed opacity-50' : ''
     )}>
       <nav className={classNames(
-        'max-w-4xl mx-auto px-4 py-4',
+        'max-w-4xl mx-auto px-4 py-4 flex-wrap',
         'flex items-center justify-between'
       )}>
         <div>
