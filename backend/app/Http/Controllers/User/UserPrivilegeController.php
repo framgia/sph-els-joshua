@@ -6,8 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\UserRelationship;
+use App\Models\Lesson;
 use Illuminate\Support\Facades\Auth;
 
 class UserPrivilegeController extends Controller
@@ -36,8 +35,43 @@ class UserPrivilegeController extends Controller
      */
     public function show($id)
     {
-        $user  = User::with(['following', 'followers'])->findOrFail($id);
-        return $this->showOne($user);
+        $user  = User::with([
+            'following', 
+            'followers',
+            'activity_logs'
+        ])->findOrFail($id);
+
+        $activities = [];
+        foreach($user->activity_logs as $key => $value)
+        {
+            if ($value['activity_type'] === 'Follow')
+            {
+                $following_user = User::find($value->activity_id);
+                $activities[] = [
+                    'following_user' => $following_user,
+                    'created_at' => $value->created_at
+                ];
+            }
+            if ($value['activity_type'] === 'Lesson')
+            {
+                $user_lesson = Lesson::with([
+                    'answers' => [
+                        'question' => [
+                            'category'
+                        ]
+                    ]
+                ])->find($value->activity_id);
+                $activities[] = [
+                    'lessons' => $user_lesson,
+                    'created_at' => $value->created_at
+                ];
+            }
+        }
+
+        return response()->json([
+            'data' => $user,
+            'activities' => $activities
+        ]);
     }
 
     /**

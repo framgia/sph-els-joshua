@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\User;
 use App\Models\UserRelationship;
-use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FollowController extends Controller
 {
-    use ApiResponser;
     /**
      * Store a newly created resource in storage.
      *
@@ -24,11 +23,21 @@ class FollowController extends Controller
             'follower_id' => Auth::user()->id,
             'following_id' => $request->following_id
         ]);
-        return $this->showOne($follow, 201);
+
+        $activity_logs = ActivityLog::create([
+            'user_id' => Auth::user()->id,
+            'activity_id' => $follow->following_id,
+            'activity_type' => 'Follow'
+        ]);
+
+        return response()->json([
+            'data' => $follow,
+            'activity_logs' => $activity_logs
+        ]);
     }
 
 
-    public function update(Request $request, User $user)
+    public function update(Request $request)
     {
         $following_id = $request->input('following_id');
         $user_relationships = UserRelationship::all();
@@ -40,7 +49,20 @@ class FollowController extends Controller
                 $item->delete();
             }
         }
+
+        $activity_logs = ActivityLog::all();
+
+        foreach($activity_logs as $item) 
+        {
+            if ($item['user_id'] == Auth::user()->id && $item['activity_id'] == $following_id) 
+            {
+                $item->delete();
+            }
+        }
         
-        return $this->showOne($user);
+        return response()->json([
+            'user_relationships' => $user_relationships,
+            'activity_logs' => $activity_logs
+        ]);
     }
 }

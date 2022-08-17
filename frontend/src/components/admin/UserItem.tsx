@@ -4,6 +4,8 @@ import Avatar from './../Avatar'
 import { IUser } from '~/data/interfaces'
 
 const UserItem = ({ id, name, is_admin, email, avatar_url, created_at }: IUser): JSX.Element => {
+  const defaultAvatar = 'https://i.stack.imgur.com/l60Hf.png'
+
   return (
     <tr className="table-tbody-tr">
       <td className="table-tbody-td">
@@ -13,7 +15,7 @@ const UserItem = ({ id, name, is_admin, email, avatar_url, created_at }: IUser):
         <Avatar 
           width={32}
           height={32}
-          url={`${avatar_url}`} 
+          url={`${avatar_url === null ? defaultAvatar : avatar_url}`} 
         />
         <div className="pl-3">
           <div className="text-sm font-semibold">{name}</div>

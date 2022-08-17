@@ -22,13 +22,15 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
     middleware: 'auth'
   })
 
+  const defaultAvatar = 'https://i.stack.imgur.com/l60Hf.png'
+
   return (
     <section className="w-1/2 min-h-[20vh]">
       <div className="max-w-sm bg-white shadow-sm border rounded-lg py-6">
         <div className="flex flex-col items-center pb-3">
             <div className="inline-flex rounded-full shadow-lg">
               <Avatar 
-                url={`${user ? user?.avatar_url : 'https://i.stack.imgur.com/l60Hf.png'}`}
+                url={`${user.avatar_url === null ? defaultAvatar : user?.avatar_url}`}
                 width={112}
                 height={112}
               />
@@ -37,15 +39,15 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
             <div className="flex items-center space-x-8 border-t pt-4">
               <div className="flex items-center flex-col space-y-2">
                 <p className="text-xs font-bold">{user?.followers?.length}</p>
-                <span className="text-xs font-medium">Followers</span>
+                <a href="#" className="text-xs text-black font-medium link">Followers</a>
               </div>
               <div className="flex items-center flex-col space-y-2">
                 <p className="text-xs font-bold">{user?.following?.length}</p>
-                <span className="text-xs font-medium">Following</span>
+                <a href="#" className="text-xs text-black font-medium link">Following</a>
               </div>
             </div>
             <div className="flex flex-col py-5">
-              {!isAuthor && (
+              {(!isAuthor && user?.id !== author?.id) && (
                 <button 
                   type="submit"
                   disabled={loading}
@@ -55,9 +57,11 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
                   {followStatus({ user, author })}
                 </button>
               )}
-              <a href="#" className={classNames(
-                'link font-semibold text-xs text-center mt-5'
-              )}>Learned 20 words</a>
+              {(isAuthor || user?.id == author?.id) && (
+                <a href="#" className={classNames(
+                  'link font-semibold text-xs text-center mt-5'
+                )}>Learned 20 words</a>
+              )}
             </div>
         </div>
       </div>

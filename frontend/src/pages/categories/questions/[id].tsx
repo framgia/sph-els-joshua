@@ -11,7 +11,7 @@ import Layout from '~/layouts/userLayout'
 import { Spinner } from '~/utils/Spinner'
 import { authProtected } from '~/utils/auth-protected'
 import { ICategoryQuestion, IChoice } from '~/data/interfaces'
-import { convertIndexToAlphabet } from '~/utils/convertIndexToAlphabet'
+import { convertIndexToAlphabet } from '~/helpers/convertIndexToAlphabet'
 
 const CategoryQuestions: NextPage = (): JSX.Element => {
   const router = useRouter()
@@ -48,8 +48,8 @@ const CategoryQuestions: NextPage = (): JSX.Element => {
         }
 
         const answers = {
-          right_anwer: data?.right_answer,
-          your_answer: data?.your_answer
+          rightAnswer: data?.right_answer,
+          yourAnswer: data?.your_answer
         }
 
         await 

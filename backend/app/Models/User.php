@@ -43,12 +43,12 @@ class User extends Authenticatable
 
     public function lessons()
     {
-        return $this->hasMany(Lesson::class);
+        return $this->hasMany(Lesson::class)->orderBy('id', 'desc');
     }
 
     public function activity_logs()
     {
-        return $this->hasMany(ActivityLog::class);
+        return $this->hasMany(ActivityLog::class)->orderBy('id', 'desc');
     }
 
     public function following() {

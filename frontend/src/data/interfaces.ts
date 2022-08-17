@@ -23,7 +23,7 @@ export interface ICategory {
   description: string
   created_at?: string
   updated_at?: string
-  lessons: ILesson[]
+  lessons?: ILesson[]
 }
 
 export interface IThead {
@@ -72,10 +72,11 @@ export interface ICategoryQuestion extends IQuestion {
   choices: IChoice[]
 }
 
-export interface ILesson extends IAnswer {
+export interface ILesson {
   id: number
   user_id: number
   category_id: number
+  answers: IAnswer[]
 }
 
 export interface IAnswer {
@@ -84,4 +85,17 @@ export interface IAnswer {
   choice_id: number
   is_correct: boolean
   question: IQuestion
+}
+
+export interface IActivity {
+  user_id: number
+  activity_id: number
+  activity_type: string
+  created_at: string
+}
+
+export interface ILessonAndFollow {
+  following_user?: IUser
+  lessons?: ILesson
+  created_at?: string
 }

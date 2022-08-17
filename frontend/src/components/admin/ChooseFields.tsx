@@ -2,7 +2,7 @@ import { FiPlus } from 'react-icons/fi'
 import { GrFormSubtract } from 'react-icons/gr'
 
 import { IChoice } from '~/data/interfaces'
-import { convertIndexToAlphabet } from '~/utils/convertIndexToAlphabet'
+import { convertIndexToAlphabet } from '~/helpers/convertIndexToAlphabet'
 
 type ChooseProps = {
   choices: any

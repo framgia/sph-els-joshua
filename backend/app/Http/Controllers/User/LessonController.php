@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Models\ActivityLog;
 use App\Models\Lesson;
 use App\Models\Answer;
 use App\Models\Category;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LessonController extends Controller
 {
@@ -22,7 +24,7 @@ class LessonController extends Controller
 
         $temp = [];
         $new_answers = [];
-        foreach($answers['your_answer'] as $key => $value) 
+        foreach($answers['yourAnswer'] as $key => $value) 
         {
             if ($value) 
             {
@@ -35,9 +37,16 @@ class LessonController extends Controller
 
         $answer_results = Answer::insert($new_answers);
 
+        $activity_logs = ActivityLog::create([
+            'user_id' => Auth::user()->id,
+            'activity_id' => $new_lesson->id,
+            'activity_type' => 'Lesson'
+        ]);
+
         return response()->json([
             'lessons' => $new_lesson,
-            'answers' => $answer_results
+            'answers' => $answer_results,
+            'activity_logs' => $activity_logs
         ]);
     }
 
