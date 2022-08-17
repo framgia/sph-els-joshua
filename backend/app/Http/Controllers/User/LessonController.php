@@ -31,19 +31,6 @@ class LessonController extends Controller
                 $temp['lesson_id'] = $new_lesson->id;
                 $temp['question_id'] = $key;
                 $temp['choice_id'] = $value;
-
-                // foreach($answers['right_answer'] as $key2 => $value2)
-                // {
-                //     if ($value == $value2)
-                //     {
-                //         $temp['is_correct'] = true;
-                //     }
-                //     else
-                //     {
-                //         $temp['is_correct'] = false;
-                //     }
-                // }
-
                 $new_answers[] = $temp;
             }
         }

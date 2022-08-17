@@ -12,24 +12,26 @@ type Props = {
 }
 
 const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Element => {
+  const default_avatar = 'https://i.stack.imgur.com/l60Hf.png'
+
   return (
     <>
-      {activities?.length === 0 ? (
+      {!activities?.length ? (
         <div className="pt-2 ">
           <p className="text-sm text-gray-500">No activities yet.</p>
         </div>
       ) : (
         <>
           {activities?.map((activity, i: number) => {
-            const getCountCorrectAnswer = activity?.lessons?.answers?.filter((answer: IAnswer) => answer?.choice_id === answer?.question?.choice_id).length
-            const getQuestionCount = activity?.lessons?.answers?.length
-            const questions = activity?.lessons?.answers?.map((answer: IAnswer) => answer?.question)
+            const getCountCorrectAnswer = activity.lessons?.answers?.filter((answer: IAnswer) => answer?.choice_id === answer?.question?.choice_id).length
+            const getQuestionCount = activity.lessons?.answers?.length
+            const questions = activity.lessons?.answers?.map((answer: IAnswer) => answer?.question)
             const getCategoryTitle = questions?.map((cat: any) => cat?.category?.title)
 
             return (
               <div key={i} className="pt-2 flex items-center space-x-4">
                 <Avatar 
-                  url={`${user?.avatar_url === null ? 'https://i.stack.imgur.com/l60Hf.png' : user?.avatar_url}`}
+                  url={`${user.avatar_url === null ? default_avatar : user?.avatar_url}`}
                   width={40}
                   height={40}
                 />
@@ -38,15 +40,15 @@ const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Elem
                     <a href="#" className="link text-orange-500 mr-2 line-clamp-2">
                       {isAuthor ? 'You' : user?.name}
                     </a> 
-                    {activity?.following_user ? 'followed' : 'learned'} 
-                    {activity?.following_user && (
-                      <Link href={`/profile/${activity?.following_user?.id}`}>
+                    {activity.following_user ? 'followed' : 'learned'} 
+                    {activity.following_user && (
+                      <Link href={`/profile/${activity.following_user.id}`}>
                         <a className="link text-orange-500">
-                          {activity?.following_user?.name}
+                          {activity.following_user.name}
                         </a>
                       </Link>
                     )}
-                    {activity?.lessons && (
+                    {activity.lessons && (
                       <div className="flex">
                         <span>{`${getCountCorrectAnswer} of ${getQuestionCount} words in `}</span>
                         <a href="#" className="ml-2 text-orange-500 link">
@@ -55,7 +57,7 @@ const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Elem
                       </div>
                     )}
                   </div>
-                  <span className="text-xs font-medium text-gray-600">{moment(activity?.created_at).fromNow()}</span>
+                  <span className="text-xs font-medium text-gray-600">{moment(activity.created_at).fromNow()}</span>
                 </div>
               </div>
             )

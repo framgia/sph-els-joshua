@@ -22,13 +22,15 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
     middleware: 'auth'
   })
 
+  const default_avatar = 'https://i.stack.imgur.com/l60Hf.png'
+
   return (
     <section className="w-1/2 min-h-[20vh]">
       <div className="max-w-sm bg-white shadow-sm border rounded-lg py-6">
         <div className="flex flex-col items-center pb-3">
             <div className="inline-flex rounded-full shadow-lg">
               <Avatar 
-                url={`${user?.avatar_url === null ? 'https://i.stack.imgur.com/l60Hf.png' : user?.avatar_url}`}
+                url={`${user.avatar_url === null ? default_avatar : user?.avatar_url}`}
                 width={112}
                 height={112}
               />
