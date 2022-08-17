@@ -14,7 +14,7 @@ const Index: NextPage = (): JSX.Element => {
 
   const { login, register } = useAuth({
     middleware: 'guest',
-    redirectIfAuthenticated: '/profile',
+    redirectIfAuthenticated: '/dashboard',
   })
 
   const handleSwitchForm = (): void => setIsLoginPage((isLoginPage = !isLoginPage))

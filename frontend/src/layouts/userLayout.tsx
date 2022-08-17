@@ -12,7 +12,7 @@ type Props = {
 }
 
 const Layout: React.FC<Props> = ({ children, metaTitle }): JSX.Element => {
-  const { logout } = useAuth({
+  const { user, logout } = useAuth({
     middleware: 'auth'
   })
 
@@ -21,7 +21,7 @@ const Layout: React.FC<Props> = ({ children, metaTitle }): JSX.Element => {
       <Head>
         <title>ELearning | {metaTitle}</title>
       </Head>
-      <Header actions={{ logout }} />
+      <Header user={user} actions={{ logout }}  />
       <main  className={classNames(
         'max-w-4xl mx-auto px-4 py-4 min-h-[70vh]'
       )}>

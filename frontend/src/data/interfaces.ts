@@ -76,6 +76,7 @@ export interface ILesson {
   id: number
   user_id: number
   category_id: number
+  created_at?: string
   answers: IAnswer[]
 }
 

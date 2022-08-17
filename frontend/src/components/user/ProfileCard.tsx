@@ -5,7 +5,6 @@ import Avatar from '../Avatar'
 import { useAuth } from '~/hooks/auth'
 import { IUser } from '~/data/interfaces'
 import { useFollow } from '~/helpers/follow'
-import { classNames } from '~/utils/classNames'
 
 type Props = {
   user: IUser
@@ -25,8 +24,8 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
   const defaultAvatar = 'https://i.stack.imgur.com/l60Hf.png'
 
   return (
-    <section className="w-1/2 min-h-[20vh]">
-      <div className="max-w-sm bg-white shadow-sm border rounded-lg py-6">
+    <section className="w-full md:w-1/2 min-h-[20vh]">
+      <div className="w-full md:max-w-sm bg-white shadow-sm border rounded-lg py-6">
         <div className="flex flex-col items-center pb-3">
             <div className="inline-flex rounded-full shadow-lg">
               <Avatar 
@@ -56,11 +55,6 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
                 >
                   {followStatus({ user, author })}
                 </button>
-              )}
-              {(isAuthor || user?.id == author?.id) && (
-                <a href="#" className={classNames(
-                  'link font-semibold text-xs text-center mt-5'
-                )}>Learned 20 words</a>
               )}
             </div>
         </div>

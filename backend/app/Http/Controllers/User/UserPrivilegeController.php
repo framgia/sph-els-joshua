@@ -38,6 +38,13 @@ class UserPrivilegeController extends Controller
         $user  = User::with([
             'following', 
             'followers',
+            'lessons' => [
+                'answers' => [
+                    'question' => [
+                        'category'
+                    ]
+                ]
+            ],
             'activity_logs'
         ])->findOrFail($id);
 

@@ -6,6 +6,7 @@ import { useAuth } from '~/hooks/auth'
 import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/userLayout'
 import { Spinner } from '~/utils/Spinner'
+import { classNames } from '~/utils/classNames'
 import { authProtected } from '~/utils/auth-protected'
 import ProfileCard from '~/components/user/ProfileCard'
 import ActivityList from '~/components/user/ActivityList'
@@ -22,7 +23,10 @@ const Profile: NextPage = (): JSX.Element => {
 
   return (
     <Layout metaTitle={`${user ? user?.data?.name : 'Profile'}`}> 
-      <div className="flex pt-5 space-x-4 overflow-hidden">
+      <div className={classNames(
+        'flex flex-col md:flex-row space-y-4 md:space-y-0',
+        'md:space-x-4 overflow-hidden pt-5'
+      )}>
         {!user ? (
             <div className="flex justify-center w-full py-8">
               <Spinner className="w-6 h-6 text-orange-500" />

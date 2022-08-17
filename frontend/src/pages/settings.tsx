@@ -25,12 +25,12 @@ const Settings: NextPage = (): JSX.Element => {
           <Spinner className="w-6 h-6 text-orange-500" />
         </div>
       ) : (
-        <div className="mt-6 flex space-x-4 overflow-hidden">
-          <div className="mt-2 w-1/2 min-h-[20vh]">
+        <div className="mt-6 flex flex-col md:flex-row space-x-4 overflow-hidden">
+          <div className="mt-2 w-full md:w-1/2 min-h-[20vh]">
             <div className="flex flex-col items-center pb-3">
               <div className="inline-flex rounded-full shadow-lg">
                 <Avatar 
-                  url={`${user?.avatar_url}`}
+                  url={`${user?.avatar_url === null ? 'https://i.stack.imgur.com/l60Hf.png' : user?.avatar_url}`}
                   width={150}
                   height={150}
                 />

@@ -50,10 +50,12 @@ const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Elem
                     )}
                     {activity.lessons && (
                       <div className="flex">
-                        <span>{`${getCountCorrectAnswer} of ${getQuestionCount} words in `}</span>
-                        <a href="#" className="ml-2 text-orange-500 link">
-                          {getCategoryTitle[0]}
-                        </a>
+                        <span>{`${getCountCorrectAnswer} of ${getQuestionCount} in `}</span>
+                        <Link href={`/results/${activity?.lessons?.id}`}>
+                          <a className="ml-2 text-orange-500 link">
+                            {getCategoryTitle[0]}
+                          </a>
+                        </Link>
                       </div>
                     )}
                   </div>
