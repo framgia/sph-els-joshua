@@ -12,7 +12,7 @@ type Props = {
 }
 
 const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Element => {
-  const default_avatar = 'https://i.stack.imgur.com/l60Hf.png'
+  const defaultAvatar = 'https://i.stack.imgur.com/l60Hf.png'
 
   return (
     <>
@@ -31,7 +31,7 @@ const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Elem
             return (
               <div key={i} className="pt-2 flex items-center space-x-4">
                 <Avatar 
-                  url={`${user.avatar_url === null ? default_avatar : user?.avatar_url}`}
+                  url={`${user.avatar_url === null ? defaultAvatar : user?.avatar_url}`}
                   width={40}
                   height={40}
                 />

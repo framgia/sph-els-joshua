@@ -24,7 +24,7 @@ class LessonController extends Controller
 
         $temp = [];
         $new_answers = [];
-        foreach($answers['your_answer'] as $key => $value) 
+        foreach($answers['yourAnswer'] as $key => $value) 
         {
             if ($value) 
             {

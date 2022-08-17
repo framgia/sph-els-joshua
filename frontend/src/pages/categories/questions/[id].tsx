@@ -48,8 +48,8 @@ const CategoryQuestions: NextPage = (): JSX.Element => {
         }
 
         const answers = {
-          right_answer: data?.right_answer,
-          your_answer: data?.your_answer
+          rightAnswer: data?.right_answer,
+          yourAnswer: data?.your_answer
         }
 
         await 
