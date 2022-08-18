@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect }from 'react'
+import createPersistedState from 'use-persisted-state'
 
 import { useAuth } from '~/hooks/auth'
 import Header from '~/components/admin/Header'
@@ -14,16 +15,17 @@ type Props = {
 }
 
 const Layout: React.FC<Props> = (props) => {
-  const { metaTitle, children } = props
-  const [isOpen, setIsOpen] = useState<boolean>(true)
-
   const router = useRouter()
+  const { metaTitle, children } = props
+
+  const useToggleState = createPersistedState('toggle')
+  const [isOpen, setIsOpen] = useToggleState(true)
 
   const { user: admin, logout } = useAuth({
     middleware: 'admin'
   })
 
-  const handleOpen = (): void => setIsOpen(prev => prev = !prev)
+  const handleOpen = (): void => setIsOpen((prev: boolean) => prev = !prev)
   
   useEffect(() => {
     const isAuthenticatedAdmin = async () => {

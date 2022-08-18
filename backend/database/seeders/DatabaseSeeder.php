@@ -17,17 +17,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        User::factory(4)->create();
+        User::factory(4)->create([
+            'avatar_url' => 'storage/images/default-avatar.png'
+        ]);
         User::factory()->create([
             'name' => 'Joshua Galit',
-            'avatar_url' => 'https://avatars.githubusercontent.com/u/108642414?v=4',
+            'avatar_url' => 'storage/images/default-avatar.png',
             'email' => 'joshuaimalay@gmail.com',
             'password' => bcrypt('123456'),
             'is_admin' => true
         ]);
         User::factory()->create([
             'name' => 'Gilchrist Calunia',
-            'avatar_url' => 'https://avatars.githubusercontent.com/u/65806779?v=4',
+            'avatar_url' => 'storage/images/default-avatar.png',
             'email' => 'gil@gmail.com',
             'password' => bcrypt('123456'),
             'is_admin' => false

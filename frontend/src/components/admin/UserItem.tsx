@@ -1,10 +1,14 @@
 import moment from 'moment'
 
 import Avatar from './../Avatar'
-import { IUser } from '~/data/interfaces'
+import { defaultAvatar } from '~/utils/defaultAvatar'
 
-const UserItem = ({ id, name, is_admin, email, avatar_url, created_at }: IUser): JSX.Element => {
-  const defaultAvatar = 'https://i.stack.imgur.com/l60Hf.png'
+type Props = {
+  [user: string]: any
+}
+
+const UserItem: React.FC<Props> = (props): JSX.Element => {
+  const { id, name, is_admin, email, avatar_url, created_at } = props
 
   return (
     <tr className="table-tbody-tr">
