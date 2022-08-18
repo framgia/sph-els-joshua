@@ -103,7 +103,7 @@ const Dashboard: NextPage = (): JSX.Element => {
                     </div>
                   ) : (
                     <>
-                      {user?.activities.length === 0 ? (
+                      {!user?.activities.length ? (
                         <p className="text-sm text-gray-500">No activities yet.</p>
                       ) : <DashboardList activities={user?.activities} /> }
                     </>

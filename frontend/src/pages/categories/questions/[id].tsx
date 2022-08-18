@@ -44,7 +44,7 @@ const CategoryQuestions: NextPage = (): JSX.Element => {
 
         const lessons = {
           user_id: author?.id,
-          category_id: categoryQuestions?.id
+          category_id: id
         }
 
         const answers = {

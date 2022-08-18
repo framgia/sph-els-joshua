@@ -22,7 +22,7 @@ export const useFollow = () => {
     const { user, author } = props
     const current_id: any = user?.followers?.map(({ id }) => id)
     const filtered_user = current_id.filter((user_id: number) => user_id === author?.id) 
-    return filtered_user.length === 0 ? 'Follow' : 'Unfollow'
+    return !filtered_user.length ? 'Follow' : 'Unfollow'
   }
 
   const handleFollow = async (props: HandleFollowProps): Promise<void> => {
@@ -32,7 +32,7 @@ export const useFollow = () => {
     const current_id: any = user?.followers?.map(({ id }) => id)
     const filtered_user = current_id.filter((user_id: number) => user_id === author?.id) 
   
-    if (filtered_user.length !== 0) {
+    if (!!filtered_user.length) {
       // UNFOLLOW
       return await 
               axios
