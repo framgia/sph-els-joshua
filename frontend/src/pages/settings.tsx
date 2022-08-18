@@ -38,10 +38,7 @@ const Settings: NextPage = (): JSX.Element => {
     await 
       axios
         .post('/api/upload-avatar', form)
-        .then((res) => {
-          console.log(res?.data)
-          toast.success('Updated Profile Successfully!')
-        })
+        .then(() => toast.success('Updated Profile Successfully!'))
         .catch(err => console.log(err))
   }
 
