@@ -5,6 +5,7 @@ import { useAuth } from '~/hooks/auth'
 import Avatar from '~/components/Avatar'
 import Layout from '~/layouts/userLayout'
 import { Spinner } from '~/utils/Spinner'
+import { defaultAvatar } from '~/utils/defaultAvatar'
 import { authProtected } from '~/utils/auth-protected'
 import UserDetailsForm from '~/components/user/UserDetailsForm'
 import UserChangePasswordForm from '~/components/user/UserChangePasswordForm'
@@ -30,7 +31,11 @@ const Settings: NextPage = (): JSX.Element => {
             <div className="flex flex-col items-center pb-3">
               <div className="inline-flex rounded-full shadow-lg">
                 <Avatar 
-                  url={`${user?.avatar_url === null ? 'https://i.stack.imgur.com/l60Hf.png' : user?.avatar_url}`}
+                  url={`${
+                    user.avatar_url === null ? 
+                    defaultAvatar : 
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`
+                  }`}
                   width={150}
                   height={150}
                 />

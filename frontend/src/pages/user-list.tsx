@@ -12,6 +12,7 @@ import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/userLayout'
 import { useFollow } from '~/helpers/follow'
 import { classNames } from '~/utils/classNames'
+import { defaultAvatar } from '~/utils/defaultAvatar'
 import { authProtected } from '~/utils/auth-protected'
 
 const UserList: NextPage = (): JSX.Element => {
@@ -26,8 +27,6 @@ const UserList: NextPage = (): JSX.Element => {
     refreshInterval: 1000,
     revalidateOnMount: true
   })
-
-  const defaultAvatar = 'https://i.stack.imgur.com/l60Hf.png'
 
   return (
     <Layout metaTitle="Accounts">
@@ -56,7 +55,11 @@ const UserList: NextPage = (): JSX.Element => {
                     <Link href={`/profile/${user?.id}`}>
                       <a className="link text-gray-900 flex flex-row items-center space-x-1">
                         <Avatar
-                          url={`${user.avatar_url === null ? defaultAvatar : user?.avatar_url}`} 
+                          url={`${
+                            user.avatar_url === null ? 
+                            defaultAvatar : 
+                            `${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`
+                          }`}
                           width={32}
                           height={32}
                         />

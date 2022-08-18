@@ -8,6 +8,7 @@ import { Menu, Transition } from '@headlessui/react'
 import Avatar from '~/components/Avatar'
 import { classNames } from '~/utils/classNames'
 import { headerLinks } from '~/data/headerLinks'
+import { defaultAvatar } from '~/utils/defaultAvatar'
 import { IHeaderLink, IUser } from '~/data/interfaces'
 
 type Props = {
@@ -184,7 +185,11 @@ function MenuToggle({ user, logout }: { user: IUser, logout: () => void }) {
         <Menu.Button type="button" className="flex items-center">
           <span className="sr-only">Open user menu</span>
           <Avatar 
-            url={`${user?.avatar_url === null ? 'https://i.stack.imgur.com/l60Hf.png' : user?.avatar_url}`}
+            url={`${
+              user?.avatar_url === null ? 
+              defaultAvatar : 
+              `${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`
+            }`}
             width={25}
             height={25}
           />

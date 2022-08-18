@@ -11,14 +11,14 @@ import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/userLayout'
 import { classNames } from '~/utils/classNames'
 import { IAnswer, ILesson } from '~/data/interfaces'
+import { defaultAvatar } from '~/utils/defaultAvatar'
 import DashboardList from '~/components/user/DashboardList'
 import LessonLearnedDialog from '~/components/user/LessonLearnedDialog'
 
 const Dashboard: NextPage = (): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false)
 
-  const closeModal = () => setIsOpen(false)
-  const openModal = () => setIsOpen(true)
+  const toggle = () => setIsOpen(!isOpen)
 
   const { user: author } = useAuth({
     middleware: 'auth'
@@ -29,7 +29,7 @@ const Dashboard: NextPage = (): JSX.Element => {
     revalidateOnMount: true
   })
 
-  const getArrayOfScores = user?.data?.lessons?.map((lesson: ILesson) => lesson?.answers?.filter((answer: IAnswer) => answer?.question?.choice_id === answer?.choice_id).length)
+  const getArrayOfScores = user?.data?.lessons?.map((lesson: ILesson) => lesson.answers.filter((answer: IAnswer) => answer.question.choice_id === answer.choice_id).length)
   const sumAllScores = (arr: []): number => {
     let total = 0;
     for(let i in arr) {
@@ -58,7 +58,11 @@ const Dashboard: NextPage = (): JSX.Element => {
                     <Link href={`/profile/${author?.id}`}>
                       <a className="link text-gray-900 flex flex-row items-center space-x-1">
                         <Avatar
-                          url={`${author?.avatar_url === null  ? 'https://i.stack.imgur.com/l60Hf.png' : author?.avatar_url}`} 
+                          url={`${
+                            author.avatar_url === null ? 
+                            defaultAvatar : 
+                            `${process.env.NEXT_PUBLIC_BACKEND_URL}/${author?.avatar_url}`
+                          }`}
                           width={90}
                           height={90}
                         />
@@ -76,12 +80,12 @@ const Dashboard: NextPage = (): JSX.Element => {
                       <a href="#" className="link text-orange-500 text-xs">Learned {getTotalCorrectLessonCount} words</a>
                       <a 
                         href="#" 
-                        onClick={openModal}
+                        onClick={toggle}
                         className="link text-orange-500 text-xs"
                       >Learned {user?.totalLessons} lessons</a>
                       <LessonLearnedDialog 
                          isOpen={isOpen}
-                         closeModal={closeModal}
+                         closeModal={toggle}
                          lessons={user?.data?.lessons}
                       />
                     </div>
@@ -98,11 +102,7 @@ const Dashboard: NextPage = (): JSX.Element => {
                       <Spinner className="w-6 h-6 text-orange-500" />
                     </div>
                   ) : (
-                    <DashboardList 
-                      activities={user?.activities} 
-                      user={user?.data} 
-                      author={author}
-                    /> 
+                    <DashboardList activities={user?.activities} /> 
                   )}
                 </div>
               </section>

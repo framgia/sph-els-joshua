@@ -4,6 +4,7 @@ import Link from 'next/link'
 
 import Avatar from './../Avatar'
 import { IAnswer, IUser } from '~/data/interfaces'
+import { defaultAvatar } from '~/utils/defaultAvatar'
 
 type Props = {
   activities: any[]
@@ -12,8 +13,6 @@ type Props = {
 }
 
 const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Element => {
-  const defaultAvatar = 'https://i.stack.imgur.com/l60Hf.png'
-
   return (
     <>
       {!activities?.length ? (
@@ -31,7 +30,11 @@ const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Elem
             return (
               <div key={i} className="pt-2 flex items-center space-x-4">
                 <Avatar 
-                  url={`${user.avatar_url === null ? defaultAvatar : user?.avatar_url}`}
+                  url={`${
+                    user.avatar_url === null ? 
+                    defaultAvatar : 
+                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`
+                  }`}
                   width={40}
                   height={40}
                 />

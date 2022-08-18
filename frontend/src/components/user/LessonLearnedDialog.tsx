@@ -1,7 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
 import { Dialog } from '@headlessui/react'
-import { MdWarningAmber } from 'react-icons/md'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { BsFillCheckCircleFill } from 'react-icons/bs'
 
@@ -33,12 +32,12 @@ const LessonLearnedDialog: React.FC<Props> = (props) => {
             {lessons?.map((lesson, lIdx) => (
               <div key={lIdx}>
                 {lesson?.answers.map((answer: any, index: number) => {
-                  const getCatTitle = answer?.question?.category?.title
-                  const is_correct = answer?.question?.choice_id == answer?.choice_id
+                  const getCatTitle = answer.question.category.title
+                  const is_correct = answer.question.choice_id == answer.choice_id
                   return (
                     <div key={index} className="flex flex-col">
                       <div className="flex items-center space-x-2 py-2">
-                        <label className="text-base font-semibold">{`${index+1}. ${answer?.question?.value}`}</label>
+                        <label className="text-base font-semibold">{`${index+1}. ${answer?.question.value}`}</label>
                         <div className={classNames(
                             'flex items-center px-1 py-0.5',
                             'rounded-full space-x-1 text-white',

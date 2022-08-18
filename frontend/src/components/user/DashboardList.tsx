@@ -1,18 +1,14 @@
 import React from 'react'
 import moment from 'moment'
 
-import { IUser } from '~/data/interfaces'
-
 type Props = {
   activities: any[]
-  user: IUser
-  author: IUser
 }
 
-const DashboardList: React.FC<Props> = ({ activities, author, user }): JSX.Element => {
+const DashboardList: React.FC<Props> = ({ activities }): JSX.Element => {
   return (
     <>
-      {activities?.length === 0 ? (
+      {!activities ? (
         <div className="pt-2 ">
           <p className="text-sm text-gray-500">No activities yet.</p>
         </div>
