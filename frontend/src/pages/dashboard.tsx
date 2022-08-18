@@ -102,7 +102,11 @@ const Dashboard: NextPage = (): JSX.Element => {
                       <Spinner className="w-6 h-6 text-orange-500" />
                     </div>
                   ) : (
-                    <DashboardList activities={user?.activities} /> 
+                    <>
+                      {user?.activities.length === 0 ? (
+                        <p className="text-sm text-gray-500">No activities yet.</p>
+                      ) : <DashboardList activities={user?.activities} /> }
+                    </>
                   )}
                 </div>
               </section>
