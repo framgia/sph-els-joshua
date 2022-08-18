@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\User\UploadAvatar;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\FollowController;
 use App\Http\Controllers\User\LessonController;
@@ -40,4 +41,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('follows', FollowController::class, ['only' => ['store', 'update']]);
     Route::resource('lessons', LessonController::class, ['only' => ['store', 'show']]);
     Route::resource('dashboards', DashboardController::class, ['only' => ['show']]);
+    Route::resource('upload-avatar', UploadAvatar::class, ['only' => ['store']]);
 });

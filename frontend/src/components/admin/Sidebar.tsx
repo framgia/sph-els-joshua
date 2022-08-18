@@ -9,7 +9,7 @@ import { classNames } from '~/utils/classNames'
 import { sidebarLinks } from '~/data/sidebarList'
 
 type Props = {
-  isOpen: Boolean
+  isOpen: any
 }
 
 const Sidebar: React.FC<Props> = (props): JSX.Element => {

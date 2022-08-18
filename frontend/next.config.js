@@ -9,7 +9,8 @@ const nextConfig = {
     domains: [
       'i.pravatar.cc',
       'avatars.githubusercontent.com',
-      'i.stack.imgur.com'
+      'i.stack.imgur.com',
+      'localhost:8000'
     ]
   }
 }
