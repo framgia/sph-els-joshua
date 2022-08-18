@@ -9,6 +9,7 @@ import { Menu, Transition } from '@headlessui/react'
 import Avatar from './../Avatar'
 import { IUser } from '~/data/interfaces'
 import { classNames } from '~/utils/classNames'
+import { defaultAvatar } from '~/utils/defaultAvatar'
 
 type Props = {
   admin: IUser
@@ -53,7 +54,11 @@ const Header: React.FC<Props> = (props): JSX.Element => {
                     <Avatar 
                       width={32} 
                       height={32} 
-                      url="https://i.pravatar.cc/60" 
+                      url={`${
+                        admin.avatar_url === null ? 
+                        defaultAvatar : 
+                        `${process.env.NEXT_PUBLIC_BACKEND_URL}/${admin.avatar_url}`
+                      }`}
                     />
                     <span className="text-sm font-medium">{admin?.name}</span>
                     <BiCaretDown className={`w-4 h-4 ${open && 'rotate-180'}`} />

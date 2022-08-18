@@ -5,7 +5,7 @@ import Avatar from '../Avatar'
 import { useAuth } from '~/hooks/auth'
 import { IUser } from '~/data/interfaces'
 import { useFollow } from '~/helpers/follow'
-import { classNames } from '~/utils/classNames'
+import { defaultAvatar } from '~/utils/defaultAvatar'
 
 type Props = {
   user: IUser
@@ -22,20 +22,22 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
     middleware: 'auth'
   })
 
-  const defaultAvatar = 'https://i.stack.imgur.com/l60Hf.png'
-
   return (
-    <section className="w-1/2 min-h-[20vh]">
-      <div className="max-w-sm bg-white shadow-sm border rounded-lg py-6">
+    <section className="w-full md:w-1/2 min-h-[20vh]">
+      <div className="w-full md:max-w-sm bg-white shadow-sm border rounded-lg py-6">
         <div className="flex flex-col items-center pb-3">
             <div className="inline-flex rounded-full shadow-lg">
               <Avatar 
-                url={`${user.avatar_url === null ? defaultAvatar : user?.avatar_url}`}
+                url={`${
+                  user.avatar_url === null ? 
+                  defaultAvatar : 
+                  `${process.env.NEXT_PUBLIC_BACKEND_URL}/${user.avatar_url}`
+                }`}
                 width={112}
                 height={112}
               />
             </div>
-            <h5 className="mt-3 text-xl font-medium text-gray-900 pb-3">{user?.name}</h5>
+            <h5 className="mt-3 text-xl font-medium text-gray-900 pb-3">{user.name}</h5>
             <div className="flex items-center space-x-8 border-t pt-4">
               <div className="flex items-center flex-col space-y-2">
                 <p className="text-xs font-bold">{user?.followers?.length}</p>
@@ -56,11 +58,6 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
                 >
                   {followStatus({ user, author })}
                 </button>
-              )}
-              {(isAuthor || user?.id == author?.id) && (
-                <a href="#" className={classNames(
-                  'link font-semibold text-xs text-center mt-5'
-                )}>Learned 20 words</a>
               )}
             </div>
         </div>

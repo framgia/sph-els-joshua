@@ -7,6 +7,7 @@ use App\Http\Controllers\User\FollowController;
 use App\Http\Controllers\User\LessonController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\QuestionController;
+use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\UserPrivilegeController;
 use App\Http\Controllers\User\CategoryPrivilegeController;
 use App\Http\Controllers\User\UserChangePasswordController;
@@ -38,4 +39,5 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('category-privilege', CategoryPrivilegeController::class, ['only' => ['index', 'show']]);
     Route::resource('follows', FollowController::class, ['only' => ['store', 'update']]);
     Route::resource('lessons', LessonController::class, ['only' => ['store', 'show']]);
+    Route::resource('dashboards', DashboardController::class, ['only' => ['show']]);
 });

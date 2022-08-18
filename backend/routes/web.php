@@ -1,5 +1,9 @@
 <?php
 
+use App\Models\ActivityLog;
+use App\Models\Category;
+use App\Models\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Route;
 
 /*
