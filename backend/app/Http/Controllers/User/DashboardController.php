@@ -5,6 +5,7 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use App\Models\ActivityLog;
 use App\Models\Category;
+use App\Models\Lesson;
 use App\Models\User;
 
 class DashboardController extends Controller
@@ -36,7 +37,8 @@ class DashboardController extends Controller
             }
             if ($activity['activity_type'] === 'Lesson')
             {
-                $name .= ' learned ' . Category::findOrFail($activity->activity_id)->title;
+                $lesson = Lesson::findOrFail($activity->activity_id);
+                $name .= ' learned ' . Category::findOrFail($lesson->category_id)->title;
             }
             
             $activities[] = [
