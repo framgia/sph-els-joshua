@@ -1,6 +1,6 @@
 import { toast } from 'react-toastify'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import React, { useEffect, useState } from 'react'
 
 import axios from '~/lib/axios'
 import { IUser } from '~/data/interfaces'

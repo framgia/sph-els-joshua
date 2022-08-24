@@ -9,7 +9,7 @@ import { Menu, Transition } from '@headlessui/react'
 import Avatar from './../Avatar'
 import { IUser } from '~/data/interfaces'
 import { classNames } from '~/utils/classNames'
-import { defaultAvatar } from '~/utils/defaultAvatar'
+import { defaultAvatar } from '~/helpers/defaultAvatar'
 
 type Props = {
   admin: IUser

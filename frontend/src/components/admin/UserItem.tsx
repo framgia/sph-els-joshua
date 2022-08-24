@@ -1,7 +1,7 @@
 import moment from 'moment'
 
 import Avatar from './../Avatar'
-import { defaultAvatar } from '~/utils/defaultAvatar'
+import { defaultAvatar } from '~/helpers/defaultAvatar'
 
 type Props = {
   [user: string]: any

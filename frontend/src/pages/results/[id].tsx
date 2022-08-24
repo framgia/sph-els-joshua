@@ -33,14 +33,14 @@ const Results: NextPage = (): JSX.Element => {
   return (
     <Layout metaTitle="Results">
       {lessonResults && (
-        <div className="flex items-center justify-between border-b pb-3">
-          <h1 className="text-lg font-semibold">{getCategoryTitle}</h1>
+        <div className="flex items-center justify-between px-5 py-3 rounded-md bg-white">
+          <h1 className="text-xl font-bold text-red-500">"{getCategoryTitle}"</h1>
           <div className="text-lg">
             <span className="font-semibold">Result:</span> {getCountCorrectAnswer} of {lessonResults?.answers?.length}
           </div>
         </div>
       )}
-      <div className="py-3">
+      <div className="mt-2 py-3 bg-white p-5 rounded-md shadow-primary">
         <div className="flex">
           <div className="flex flex-col space-y-2 divide-y w-full">
           {!lessonResults ? (

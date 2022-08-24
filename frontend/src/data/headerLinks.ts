@@ -10,7 +10,7 @@ export const headerLinks: IHeaderLink[] = [
     href: '/categories'
   },
   {
-    name: 'User List',
-    href: '/user-list'
+    name: 'Users',
+    href: '/users'
   }
 ]

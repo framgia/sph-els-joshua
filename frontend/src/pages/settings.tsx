@@ -9,8 +9,8 @@ import Avatar from '~/components/Avatar'
 import Layout from '~/layouts/userLayout'
 import { Spinner } from '~/utils/Spinner'
 import { classNames } from '~/utils/classNames'
-import { defaultAvatar } from '~/utils/defaultAvatar'
 import { authProtected } from '~/utils/auth-protected'
+import { defaultAvatar } from '~/helpers/defaultAvatar'
 import UserDetailsForm from '~/components/user/UserDetailsForm'
 import UserChangePasswordForm from '~/components/user/UserChangePasswordForm'
 
@@ -46,10 +46,15 @@ const Settings: NextPage = (): JSX.Element => {
     <Layout metaTitle="Settings">
       {!user ? (
         <div className="flex justify-center w-full py-8">
-          <Spinner className="w-6 h-6 text-orange-500" />
+          <Spinner className="w-6 h-6 text-red-500" />
         </div>
       ) : (
-        <div className="mt-6 flex flex-col md:flex-row space-x-4 overflow-hidden">
+        <div 
+          className="mt-6 flex flex-col md:flex-row space-x-4 overflow-hidden"
+          data-aos="fade-up"
+          data-aos-delay="300"
+          data-aos-duration="300"
+        >
           <div className="mt-2 w-full md:w-1/2 min-h-[20vh]">
             <div className="flex flex-col items-center pb-3">
               <div className="inline-flex rounded-full shadow-lg">
@@ -87,18 +92,27 @@ const Settings: NextPage = (): JSX.Element => {
             </div>
           </div>
           <div className="flex flex-col flex-1">
-            <div>
+            <section
+              data-aos="fade-up"
+              data-aos-delay="400"
+              data-aos-duration="400"
+            >
               <Title>Your Details</Title>
               <Card>
                 <UserDetailsForm user={user} />
               </Card>
-            </div>
-            <div className="mt-6">
+            </section>
+            <section 
+              className="mt-6"
+              data-aos="fade-up"
+              data-aos-delay="400"
+              data-aos-duration="600"
+            >
               <Title>Change your password</Title>
               <Card>
                 <UserChangePasswordForm user={user} />
               </Card>
-            </div>
+            </section>
           </div>
         </div>
       )}
@@ -108,6 +122,6 @@ const Settings: NextPage = (): JSX.Element => {
 
 const Title = ({ children }: Props) => <h5 className="text-xl font-bold text-gray-900">{children}</h5>
 
-const Card = ({ children }: Props) => <div className="mt-2 bg-white rounded-lg border border-gray-200 p-6">{children}</div>
+const Card = ({ children }: Props) => <div className="mt-2 bg-white rounded-lg shadow-primary border-gray-200 p-6">{children}</div>
 
 export default authProtected(Settings)
