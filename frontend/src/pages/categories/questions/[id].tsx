@@ -65,22 +65,22 @@ const CategoryQuestions: NextPage = (): JSX.Element => {
 
   return (
     <Layout metaTitle={categoryQuestions?.title}>
-      <div className="border-b pb-3">
-        <h1 className="text-xl font-semibold">{categoryQuestions?.title}</h1>
-      </div>
-      <div className="pt-5 pb-4">
-        {!categoryQuestions ? (
-            <div className="flex justify-center w-full py-8">
-              <Spinner className="w-6 h-6 text-orange-500" />
+      {!categoryQuestions ? (
+          <div className="flex justify-center w-full py-8">
+            <Spinner className="w-6 h-6 text-red-500" />
+          </div>
+        ) : (
+          <>
+            <div className="pt-5 pb-4 bg-white rounded-md shadow-primary">
+              <h1 className="text-2xl font-bold text-red-500 text-center">"{categoryQuestions?.title}"</h1>
             </div>
-          ) : (
-            <form onSubmit={handleSubmit(handleSave)}>
-              <div className="divide-y">
+            <form onSubmit={handleSubmit(handleSave)} className="mt-4 bg-white px-8 py-4 rounded-md shadow-primary">
+              <div className="divide-y divide-gray-100">
                 {categoryQuestions?.questions.map((question: ICategoryQuestion, i: number) => (
                   <div key={i} className="flex flex-col pb-10 pt-4">
                     <div className="inline-flex">
                       <div className="w-1/2 flex flex-col">
-                        <label className="text-base font-semibold">{i+1}. {question?.value}</label>
+                        <label className="text-lg font-semibold">{i+1}. {question?.value}</label>
                         <input 
                           type="hidden" 
                           value={question?.choice_id}
@@ -88,7 +88,6 @@ const CategoryQuestions: NextPage = (): JSX.Element => {
                         />
                       </div>
                       <div className="w-1/2 space-y-4">
-                        <label className="text-base font-semibold">Choices</label>
                         {question?.choices?.map((choice: IChoice, idx: number) => (
                           <div key={idx} className="flex space-x-2 items-center">
                             <span>{convertIndexToAlphabet(idx+1) + ". "}</span>
@@ -124,8 +123,8 @@ const CategoryQuestions: NextPage = (): JSX.Element => {
                 </div>
               </div>
             </form>
-          )}
-      </div>
+          </>
+        )}
     </Layout>
   )
 }

@@ -28,7 +28,7 @@ const UserProfile: NextPage = (): JSX.Element => {
       )}>
         {!user ? (
           <div className="flex justify-center w-full py-8">
-            <Spinner className="w-6 h-6 text-orange-500" />
+            <Spinner className="w-6 h-6 text-red-500" />
           </div>
         ) : (
           <>
@@ -37,7 +37,7 @@ const UserProfile: NextPage = (): JSX.Element => {
               mutate={mutate} 
               isAuthor={false} 
             />
-            <section className="w-full overflow-hidden shadow-sm border rounded-lg">
+            <section className="w-full overflow-hidden shadow-sm border rounded-lg bg-white">
               <div className="py-4 px-6 border-b">
                 <h1 className="font-bold">Activities</h1>
               </div>        

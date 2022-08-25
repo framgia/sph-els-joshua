@@ -5,7 +5,7 @@ import Avatar from '../Avatar'
 import { useAuth } from '~/hooks/auth'
 import { IUser } from '~/data/interfaces'
 import { useFollow } from '~/helpers/follow'
-import { defaultAvatar } from '~/utils/defaultAvatar'
+import { defaultAvatar } from '~/helpers/defaultAvatar'
 
 type Props = {
   user: IUser
@@ -33,8 +33,8 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
                   defaultAvatar : 
                   `${process.env.NEXT_PUBLIC_BACKEND_URL}/${user.avatar_url}`
                 }`}
-                width={112}
-                height={112}
+                width={150}
+                height={150}
               />
             </div>
             <h5 className="mt-3 text-xl font-medium text-gray-900 pb-3">{user.name}</h5>

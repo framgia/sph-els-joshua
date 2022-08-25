@@ -1,15 +1,14 @@
 import Link from 'next/link'
-import React, { Fragment, useState } from 'react'
 import { useRouter } from 'next/router'
-import { IoClose } from 'react-icons/io5'
-import { BiMenuAltRight  } from 'react-icons/bi'
+import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
 
+import Nav from './Nav'
+import NavMobile from './NavMobile'
 import Avatar from '~/components/Avatar'
+import { IUser } from '~/data/interfaces'
 import { classNames } from '~/utils/classNames'
-import { headerLinks } from '~/data/headerLinks'
-import { defaultAvatar } from '~/utils/defaultAvatar'
-import { IHeaderLink, IUser } from '~/data/interfaces'
+import { defaultAvatar } from '~/helpers/defaultAvatar'
 
 type Props = {
   user: IUser
@@ -19,155 +18,35 @@ type Props = {
 }
 
 const Header: React.FC<Props> = ({ user, actions: { logout } }): JSX.Element => {
-  const router = useRouter()
-  const [isOpen, setIsOpen] = useState(false)
-
+  const Logo = '/img/logo.png'
   return (
-    <header className={classNames(
-      'bg-white border-b shadow-sm',
-      router.pathname.includes('/categories/questions') ?
-      'cursor-not-allowed opacity-50' : ''
-    )}>
-      <nav className={classNames(
-        'max-w-4xl mx-auto px-4 py-4 flex-wrap',
-        'flex items-center justify-between'
-      )}>
-        <div>
-          <h1 className={classNames(
-            'font-semibold text-lg text-gray-900'
-          )}>Sun<span className="text-orange-500">*</span> ELearning App</h1>
+    <header className="bg-white py-5 px-5 shadow-primary transition-all duration-500">
+      <div className="flex items-center justify-between max-w-6xl mx-auto">
+        <div className="flex items-center">
+          <Link href="/dashboard">
+            <a>
+              <img 
+                src={Logo} 
+                className="h-6"
+                alt=""
+              />
+            </a>
+          </Link>
+          <div className='hidden lg:flex'>
+            <Nav />
+          </div>
         </div>
-        <div className="block md:hidden">
-          <button
-            onClick={() => setIsOpen(!isOpen)}
-            className="p-1.5 rounded-full hover:bg-orange-50 focus:bg-orange-100"
-          >
-            <BiMenuAltRight className="w-7 h-7 fill-current" />
-          </button>
-          <DropDownMenuToggle 
-            isOpen={isOpen} 
-            logout={logout} 
-            setIsOpen={setIsOpen} 
-          />
+        <div className='flex items-center'>
+          <MenuToggle user={user} logout={logout} />
+          <NavMobile />
         </div>
-        <div className="hidden md:block">
-          <ul className="flex items-center space-x-4">
-            {headerLinks?.map(({ name, href }: IHeaderLink, i: number) => (
-              <li key={i}>
-                {router.pathname.includes('/categories/questions') ? (
-                  <span className={classNames(
-                    'font-medium text-sm',
-                    router.pathname.includes(href) ? 
-                    'text-orange-500 font-bold' : ''
-                  )}>{name}</span>
-                ) : (
-                  <Link href={href}>
-                    <a className={classNames(
-                      'font-medium text-sm hover:text-orange-500',
-                      router.pathname.includes(href) ? 
-                      'text-orange-500 font-bold' : ''
-                    )}>{name}</a>
-                  </Link>
-                )}
-              </li>
-            ))}
-            <MenuToggle user={user} logout={logout} />
-          </ul>
-        </div>
-      </nav>
+      </div>
     </header>
   )
 }
 
-function DropDownMenuToggle({ isOpen, setIsOpen, logout }: { isOpen: boolean, setIsOpen: Function, logout: () => void }) {
+const MenuToggle = ({ user, logout }: { user: IUser, logout: () => void }) => {
   const router = useRouter()
-  const subLink = [
-    {
-      name: 'Profile',
-      href: '/profile'
-    },
-    {
-      name: 'Settings',
-      href: '/settings'
-    },
-  ]
-
-  return (
-    <Transition show={isOpen}>
-      <nav className="absolute top-0 inset-x-0 p-2 z-50">
-        <div className="shadow-lg rounded-lg border-t border-gray-100">
-          <div className="bg-white shadow-sm rounded-lg pt-5 pb-8 px-5 space-y-4">
-            <div className="flex justify-between items-center">
-              <h1 className={classNames(
-                'font-semibold text-lg text-gray-900'
-              )}>Sun<span className="text-orange-500">*</span> ELearning App</h1>
-              <div>
-                <button
-                  onClick={() => setIsOpen(!isOpen)}
-                  className="p-1.5 rounded-full hover:bg-orange-50 focus:bg-orange-100"
-                >
-                  <IoClose className="w-6 h-6" />
-                </button>
-              </div>
-            </div>
-            <nav className="border-t border-gray-100 pt-3">
-              <ul className="flex flex-col space-x-0 space-y-3">
-                {headerLinks?.map(({ name, href }: IHeaderLink, i: number) => (
-                  <li key={i}>
-                    {router.pathname.includes('/categories/questions') ? (
-                      <span className={classNames(
-                        'font-medium text-sm',
-                        router.pathname.includes(href) ? 
-                        'text-orange-500 font-bold' : ''
-                      )}>{name}</span>
-                    ) : (
-                      <Link href={href}>
-                        <a className={classNames(
-                          'font-medium text-sm hover:text-orange-500',
-                          router.pathname.includes(href) ? 
-                          'text-orange-500 font-bold' : ''
-                        )}>{name}</a>
-                      </Link>
-                    )}
-                  </li>
-                ))}
-                {router.pathname.includes('/categories/questions') ? (
-                  <span className="text-left text-sm font-medium">
-                    Logout
-                  </span>
-                ) : (
-                  <>
-                    {subLink?.map(({ name, href }, i) => (
-                      <Link 
-                        key={i}
-                        href={href}
-                      >
-                        <a
-                          className="text-left text-sm font-medium hover:text-orange-500"
-                        >
-                          {name}
-                        </a>
-                      </Link>
-                    ))}
-                    <button
-                      type="button"
-                      className="text-left text-sm font-medium hover:text-orange-500"
-                      onClick={logout}
-                    >
-                      Logout
-                    </button>
-                  </>
-                )}
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </nav>
-    </Transition>
-  )
-}
-
-function MenuToggle({ user, logout }: { user: IUser, logout: () => void }) {
   const subLink = [
     {
       name: 'Profile',
@@ -182,7 +61,13 @@ function MenuToggle({ user, logout }: { user: IUser, logout: () => void }) {
   return (
     <Menu as="div" className="ml-3 relative">
       <div>
-        <Menu.Button type="button" className="flex items-center">
+        <Menu.Button 
+          type="button" 
+          className={classNames(
+            'flex flex-row-reverse items-center space-x-2',
+            'hover:text-red-500'
+          )}
+        >
           <span className="sr-only">Open user menu</span>
           <Avatar 
             url={`${
@@ -190,9 +75,10 @@ function MenuToggle({ user, logout }: { user: IUser, logout: () => void }) {
               defaultAvatar : 
               `${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`
             }`}
-            width={25}
-            height={25}
+            width={32}
+            height={32}
           />
+          <p>{user?.name}</p>
         </Menu.Button>
       </div>
       <Transition
@@ -205,12 +91,17 @@ function MenuToggle({ user, logout }: { user: IUser, logout: () => void }) {
         leaveTo="transform opacity-0 scale-95">
         <Menu.Items className={classNames(
           'origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1',
-          'bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'
+          'bg-white ring-1 ring-black ring-opacity-5 focus:outline-none z-50'
         )}>
           {subLink?.map(({ name, href }, i) => (
             <Menu.Item key={i}>
               <Link href={href}>
-                <a className="hover:bg-orange-100 block px-4 py-2 text-sm text-orange-900">
+                <a className={classNames(
+                  'block px-4 py-2 text-sm',
+                  router.pathname.includes(href) ? 
+                  'bg-red-500 text-white hover:text-white' : 
+                  'hover:bg-red-100 text-red-900'
+                )}>
                   {name}
                 </a>
               </Link>
@@ -220,7 +111,7 @@ function MenuToggle({ user, logout }: { user: IUser, logout: () => void }) {
             <a
               href="#"
               onClick={logout}
-              className="w-full hover:bg-orange-100 block px-4 py-2 text-sm text-orange-900">
+              className="w-full hover:bg-red-100 block px-4 py-2 text-sm text-red-900">
               Sign Out
             </a>
           </Menu.Item>

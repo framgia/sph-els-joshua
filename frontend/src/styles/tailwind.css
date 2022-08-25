@@ -2,11 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  body {
+    @apply font-primary text-paragraph;
+  }
+  a {
+    @apply hover:text-red-500 transition;
+  }
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-heading;
+  }
+  .h1 {
+    @apply text-[36px] leading-[46px] lg:text-[70px] lg:leading-[80px] font-extrabold;
+  }
+  .h2 {
+    @apply text-[26px] leading-[36px] lg:text-[50px] lg:leading-[60px] font-bold;
+  }
+  .h3 {
+    @apply text-[18px] leading-[28px] lg:text-[34px] lg:leading-[44px] font-semibold;
+  }
+  .section-sm {
+    @apply py-[70px];
+  }
+  .section-lg {
+    @apply py-[150px];
+  }
+}
+
 @layer components {
   /* Register / Login style */
   .form-control {
     @apply block w-full px-4 py-2 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200;
-    @apply rounded-md focus:border-orange-400 focus:ring-orange-400 focus:outline-none;
+    @apply rounded-md focus:border-red-400 focus:ring-red-400 focus:outline-none;
     @apply focus:ring focus:ring-opacity-40 transition ease-in-out duration-150;
     @apply disabled:cursor-not-allowed disabled:opacity-60;
   }
@@ -21,13 +53,13 @@
   }
   .link {
     @apply block text-sm font-medium text-gray-500;
-    @apply hover:underline focus:outline-none hover:text-orange-600;
+    @apply hover:underline focus:outline-none hover:text-red-600;
     @apply transition ease-in-out duration-150;
   }
   .btn-submit {
-    @apply w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-orange-500 rounded-md;
-    @apply hover:bg-orange-400 focus:outline-none focus:bg-orange-400 focus:ring focus:ring-orange-300 focus:ring-opacity-50;
-    @apply transition ease-in-out duration-150 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-orange-500;
+    @apply w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-red-500 rounded-md;
+    @apply hover:bg-red-400 focus:outline-none focus:bg-red-400 focus:ring focus:ring-red-300 focus:ring-opacity-50;
+    @apply transition ease-in-out duration-150 disabled:cursor-not-allowed disabled:opacity-50 disabled:bg-red-500;
     @apply flex justify-center;
   }
   .btn-dismiss {
@@ -135,10 +167,10 @@
     @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-green-500;
   }
   .btn-primary {
-    @apply inline-flex items-center py-2 px-4 text-sm font-medium text-white bg-orange-400 rounded-lg;
-    @apply hover:bg-orange-500 transition ease-in-out duration-200 focus:bg-orange-400;
-    @apply focus:z-20 focus:ring-4 focus:ring-orange-400/50;
-    @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-orange-500;
+    @apply inline-flex items-center py-2 px-4 text-sm font-medium text-white bg-red-400 rounded-lg;
+    @apply hover:bg-red-500 transition ease-in-out duration-200 focus:bg-red-400;
+    @apply focus:z-20 focus:ring-4 focus:ring-red-400/50;
+    @apply disabled:cursor-not-allowed disabled:opacity-50;
   }
   .btn-danger {
     @apply inline-flex items-center py-2 px-4 text-sm font-medium text-white bg-red-500 rounded-lg;
@@ -148,12 +180,18 @@
   }
   .btn-default {
     @apply py-2.5 px-3 text-sm font-medium text-gray-700 bg-white border border-gray-200;
-    @apply hover:bg-gray-100 focus:z-20 focus:ring-2 focus:ring-orange-400/50 focus:outline-none;
+    @apply hover:bg-gray-100 focus:z-20 focus:ring-2 focus:ring-red-400/50 focus:outline-none;
     @apply disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:bg-white;
   }
 
   /* Radio */
   .form-radio-button {
-    @apply w-4 h-4 text-orange-500 bg-gray-100 border-gray-300 focus:ring-orange-400;
+    @apply w-4 h-4 text-red-500 bg-gray-100 border-gray-300 focus:ring-red-400;
+  }
+
+  /* Category */
+  .category-card {
+    @apply w-full max-w-[368px] px-[18px] pb-[26px] lg:px-[28px] lg:pb-[38px] bg-white;
+    @apply hover:shadow-primary flex flex-col rounded-[14px] mx-auto transition;
   }
 }

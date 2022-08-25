@@ -10,14 +10,14 @@ import AuthValidationErrors from '~/components/AuthValidationErrors'
 
 const Index: NextPage = (): JSX.Element => {
   const [errors, setErrors] = useState([])
-  let [isLoginPage, setIsLoginPage] = useState<boolean>(true)
+  const [isLoginPage, setIsLoginPage] = useState<boolean>(true)
 
   const { login, register } = useAuth({
     middleware: 'guest',
     redirectIfAuthenticated: '/dashboard',
   })
 
-  const handleSwitchForm = (): void => setIsLoginPage((isLoginPage = !isLoginPage))
+  const handleSwitchForm = (): void => setIsLoginPage(!isLoginPage)
 
   const handleAuthSubmit = async (data: SignInUpFormValues): Promise<void> => {
     const { name, email, password } = data

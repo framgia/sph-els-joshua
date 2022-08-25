@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { useRouter } from 'next/router'
 import React, { ReactNode } from 'react'
 
 import { useAuth } from '~/hooks/auth'
@@ -12,6 +13,7 @@ type Props = {
 }
 
 const Layout: React.FC<Props> = ({ children, metaTitle }): JSX.Element => {
+  const router = useRouter()
   const { user, logout } = useAuth({
     middleware: 'auth'
   })
@@ -21,9 +23,9 @@ const Layout: React.FC<Props> = ({ children, metaTitle }): JSX.Element => {
       <Head>
         <title>ELearning | {metaTitle}</title>
       </Head>
-      <Header user={user} actions={{ logout }} />
+      {!router.pathname.includes('/categories/questions') && <Header user={user} actions={{ logout }} />}
       <main  className={classNames(
-        'max-w-4xl mx-auto px-4 py-4 min-h-[70vh]'
+        'max-w-6xl mx-auto px-4 py-4 min-h-[70vh]'
       )}>
         {children}
       </main>

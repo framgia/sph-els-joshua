@@ -23,13 +23,17 @@ const Profile: NextPage = (): JSX.Element => {
 
   return (
     <Layout metaTitle={`${user ? user?.data?.name : 'Profile'}`}> 
-      <div className={classNames(
-        'flex flex-col md:flex-row space-y-4 md:space-y-0',
-        'md:space-x-4 overflow-hidden pt-5'
-      )}>
+      <section className={classNames(
+          'flex flex-col md:flex-row space-y-4 md:space-y-0',
+          'md:space-x-4 overflow-hidden pt-5'
+        )}
+        data-aos="fade-up"
+        data-aos-delay="400"
+        data-aos-duration="400"
+      >
         {!user ? (
             <div className="flex justify-center w-full py-8">
-              <Spinner className="w-6 h-6 text-orange-500" />
+              <Spinner className="w-6 h-6 text-red-500" />
             </div>
           ) : (
             <>
@@ -38,7 +42,11 @@ const Profile: NextPage = (): JSX.Element => {
                 user={user?.data} 
                 isAuthor 
               />
-              <section className="w-full overflow-hidden shadow-sm border rounded-lg">
+              <section 
+                className="w-full overflow-hidden shadow-sm border rounded-lg bg-white"
+                data-aos="fade-down"
+                data-aos-delay="700"
+              >
                 <div className="py-4 px-6 border-b">
                   <h1 className="font-bold">Activities</h1>
                 </div>        
@@ -52,7 +60,7 @@ const Profile: NextPage = (): JSX.Element => {
               </section>
             </>
         )}
-      </div>
+      </section>
     </Layout>
   )
 }

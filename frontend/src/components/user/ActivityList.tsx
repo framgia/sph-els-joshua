@@ -4,7 +4,7 @@ import Link from 'next/link'
 
 import Avatar from './../Avatar'
 import { IAnswer, IUser } from '~/data/interfaces'
-import { defaultAvatar } from '~/utils/defaultAvatar'
+import { defaultAvatar } from '~/helpers/defaultAvatar'
 
 type Props = {
   activities: any[]
@@ -40,13 +40,13 @@ const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Elem
                 />
                 <div className="text-sm">
                   <div className="flex items-center space-x-2">
-                    <a href="#" className="link text-orange-500 mr-2 line-clamp-2">
+                    <a href="#" className="link text-red-500 mr-2 line-clamp-2">
                       {isAuthor ? 'You' : user?.name}
                     </a> 
                     {activity.following_user ? 'followed' : 'learned'} 
                     {activity.following_user && (
                       <Link href={`/profile/${activity.following_user.id}`}>
-                        <a className="link text-orange-500">
+                        <a className="link text-red-500">
                           {activity.following_user.name}
                         </a>
                       </Link>
@@ -55,7 +55,7 @@ const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Elem
                       <div className="flex">
                         <span>{`${getCountCorrectAnswer} of ${getQuestionCount} in `}</span>
                         <Link href={`/results/${activity?.lessons?.id}`}>
-                          <a className="ml-2 text-orange-500 link">
+                          <a className="ml-2 text-red-500 link">
                             {getCategoryTitle[0]}
                           </a>
                         </Link>

@@ -1,5 +1,4 @@
 import React from 'react'
-import Link from 'next/link'
 import { Dialog } from '@headlessui/react'
 import { AiFillCloseCircle } from 'react-icons/ai'
 import { BsFillCheckCircleFill } from 'react-icons/bs'
