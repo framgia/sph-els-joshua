@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { NextPage } from 'next'
-import { useRouter } from 'next/router'
 
+import { useAuth } from '~/hooks/auth'
 import { classNames } from '~/utils/classNames'
 
 type Props = {
@@ -10,7 +10,9 @@ type Props = {
 }
 
 const UnAuthorized: NextPage<Props> = ({ message }): JSX.Element => {
-  const router = useRouter()
+  const { logout } = useAuth({
+    middleware: 'admin'
+  })
 
   return (
     <>
@@ -53,7 +55,7 @@ const UnAuthorized: NextPage<Props> = ({ message }): JSX.Element => {
           </div>
           <div>
             <button
-              onClick={() => router.push('/admin')}
+              onClick={logout}
               className={classNames(
                 'px-6 py-3 rounded-full bg-yellow-300 hover:bg-yellow-400 text-white',
                 'font-semibold hover:shadow-xl transition ease-in-out duration-150 focus:outline-none',

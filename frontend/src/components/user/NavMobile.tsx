@@ -22,7 +22,7 @@ const NavMobile: React.FC = (): JSX.Element => {
       <ul
         className={classNames(
           isOpen ? 'max-h-60 p-8' : 'max-h-0 p-0',
-          'flex flex-col absolute w-full top-24 left-0 bg-white rounded-md',
+          'flex flex-col absolute w-full top-[90px] left-0 bg-white rounded-md',
           'shadow-primary space-y-6 overflow-hidden transition-all z-10'
         )}
       >

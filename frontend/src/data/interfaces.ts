@@ -33,6 +33,7 @@ export interface IThead {
 export interface IChoice {
   id: string
   value: string
+  is_correct: boolean
 }
 
 export interface IQuestion {
@@ -99,4 +100,23 @@ export interface ILessonAndFollow {
   following_user?: IUser
   lessons?: ILesson
   created_at?: string
+}
+
+export interface IQuestionAndAnswer {
+  name: string
+  get_category_title: string
+  get_question_and_answer:  []
+  count_question: number
+  count_correct_answer: number
+}
+
+export interface IProfile {
+  id: number
+  name: string
+  avatar_url: string | null
+  email?: string
+  followers: IFollower[]
+  followings: IFollowing[]
+  count_followings: number
+  count_followers: number
 }

@@ -11,11 +11,7 @@ use App\Http\Controllers\Controller;
 class CategoryController extends Controller
 {
     use ApiResponser;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $categories = Category::latest()
@@ -25,12 +21,6 @@ class CategoryController extends Controller
         return $this->showAll($categories);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $rules = [
@@ -45,24 +35,11 @@ class CategoryController extends Controller
         return $this->showOne($newCategory, 201);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Category $category)
+    public function show(Category $category)
     {
         return $this->showOne($category);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Category $category)
     {
         $category->fill($request->only([
@@ -79,12 +56,6 @@ class CategoryController extends Controller
         return $this->showOne($category);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Category $category)
     {
         $category->delete();

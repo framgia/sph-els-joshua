@@ -29,17 +29,17 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::middleware(['admin', 'auth'])->group(function () {
-    Route::resource('users', UserController::class, ['only' => ['index']]);
-    Route::resource('categories', CategoryController::class);
-    Route::resource('questions', QuestionController::class);
+    Route::apiResource('users', UserController::class, ['only' => ['index']]);
+    Route::apiResource('categories', CategoryController::class);
+    Route::apiResource('questions', QuestionController::class);
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::resource('user-privilege', UserPrivilegeController::class, ['only' => ['index', 'show', 'update']]);
-    Route::resource('user-change-password', UserChangePasswordController::class, ['only' => ['update']]);
-    Route::resource('category-privilege', CategoryPrivilegeController::class, ['only' => ['index', 'show']]);
-    Route::resource('follows', FollowController::class, ['only' => ['store', 'update']]);
-    Route::resource('lessons', LessonController::class, ['only' => ['store', 'show']]);
-    Route::resource('dashboards', DashboardController::class, ['only' => ['show']]);
-    Route::resource('upload-avatar', UploadAvatar::class, ['only' => ['store']]);
+    Route::apiResource('user-privilege', UserPrivilegeController::class, ['only' => ['index', 'show', 'update']]);
+    Route::apiResource('user-change-password', UserChangePasswordController::class, ['only' => ['update']]);
+    Route::apiResource('category-privilege', CategoryPrivilegeController::class, ['only' => ['index', 'show']]);
+    Route::apiResource('follows', FollowController::class, ['only' => ['store', 'destroy']]);
+    Route::apiResource('lessons', LessonController::class, ['only' => ['store', 'show']]);
+    Route::apiResource('dashboards', DashboardController::class, ['only' => ['index']]);
+    Route::apiResource('upload-avatar', UploadAvatar::class, ['only' => ['store']]);
 });

@@ -22,7 +22,7 @@ const CategoryUpdate: NextPage = (): JSX.Element => {
   
   useEffect(() => {
     const getCategoryDataById = async () => {
-      const newCategory = await fetcher(`/api/categories/${id}/edit`)
+      const newCategory = await fetcher(`/api/categories/${id}`)
       setCategoryData(newCategory?.data)
     }
     getCategoryDataById()

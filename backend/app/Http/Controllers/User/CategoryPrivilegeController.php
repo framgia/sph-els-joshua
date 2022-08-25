@@ -9,11 +9,7 @@ use App\Traits\ApiResponser;
 class CategoryPrivilegeController extends Controller
 {
     use ApiResponser;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $categories = Category::with(['lessons'])

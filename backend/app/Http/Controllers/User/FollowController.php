@@ -11,12 +11,6 @@ use Illuminate\Support\Facades\Auth;
 
 class FollowController extends Controller
 {
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $follow = UserRelationship::create([
@@ -36,15 +30,13 @@ class FollowController extends Controller
         ]);
     }
 
-
-    public function update(Request $request)
+    public function destroy($id)
     {
-        $following_id = $request->input('following_id');
         $user_relationships = UserRelationship::all();
 
         foreach($user_relationships as $item) 
         {
-            if ($item['following_id'] == $following_id && $item['follower_id'] == Auth::user()->id) 
+            if ($item['following_id'] == $id && $item['follower_id'] == Auth::user()->id) 
             {
                 $item->delete();
             }
@@ -54,7 +46,7 @@ class FollowController extends Controller
 
         foreach($activity_logs as $item) 
         {
-            if ($item['user_id'] == Auth::user()->id && $item['activity_id'] == $following_id) 
+            if ($item['user_id'] == Auth::user()->id && $item['activity_id'] == $id) 
             {
                 $item->delete();
             }

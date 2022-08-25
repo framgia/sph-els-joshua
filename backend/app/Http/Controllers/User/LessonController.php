@@ -7,6 +7,9 @@ use App\Models\ActivityLog;
 use App\Models\Lesson;
 use App\Models\Answer;
 use App\Models\Category;
+use App\Models\Choice;
+use App\Models\Question;
+use App\Models\User;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,42 +27,62 @@ class LessonController extends Controller
 
         $temp = [];
         $new_answers = [];
-        foreach($answers['yourAnswer'] as $key => $value) 
+        foreach($answers as $value) 
         {
             if ($value) 
             {
                 $temp['lesson_id'] = $new_lesson->id;
-                $temp['question_id'] = $key;
-                $temp['choice_id'] = $value;
+                $temp['question_id'] = $value['question_id'];
+                $temp['choice_id'] = $value['choice_id'];
+                $temp['is_correct'] = $value['is_correct'];
                 $new_answers[] = $temp;
             }
         }
 
-        $answer_results = Answer::insert($new_answers);
+        Answer::insert($new_answers);
 
-        $activity_logs = ActivityLog::create([
+        ActivityLog::create([
             'user_id' => Auth::user()->id,
             'activity_id' => $new_lesson->id,
             'activity_type' => 'Lesson'
         ]);
 
         return response()->json([
-            'lessons' => $new_lesson,
-            'answers' => $answer_results,
-            'activity_logs' => $activity_logs
+            'lesson_id' => $new_lesson->id, 
+            'message' => 'You successfully submitted you answer!'
         ]);
     }
 
-    public function show($id)
+    public function show(Lesson $lesson)
     {
-        $lessons = Lesson::with([
-            'answers' => [
-                'question' => [
-                    'category'
-                ]
+        $get_category_title = Category::findOrFail($lesson->category_id)->title;
+        $count_question = count($lesson->answers);
+
+        $get_correct_answer = [];
+        $question_and_answer = [];
+        foreach ($lesson->answers as $value)
+        {
+            if ($value['is_correct'])
+            {
+                $get_correct_answer[] = $value['is_correct'];
+            }
+
+            $question_and_answer[] = [
+                'question_title' => Question::findOrFail((string)$value['question_id'])->value,
+                'is_correct' => $value['is_correct'],
+                'your_answer' => Choice::findOrFail((string)$value['choice_id'])->value
+            ];
+        }
+        
+        return response()->json([
+            'data' => [
+                'name' => Auth::user()->id === $lesson->user_id ? 'Your' : User::findOrFail($lesson->user_id)->name,
+                'get_category_title' => $get_category_title,
+                'get_question_and_answer' => $question_and_answer,
+                'count_question' => $count_question,
+                'count_correct_answer' => count($get_correct_answer)
             ]
-        ])->findOrFail($id);
-        return $this->showOne($lessons);
+        ]);
     }
 
 }

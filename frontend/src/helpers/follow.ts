@@ -2,15 +2,15 @@ import { KeyedMutator } from 'swr'
 import { toast } from 'react-toastify'
 
 import axios from '~/lib/axios'
-import { IUser } from '~/data/interfaces'
+import { IProfile, IUser } from '~/data/interfaces'
 
 type FollowStatusProps = {
-  user: IUser
+  user: IProfile
   author: any
 }
 
 type HandleFollowProps = {
-  user: IUser
+  user: IProfile
   author: any
   mutate: KeyedMutator<any>
   setLoading: React.Dispatch<React.SetStateAction<boolean>> 
@@ -36,7 +36,7 @@ export const useFollow = () => {
       // UNFOLLOW
       return await 
               axios
-                .patch(`/api/follows/${user?.id}`, { following_id: user?.id })
+                .delete(`/api/follows/${user?.id}`)
                 .then(async () => {
                   await mutate()
                   toast.success(`You unfollow ${user?.name}`)

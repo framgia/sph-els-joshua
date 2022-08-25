@@ -15,20 +15,20 @@ export const adminProtected = (Comp: any) => {
 
     {/**
       * This will check "is_admin" column
-      * if it is equal to 0 which is false
-      * it will show the unauthorized message
+      * if it is equal to true it will 
+      * show the unauthorized message
       * and will logout automatically redirect 
       * to /admin route
     */}
     useEffect(() => {
       const isAuthenticatedAdmin = async () => {
         if (!admin) router.push('/admin')
-        if (admin?.is_admin === 0) await logout()
+        if (!admin?.is_admin) await logout()
       }
       isAuthenticatedAdmin()
     }, [admin])
     
-    if (admin?.is_admin === 0) return <UnAuthorized message="You are not authorized to access this page" />
+    if (!admin?.is_admin) return <UnAuthorized message="You are not authorized to access this page!" />
 
     return <Comp {...props} />
   }

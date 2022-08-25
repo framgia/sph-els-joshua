@@ -27,9 +27,6 @@ const QuestionList: React.FC<Props> = (props): JSX.Element => {
       name: 'Category ID'
     },
     {
-      name: 'Choice ID'
-    },
-    {
       name: 'Question'
     },
     {

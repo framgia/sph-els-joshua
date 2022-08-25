@@ -16,7 +16,7 @@ type Props = {
 const QuestionItem: React.FC<Props> = (props): JSX.Element => {
   const { actions, ...question } = props
   const { handleDelete } = actions
-  const { id, category_id, choice_id, value, created_at } = question
+  const { id, category_id, value, created_at } = question
 
   return (
     <tr className="table-tbody-tr">
@@ -25,9 +25,6 @@ const QuestionItem: React.FC<Props> = (props): JSX.Element => {
       </td>
       <td className="table-tbody-td font-medium">
         {category_id}
-      </td>
-      <td className="table-tbody-td">
-        {choice_id}
       </td>
       <td className="table-tbody-td">
         {value}
