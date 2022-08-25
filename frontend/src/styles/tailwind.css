@@ -188,4 +188,10 @@
   .form-radio-button {
     @apply w-4 h-4 text-red-500 bg-gray-100 border-gray-300 focus:ring-red-400;
   }
+
+  /* Category */
+  .category-card {
+    @apply w-full max-w-[368px] px-[18px] pb-[26px] lg:px-[28px] lg:pb-[38px] bg-white;
+    @apply hover:shadow-primary flex flex-col rounded-[14px] mx-auto transition;
+  }
 }

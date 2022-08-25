@@ -2,7 +2,6 @@ import Image from 'next/image'
 import React, { useState } from 'react'
 import { BsStarFill } from 'react-icons/bs'
 
-import { classNames } from '~/utils/classNames'
 import { ICategory, ILesson, IUser } from '~/data/interfaces'
 import LessonConfirmationDialog from './LessonConfirmationDialog'
 
@@ -21,14 +20,13 @@ const CategoryCard: React.FC<Props> = ({ category, author, delay }): JSX.Element
 
   const is_already_taken: any = get_author_lessons?.filter(value => value)
 
+  const defaultNumberOfStars = [0,1,2,3,4]
+
   return (
     <section className="section-sm">
       <div className="flex flex-col lg:flex-row lg:gap-x-[33px] gap-y-24">
         <div
-          className={classNames(
-            'w-full max-w-[368px] px-[18px] pb-[26px] lg:px-[28px] lg:pb-[38px] bg-white',
-            'hover:shadow-primary flex flex-col rounded-[14px] mx-auto transition'
-          )}
+          className="category-card"
           data-aos="fade-up"
           data-aos-delay={`${400+(delay+200)}`}
         >
@@ -52,9 +50,8 @@ const CategoryCard: React.FC<Props> = ({ category, author, delay }): JSX.Element
             <p className="line-clamp-4">{category.description}</p>
           </div>
           <div className="flex items-center justify-between mt-8 mb-2 lg:mb-0">
-            {/* stars */}
             <div className="flex gap-x-2 text-red-400">
-              {[0,1,2,3,4].map((i) => <BsStarFill key={i} />)}
+              {defaultNumberOfStars.map((i) => <BsStarFill key={i} />)}
             </div>
             <button
               className="btn-sm btn-primary disabled:bg-opacity-50"

@@ -23,9 +23,7 @@ const Header: React.FC<Props> = ({ user, actions: { logout } }): JSX.Element => 
     <header className="bg-white py-5 px-5 shadow-primary transition-all duration-500">
       <div className="flex items-center justify-between max-w-6xl mx-auto">
         <div className="flex items-center">
-          {/* Logo */}
           <Link href="/dashboard">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
             <a>
               <img 
                 src={Logo} 
@@ -34,14 +32,12 @@ const Header: React.FC<Props> = ({ user, actions: { logout } }): JSX.Element => 
               />
             </a>
           </Link>
-          {/* nav */}
           <div className='hidden lg:flex'>
             <Nav />
           </div>
         </div>
         <div className='flex items-center'>
           <MenuToggle user={user} logout={logout} />
-          {/* nav mobile */}
           <NavMobile />
         </div>
       </div>
