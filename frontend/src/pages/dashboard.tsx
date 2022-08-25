@@ -11,6 +11,7 @@ import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/userLayout'
 import { classNames } from '~/utils/classNames'
 import { IAnswer, ILesson } from '~/data/interfaces'
+import { authProtected } from '~/utils/auth-protected'
 import { defaultAvatar } from '~/helpers/defaultAvatar'
 import DashboardList from '~/components/user/DashboardList'
 import LessonLearnedDialog from '~/components/user/LessonLearnedDialog'
@@ -130,4 +131,4 @@ const Dashboard: NextPage = (): JSX.Element => {
   )
 }
 
-export default Dashboard
+export default authProtected(Dashboard)

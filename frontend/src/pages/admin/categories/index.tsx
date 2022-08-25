@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import axios from '~/lib/axios'
 import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/adminLayout'
+import UnAuthorized from '~/utils/unauthorized'
 import Pagination from '~/components/admin/Pagination'
 import { adminProtected } from '~/utils/admin-protected'
 import CategoryList from '~/components/admin/CategoryList'
@@ -41,6 +42,8 @@ const Categories: NextPage = (): JSX.Element => {
           })
     }
   }
+
+  if (categories?.status === 419) return <UnAuthorized message={categories?.message} />
 
   return (
     <Layout metaTitle="Categories">

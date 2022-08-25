@@ -11,6 +11,7 @@ import axios from '~/lib/axios'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
 import { classNames } from '~/utils/classNames'
+import UnAuthorized from '~/utils/unauthorized'
 import { QuestionFormValues } from '~/data/types'
 import { ICategory, IChoice } from '~/data/interfaces'
 import ChooseFields from '~/components/admin/ChooseFields'
@@ -26,6 +27,8 @@ const QuestionCreate: NextPage = (): JSX.Element => {
     refreshInterval: 1000,
     revalidateOnMount: true
   })
+
+  if (categories?.status === 419) return <UnAuthorized message={categories?.message} />
 
 
   /**
