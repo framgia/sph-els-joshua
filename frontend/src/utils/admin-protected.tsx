@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 import React, { useEffect } from 'react'
 
 import { useAuth } from '~/hooks/auth'
-import { Spinner } from '~/utils/Spinner'
+import UnAuthorized from './unauthorized'
 
 export const adminProtected = (Comp: any) => {
   return function AuthProtected(props: any) {
@@ -28,12 +28,7 @@ export const adminProtected = (Comp: any) => {
       isAuthenticatedAdmin()
     }, [admin])
     
-    if (admin?.is_admin === 0) return (
-      <div className="flex flex-col items-center justify-center space-y-4 min-h-screen">
-        <p className="text-xl font-bold text-red-500 uppercase">You are unauthorized to access this page.</p>
-        <Spinner className="w-8 h-8 text-red-500 stroke-2" />
-      </div>
-    )
+    if (admin?.is_admin === 0) return <UnAuthorized message="You are not authorized to access this page" />
 
     return <Comp {...props} />
   }

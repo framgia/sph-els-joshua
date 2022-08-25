@@ -18,7 +18,10 @@ class Administrator
     public function handle(Request $request, Closure $next)
     {
         if (auth()->user()->is_admin !== 1) {
-            abort(Response::HTTP_FORBIDDEN);
+            return response()->json([
+                'message' => 'You are not authorized to access this page!', 
+                'status' => 419
+            ]);
         }
         return $next($request);
     }

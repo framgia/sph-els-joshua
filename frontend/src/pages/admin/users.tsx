@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 
 import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/adminLayout'
+import UnAuthorized from '~/utils/unauthorized'
 import UserList from '~/components/admin/UserList'
 import Pagination from '~/components/admin/Pagination'
 import { adminProtected } from '~/utils/admin-protected'
@@ -26,6 +27,8 @@ const Users: NextPage = (): JSX.Element => {
   const pageCount = Math.ceil(users?.data?.length / userPerPage)
 
   const changePage = ({ selected }: { selected: number }): void => setPageNumber(selected)
+
+  if (users?.status === 419) return <UnAuthorized message={users?.message} />
 
   return (
     <Layout metaTitle="Users">
