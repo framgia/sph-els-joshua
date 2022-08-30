@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('question_id');
             $table->string('value');
+            $table->boolean('is_correct')->default(false);
             $table->timestamps();
 
             $table->foreign('question_id')

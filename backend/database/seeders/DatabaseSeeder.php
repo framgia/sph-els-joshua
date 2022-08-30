@@ -34,20 +34,19 @@ class DatabaseSeeder extends Seeder
 
         // Japanese Zone
         $category = Category::create([
-                    'title' => 'Japanse',
+                    'title' => 'Japanese Language',
                     'description' => Lorem::text()
                 ]);
 
         // Question 1
         $question = $category->questions()->save(
             new Question([
-                'value' => 'Ato dorekurai kakari mas ka?',
-                'choice_id' => 1
+                'value' => 'Ato dorekurai kakari mas ka?'
             ])
         );
         // Question 1 with Choices
         $question->choices()->saveMany([
-            new Choice(['value' => 'How long will it take?']),
+            new Choice(['value' => 'How long will it take?', 'is_correct' => true]),
             new Choice(['value' => 'Once again please.']),
             new Choice(['value' => 'Welcom, thank you for coming'])
         ]);
@@ -55,15 +54,14 @@ class DatabaseSeeder extends Seeder
         // Question 2
         $question2 = $category->questions()->save(
             new Question([
-                'value' => 'Youkoso okoshi kudasaimashita',
-                'choice_id' => 2
+                'value' => 'Youkoso okoshi kudasaimashita'
             ])
         );
 
         // Question 2 with Choices
         $question2->choices()->saveMany([
             new Choice(['value' => 'Please enjoy your stay']),
-            new Choice(['value' => 'Welcom, thank you for coming']),
+            new Choice(['value' => 'Welcom, thank you for coming', 'is_correct' => true]),
             new Choice(['value' => 'How long will it take?']),
             new Choice(['value' => "I don't understand."])
         ]);
@@ -71,8 +69,7 @@ class DatabaseSeeder extends Seeder
         // Question 3
         $question3 = $category->questions()->save(
             new Question([
-                'value' => 'Kinishinai de!',
-                'choice_id' => 3
+                'value' => 'Kinishinai de!'
             ])
         );
 
@@ -80,21 +77,20 @@ class DatabaseSeeder extends Seeder
         $question3->choices()->saveMany([
             new Choice(['value' => "That's okay."]),
             new Choice(['value' => 'Welcom, thank you for coming']),
-            new Choice(['value' => 'No worries.']),
+            new Choice(['value' => 'No worries.', 'is_correct' => true]),
             new Choice(['value' => "Noted./Certainly"])
         ]);
 
         // Question 4
         $question4 = $category->questions()->save(
             new Question([
-                'value' => 'Daijoubu desu',
-                'choice_id' => 1
+                'value' => 'Daijoubu desu'
             ])
         );
 
         // Question 4 with Choices
         $question4->choices()->saveMany([
-            new Choice(['value' => "That's okay."]),
+            new Choice(['value' => "That's okay.", 'is_correct' => true]),
             new Choice(['value' => "That's nice!"]),
             new Choice(['value' => 'Is there something wrong?']),
             new Choice(['value' => "Noted./Certainly"])
@@ -106,50 +102,47 @@ class DatabaseSeeder extends Seeder
 
         // Waray waray
         $category = Category::create([
-            'title' => 'Waray-waray',
+            'title' => 'Waray-waray Language',
             'description' => Lorem::text()
         ]);
 
         // Question 1
         $question = $category->questions()->save(
             new Question([
-                'value' => 'Maupay na Aga',
-                'choice_id' => 2
+                'value' => 'Maupay na Aga'
             ])
         );
         // Question 1 with Choices
         $question->choices()->saveMany([
             new Choice(['value' => 'Maayong gabie']),
-            new Choice(['value' => 'Maayong buntag']),
+            new Choice(['value' => 'Maayong buntag', 'is_correct' => true]),
             new Choice(['value' => 'Maayong hapon'])
         ]);
 
         // Question 2
         $question = $category->questions()->save(
             new Question([
-                'value' => 'Maupay na Kulop',
-                'choice_id' => 3
+                'value' => 'Maupay na Kulop'
             ])
         );
         // Question 2 with Choices
         $question->choices()->saveMany([
             new Choice(['value' => 'Thank you']),
             new Choice(['value' => 'Maayong buntag']),
-            new Choice(['value' => 'Good afternoon']),
+            new Choice(['value' => 'Good afternoon', 'is_correct' => true]),
             new Choice(['value' => 'Good evening'])
         ]);
 
          // Question 3
          $question = $category->questions()->save(
             new Question([
-                'value' => 'Waray Sapayan',
-                'choice_id' => 4
+                'value' => 'Waray Sapayan'
             ])
         );
         // Question 3 with Choices
         $question->choices()->saveMany([
             new Choice(['value' => 'Good afternoon']),
-            new Choice(['value' => "You're Welcome"]),
+            new Choice(['value' => "You're Welcome", 'is_correct' => true]),
             new Choice(['value' => 'Good afternoon']),
             new Choice(['value' => 'Thank you so much'])
         ]);
@@ -158,21 +151,20 @@ class DatabaseSeeder extends Seeder
 
         // Waray waray
         $category = Category::create([
-            'title' => 'Ilonggo',
+            'title' => 'Ilonggo Language',
             'description' => Lorem::text()
         ]);
 
         // Question 1
         $question = $category->questions()->save(
             new Question([
-                'value' => 'Mayong gabi',
-                'choice_id' => 2
+                'value' => 'Mayong gabi'
             ])
         );
         // Question 1 with Choices
         $question->choices()->saveMany([
             new Choice(['value' => 'Good afternoon']),
-            new Choice(['value' => 'Good evening']),
+            new Choice(['value' => 'Good evening', 'is_correct' => true]),
             new Choice(['value' => 'Thank you']),
             new Choice(['value' => 'Thank you so much'])
         ]);
@@ -180,14 +172,13 @@ class DatabaseSeeder extends Seeder
         // Question 2
         $question = $category->questions()->save(
             new Question([
-                'value' => 'Mayong gabi',
-                'choice_id' => 2
+                'value' => 'Mayong gabi'
             ])
         );
         // Question 2 with Choices
         $question->choices()->saveMany([
             new Choice(['value' => 'Good afternoon']),
-            new Choice(['value' => 'Good evening']),
+            new Choice(['value' => 'Good evening', 'is_correct' => true]),
             new Choice(['value' => 'Thank you']),
             new Choice(['value' => 'Thank you so much'])
         ]);
@@ -195,8 +186,7 @@ class DatabaseSeeder extends Seeder
         // Question 3
         $question = $category->questions()->save(
             new Question([
-                'value' => 'Wala problema',
-                'choice_id' => 4
+                'value' => 'Wala problema'
             ])
         );
         // Question 3 with Choices
@@ -204,7 +194,7 @@ class DatabaseSeeder extends Seeder
             new Choice(['value' => 'Thank you so much']),
             new Choice(['value' => 'Good evening']),
             new Choice(['value' => 'Thank you']),
-            new Choice(['value' => "You're Welcome"])
+            new Choice(['value' => "You're Welcome", 'is_correct' => true])
         ]);
         
     }

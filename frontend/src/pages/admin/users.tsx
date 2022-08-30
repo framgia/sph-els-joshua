@@ -10,7 +10,7 @@ import Pagination from '~/components/admin/Pagination'
 import { adminProtected } from '~/utils/admin-protected'
 
 const Users: NextPage = (): JSX.Element => {
-  const { data: users } = useSWR('/api/users', async () => fetcher('/api/users'), {
+  const { data: users } = useSWR('/api/users', fetcher, {
     refreshInterval: 1000,
     revalidateOnMount: true
   })

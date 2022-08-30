@@ -37,7 +37,8 @@ const QuestionCreate: NextPage = (): JSX.Element => {
   const [choices, setChoices] = useState<IChoice[]>([
     {
       id: uuidv4(),
-      value: ''
+      value: '',
+      is_correct: false
     }
   ])
   
@@ -76,7 +77,7 @@ const QuestionCreate: NextPage = (): JSX.Element => {
   /**
     * This will add dynamic choice field
    */
-  const handleAddField = (): void => setChoices([...choices, { id: uuidv4(), value: '' }])
+  const handleAddField = (): void => setChoices([...choices, { id: uuidv4(), value: '', is_correct: false }])
 
     /**
     * This will Save all the data seelcted
@@ -84,13 +85,19 @@ const QuestionCreate: NextPage = (): JSX.Element => {
   const handleSave = async (data: QuestionFormValues): Promise<void> => {
     const { category_id, value, choice_id } = data
 
+    const newChoices = choices.map((choice, i) => {
+      return {
+        ...choice,
+        is_correct: (i+1) == choice_id
+      }
+    })
+
     await 
       axios
         .post('/api/questions', {
           category_id,
           value,
-          choice_id,
-          choices
+          choices: newChoices
         })
         .then(() => {
           toast.success('Added Question Successfully!')
@@ -150,7 +157,7 @@ const QuestionCreate: NextPage = (): JSX.Element => {
                   disabled={isSubmitting}
                   {...register('choice_id', { required: 'Right Answer is required'})}
                 >
-                {choices?.map(({ id, value }: IChoice, i: number) => <option key={id} value={i+1}>{value}</option>)}
+                {choices?.map(({ id, value }: IChoice, i: number) => <option key={id} defaultValue={i+1}>{value}</option>)}
                 </select>
                 {errors?.choice_id && <span className="error">{`${errors?.choice_id?.message}`}</span>}
               </div>

@@ -15,7 +15,7 @@ const Categories: NextPage = (): JSX.Element => {
     middleware: 'auth'
   })
   
-  const { data: categories } = useSWR('/api/category-privilege', async () => fetcher('/api/category-privilege'), {
+  const { data: categories } = useSWR('/api/category-privilege', fetcher, {
     refreshInterval: 1000,
     revalidateOnMount: true
   })

@@ -24,6 +24,7 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
   const [category, setCategory] = useState<ICategory>()
   const [question, setQuestion] = useState<IQuestion>()
   const [choices, setChoices] = useState<IChoice[]>([])
+  const [selectedChoice, setSelectedChoice] = useState<any>(0)
 
   useEffect(() => {
     const getQuestionById = async () => {
@@ -76,16 +77,23 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
   /**
     * This will add dynamic choice field
     */
-  const handleAddField = (): void => setChoices([...choices, { id: uuidv4(), value: '' }])
+  const handleAddField = (): void => setChoices([...choices, { id: uuidv4(), value: '', is_correct: false }])
 
   const handleUpdate = async (data: QuestionFormValues): Promise<void> => {
-    const { value, choice_id } = data
+    const { value } = data
+
+    const newChoices = choices.map((choice, i) => {
+      return {
+        ...choice,
+        is_correct: (i+1) === parseInt(selectedChoice)
+      }
+    })
+
     await 
       axios
-        .patch(`/api/questions/${id}`, {
+        .put(`/api/questions/${id}`, {
           value,
-          choice_id,
-          choices
+          choices: newChoices
         })
         .then(() => {
           toast.success('Updated Category Successfully!')
@@ -144,9 +152,10 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
                   tabIndex={1}
                   disabled={isSubmitting}
                   {...register('choice_id', { required: 'Right Answer is required'})}
+                  onChange={(e) => setSelectedChoice(e.target.value)}
                 >
-                {choices?.map(({ id, value }: IChoice, i: number) => 
-                  <option key={id} value={i+1} selected={question?.choice_id == i+1}>{value}</option>
+                {choices?.map(({ id, value, is_correct }: IChoice, i: number) => 
+                  <option key={id} value={i+1} selected={is_correct}>{value}</option>
                 )}
                 </select>
                 {errors?.choice_id && <span className="error">{`${errors?.choice_id?.message}`}</span>}

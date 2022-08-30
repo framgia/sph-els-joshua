@@ -29,7 +29,7 @@ const Layout: React.FC<Props> = (props) => {
   
   useEffect(() => {
     const isAuthenticatedAdmin = async () => {
-      if (admin?.is_admin === 0) {
+      if (!admin?.is_admin) {
         await logout()
         return null
       }

@@ -6,17 +6,14 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
+use App\Models\Category;
 use App\Models\Lesson;
 use Illuminate\Support\Facades\Auth;
 
 class UserPrivilegeController extends Controller
 {
     use ApiResponser;
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $users = User::with(['following', 'followers'])
@@ -27,67 +24,68 @@ class UserPrivilegeController extends Controller
         return $this->showAll($users);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        $user  = User::with([
+        $user = User::with([
             'following', 
             'followers',
-            'lessons' => [
-                'answers' => [
-                    'question' => [
-                        'category'
-                    ]
-                ]
-            ],
             'activity_logs'
         ])->findOrFail($id);
 
         $activities = [];
-        foreach($user->activity_logs as $key => $value)
+        foreach($user->activity_logs as $activity)
         {
-            if ($value['activity_type'] === 'Follow')
+            $name = User::findOrFail($activity->user_id)->name;
+
+            $name = $activity->user_id === Auth::user()->id ? 'You' : explode(' ', $name, 2)[0];
+            
+            if ($activity['activity_type'] === 'Follow')
             {
-                $following_user = User::find($value->activity_id);
-                $activities[] = [
-                    'following_user' => $following_user,
-                    'created_at' => $value->created_at
-                ];
+                $name .= ' <b className="font-bold">followed</b> ' . User::findOrFail($activity->activity_id)->name;
             }
-            if ($value['activity_type'] === 'Lesson')
+
+            if ($activity['activity_type'] === 'Lesson')
             {
-                $user_lesson = Lesson::with([
-                    'answers' => [
-                        'question' => [
-                            'category'
-                        ]
-                    ]
-                ])->find($value->activity_id);
-                $activities[] = [
-                    'lessons' => $user_lesson,
-                    'created_at' => $value->created_at
-                ];
+                $lesson = Lesson::findOrFail($activity->activity_id);
+
+                $get_correct_answer = [];
+                foreach ($lesson->answers as $value)
+                {
+                    if ($value['is_correct'])
+                    {
+                        $get_correct_answer[] = $value['is_correct'];
+                    }
+                }
+                
+                $name .= ' <b>learned</b> ' . 
+                        count($get_correct_answer)  . ' of ' . 
+                        count($lesson->answers) . ' in ' . 
+                        Category::findOrFail($lesson->category_id)->title;
+                
             }
+
+            $activities[] = [
+                'activity_title' => $name,
+                'created_at' => $activity->created_at
+            ];
         }
 
         return response()->json([
-            'data' => $user,
-            'activities' => $activities
+            'data' => [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'avatar_url' => $user->avatar_url,
+                    'followings' => $user->following,
+                    'followers' => $user->followers,
+                    'count_followings' => count($user->following),
+                    'count_followers' => count($user->followers)
+                ],
+                'activities' => $activities
+            ]
         ]);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);

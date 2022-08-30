@@ -1,3 +1,4 @@
+import { KeyedMutator } from 'swr'
 import { toast } from 'react-toastify'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
@@ -10,9 +11,10 @@ import { UserDetailsFormValues } from '~/data/types'
 
 type Props = {
   user: IUser
+  mutate: KeyedMutator<any>
 }
 
-const UserDetailsForm: React.FC<Props> = ({ user }): JSX.Element => {
+const UserDetailsForm: React.FC<Props> = ({ user, mutate }): JSX.Element => {
   const [formError, setFormError]: any = useState()
 
   const {
@@ -25,7 +27,10 @@ const UserDetailsForm: React.FC<Props> = ({ user }): JSX.Element => {
     await 
       axios
         .patch(`/api/user-privilege/${user?.id}`, data)
-        .then(() => toast.success('Your Details Updated Successfully!'))
+        .then(async () => {
+          await mutate()
+          toast.success('Your Details Updated Successfully!')
+        })
         .catch(error => {
           if (error.response.status !== 422) throw EvalError
           setFormError(Object.values(error?.response?.data?.error).flat())

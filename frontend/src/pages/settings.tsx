@@ -1,6 +1,7 @@
 import React from 'react'
 import { NextPage } from 'next'
 import { toast } from 'react-toastify'
+import ReactAvatar from 'react-avatar'
 import { useForm } from 'react-hook-form'
 
 import axios from '~/lib/axios'
@@ -10,7 +11,6 @@ import Layout from '~/layouts/userLayout'
 import { Spinner } from '~/utils/Spinner'
 import { classNames } from '~/utils/classNames'
 import { authProtected } from '~/utils/auth-protected'
-import { defaultAvatar } from '~/helpers/defaultAvatar'
 import UserDetailsForm from '~/components/user/UserDetailsForm'
 import UserChangePasswordForm from '~/components/user/UserChangePasswordForm'
 
@@ -19,7 +19,7 @@ type Props = {
 }
 
 const Settings: NextPage = (): JSX.Element => {
-  const { user } = useAuth({
+  const { user, mutate } = useAuth({
     middleware: 'auth'
   })
 
@@ -38,7 +38,10 @@ const Settings: NextPage = (): JSX.Element => {
     await 
       axios
         .post('/api/upload-avatar', form)
-        .then(() => toast.success('Updated Profile Successfully!'))
+        .then(async () => {
+          await mutate()
+          toast.success('Updated Profile Successfully!')
+        })
         .catch(err => console.log(err))
   }
 
@@ -58,15 +61,19 @@ const Settings: NextPage = (): JSX.Element => {
           <div className="mt-2 w-full md:w-1/2 min-h-[20vh]">
             <div className="flex flex-col items-center pb-3">
               <div className="inline-flex rounded-full shadow-lg">
-                <Avatar 
-                  url={`${
-                    user.avatar_url === null ? 
-                    defaultAvatar : 
-                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`
-                  }`}
-                  width={150}
-                  height={150}
-                />
+                {!user?.avatar_url ? (
+                  <ReactAvatar 
+                    name={user?.name} 
+                    size="150" 
+                    round="100%" 
+                  />
+                ) : (
+                  <Avatar 
+                    url={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`}
+                    width={150}
+                    height={150}
+                  />
+                )}
               </div>
               <form onSubmit={handleSubmit(handleUpdate)} className="flex flex-col">
                 <input 
@@ -99,7 +106,7 @@ const Settings: NextPage = (): JSX.Element => {
             >
               <Title>Your Details</Title>
               <Card>
-                <UserDetailsForm user={user} />
+                <UserDetailsForm user={user} mutate={mutate} />
               </Card>
             </section>
             <section 

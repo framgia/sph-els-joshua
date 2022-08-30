@@ -24,8 +24,7 @@ class QuestionFactory extends Factory
     public function definition()
     {
         return [
-            'value' => fake()->text(35),
-            'choice_id' =>  fake()->numberBetween(1, 4)
+            'value' => fake()->text(35)
         ];
     }
 }

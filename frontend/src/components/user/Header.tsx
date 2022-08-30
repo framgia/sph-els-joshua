@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import ReactAvatar from 'react-avatar'
 import { useRouter } from 'next/router'
 import React, { Fragment } from 'react'
 import { Menu, Transition } from '@headlessui/react'
@@ -8,7 +9,6 @@ import NavMobile from './NavMobile'
 import Avatar from '~/components/Avatar'
 import { IUser } from '~/data/interfaces'
 import { classNames } from '~/utils/classNames'
-import { defaultAvatar } from '~/helpers/defaultAvatar'
 
 type Props = {
   user: IUser
@@ -50,7 +50,7 @@ const MenuToggle = ({ user, logout }: { user: IUser, logout: () => void }) => {
   const subLink = [
     {
       name: 'Profile',
-      href: '/profile'
+      href: `/profile/${user?.id}`
     },
     {
       name: 'Settings',
@@ -69,15 +69,19 @@ const MenuToggle = ({ user, logout }: { user: IUser, logout: () => void }) => {
           )}
         >
           <span className="sr-only">Open user menu</span>
-          <Avatar 
-            url={`${
-              user?.avatar_url === null ? 
-              defaultAvatar : 
-              `${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`
-            }`}
-            width={32}
-            height={32}
-          />
+          {user?.avatar_url === null ? (
+            <ReactAvatar 
+              name={user?.name} 
+              size="32" 
+              round="100%" 
+            />
+          ) : (
+            <Avatar 
+              url={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`}
+              width={32}
+              height={32}
+            />
+          )}
           <p>{user?.name}</p>
         </Menu.Button>
       </div>
@@ -95,16 +99,17 @@ const MenuToggle = ({ user, logout }: { user: IUser, logout: () => void }) => {
         )}>
           {subLink?.map(({ name, href }, i) => (
             <Menu.Item key={i}>
-              <Link href={href}>
-                <a className={classNames(
-                  'block px-4 py-2 text-sm',
+              <button
+                onClick={() => router.push(href)}
+                className={classNames(
+                  'w-full text-left px-4 py-2 text-sm',
                   router.pathname.includes(href) ? 
                   'bg-red-500 text-white hover:text-white' : 
                   'hover:bg-red-100 text-red-900'
-                )}>
-                  {name}
-                </a>
-              </Link>
+                )}
+              >
+                {name}
+              </button>
             </Menu.Item>
           ))}
           <Menu.Item>

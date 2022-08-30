@@ -1,18 +1,19 @@
 import React from 'react'
 import moment from 'moment'
-import Link from 'next/link'
+import ReactAvatar from 'react-avatar'
 
 import Avatar from './../Avatar'
-import { IAnswer, IUser } from '~/data/interfaces'
-import { defaultAvatar } from '~/helpers/defaultAvatar'
+import { IUser } from '~/data/interfaces'
 
 type Props = {
-  activities: any[]
+  activities: {
+    activity_title: string
+    created_at: string
+  }[]
   user: IUser
-  isAuthor: boolean
 }
 
-const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Element => {
+const ActivityList: React.FC<Props> = ({ activities, user }): JSX.Element => {
   return (
     <>
       {!activities?.length ? (
@@ -21,52 +22,29 @@ const ActivityList: React.FC<Props> = ({ activities, user, isAuthor }): JSX.Elem
         </div>
       ) : (
         <>
-          {activities?.map((activity, i: number) => {
-            const getCountCorrectAnswer = activity.lessons?.answers?.filter((answer: IAnswer) => answer?.choice_id === answer?.question?.choice_id).length
-            const getQuestionCount = activity.lessons?.answers?.length
-            const questions = activity.lessons?.answers?.map((answer: IAnswer) => answer?.question)
-            const getCategoryTitle = questions?.map((cat: any) => cat?.category?.title)
-
-            return (
-              <div key={i} className="pt-2 flex items-center space-x-4">
+          {activities.map(({ activity_title, created_at }, i) => (
+            <div key={i} className="pt-2 flex items-center space-x-4">
+              {!user?.avatar_url ? (
+                <ReactAvatar 
+                  name={user?.name} 
+                  size="40" 
+                  round="100%" 
+                />
+              ) : (
                 <Avatar 
-                  url={`${
-                    user.avatar_url === null ? 
-                    defaultAvatar : 
-                    `${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`
-                  }`}
+                  url={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`}
                   width={40}
                   height={40}
                 />
-                <div className="text-sm">
-                  <div className="flex items-center space-x-2">
-                    <a href="#" className="link text-red-500 mr-2 line-clamp-2">
-                      {isAuthor ? 'You' : user?.name}
-                    </a> 
-                    {activity.following_user ? 'followed' : 'learned'} 
-                    {activity.following_user && (
-                      <Link href={`/profile/${activity.following_user.id}`}>
-                        <a className="link text-red-500">
-                          {activity.following_user.name}
-                        </a>
-                      </Link>
-                    )}
-                    {activity.lessons && (
-                      <div className="flex">
-                        <span>{`${getCountCorrectAnswer} of ${getQuestionCount} in `}</span>
-                        <Link href={`/results/${activity?.lessons?.id}`}>
-                          <a className="ml-2 text-red-500 link">
-                            {getCategoryTitle[0]}
-                          </a>
-                        </Link>
-                      </div>
-                    )}
-                  </div>
-                  <span className="text-xs font-medium text-gray-600">{moment(activity.created_at).fromNow()}</span>
+              )}
+              <div className="text-sm">
+                <div className="flex items-center space-x-2">
+                  <span className="mr-2 line-clamp-2" dangerouslySetInnerHTML={{__html: activity_title }}></span> 
                 </div>
+                <span className="text-xs font-medium text-gray-600">{moment(created_at).fromNow()}</span>
               </div>
-            )
-          })}
+            </div>
+          ))}
         </>
       )}
     </>

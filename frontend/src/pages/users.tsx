@@ -1,35 +1,33 @@
 import useSWR from 'swr'
 import Link from 'next/link'
 import { NextPage } from 'next'
+import ReactAvatar from 'react-avatar'
 import React, { useState } from 'react'
 import { MdVerified } from 'react-icons/md'
 
 import { useAuth } from '~/hooks/auth'
 import { fetcher } from '~/lib/fetcher'
 import Avatar from '~/components/Avatar'
-import { IUser } from '~/data/interfaces'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/userLayout'
+import { IProfile } from '~/data/interfaces'
 import { useFollow } from '~/helpers/follow'
 import { classNames } from '~/utils/classNames'
 import { authProtected } from '~/utils/auth-protected'
-import { defaultAvatar } from '~/helpers/defaultAvatar'
 
 const UserList: NextPage = (): JSX.Element => {
   const [loading, setLoading] = useState<boolean>(false)
   
   const { followStatus, handleFollow } = useFollow()
-  const { user: author } = useAuth({
-    middleware: 'auth'
-  })
+  const { user: author } = useAuth({ middleware: 'auth' })
   
-  const { data: users, mutate } = useSWR('/api/user-privilege', async () => fetcher('/api/user-privilege'), {
+  const { data: users, mutate } = useSWR('/api/user-privilege', fetcher, {
     refreshInterval: 1000,
     revalidateOnMount: true
   })
 
   return (
-    <Layout metaTitle="Accounts">
+    <Layout metaTitle="Users">
       <section
         data-aos="fade-up"
         data-aos-delay="400"
@@ -42,7 +40,7 @@ const UserList: NextPage = (): JSX.Element => {
             </div>
           ) : (
             <>
-              {users?.data?.map((user: IUser, i: number) => (
+              {users?.data?.map((user: IProfile, i: number) => (
                 <li 
                   key={i}
                   className={classNames(
@@ -61,15 +59,19 @@ const UserList: NextPage = (): JSX.Element => {
                     <div className="relative rounded-full overflow-hidden">
                       <Link href={`/profile/${user?.id}`}>
                         <a className="link text-gray-900 flex flex-row items-center space-x-1">
-                          <Avatar
-                            url={`${
-                              user.avatar_url === null ? 
-                              defaultAvatar : 
-                              `${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`
-                            }`}
-                            width={40}
-                            height={40}
-                          />
+                          {!user?.avatar_url ? (
+                            <ReactAvatar 
+                              name={user?.name} 
+                              size="40" 
+                              round="100%" 
+                            />
+                          ) : (
+                            <Avatar 
+                              url={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${user?.avatar_url}`}
+                              width={40}
+                              height={40}
+                            />
+                          )}
                         </a>
                       </Link>
                     </div>

@@ -12,11 +12,7 @@ use Illuminate\Support\Facades\DB;
 class QuestionController extends Controller
 {
     use ApiResponser;
-     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
         $questions = Question::latest()
@@ -26,12 +22,6 @@ class QuestionController extends Controller
         return $this->showAll($questions);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $categoryRules = [
@@ -49,6 +39,7 @@ class QuestionController extends Controller
         {
             $temp['question_id'] = $newQuestion->id;
             $temp['value'] = $item['value'];
+            $temp['is_correct'] = $item['is_correct'];
             $newChoices[] = $temp;
         }
 
@@ -71,7 +62,6 @@ class QuestionController extends Controller
     public function update(Request $request, Question $question)
     {
         $question->value = $request->input('value');
-        $question->choice_id = $request->input('choice_id'); 
         $question->save();
         
         $this->updateChoices($request->input('choices'));
@@ -80,36 +70,26 @@ class QuestionController extends Controller
     }
 
     private function updateChoices(array $choices): void {
-        $caseString = 'case id';
+        $caseValue = 'case';
+        $caseIsCorrect = 'case';
         $ids = '';
         foreach ($choices as $value) {
             $id = $value['id'];
-            $displayIndex = $value['value'];
-            $caseString .= " when $id then \"$displayIndex\"";
+            $displayValue = $value['value'];
+            $displayIsCorrect = $value['is_correct'] == 0 ? 0 : 1;
+            $caseValue .= " when id = $id then \"$displayValue\"";
+            $caseIsCorrect .= " when id = $id then $displayIsCorrect";
             $ids .= " $id,";
         }
         $ids = trim($ids, ',');
-
-        DB::update("UPDATE choices SET value = $caseString END WHERE id IN ($ids)");
+        DB::update("UPDATE choices SET value = $caseValue END, is_correct = $caseIsCorrect END WHERE id IN ($ids)");
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Question $choice)
     {
         return $this->showOne($choice);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Category  $category
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(Question $question)
     {
         $question->delete();

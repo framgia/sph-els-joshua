@@ -7,60 +7,78 @@ use App\Models\ActivityLog;
 use App\Models\Category;
 use App\Models\Lesson;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
-    public function show($id)
+    public function index()
     {
-        $following_user = User::findOrFail($id)->following;
-        $lessonsCount = count(User::findOrFail($id)->lessons);
+        $user = User::with(['following', 'lessons'])->findOrFail(Auth::user()->id);
 
         $ids = [];
-        foreach($following_user as $user)
+        foreach($user->following as $usr)
         {
-            $ids[] = $user->id;
+            $ids[] = $usr->id;
         }
-        array_push($ids, $id);
+        array_push($ids, $user->id);
     
         $user_activities = ActivityLog::whereIn('user_id', $ids)->orderBy('created_at', 'desc')->get();
     
         $activities = [];
+        $get_all_correct_lessons = [];
         foreach($user_activities as $activity)
         {
             $name = User::findOrFail($activity->user_id)->name;
 
-            $name = $activity->user_id == $id ? 'You' : $name;
+            $name = $activity->user_id == Auth::user()->id ? 'You' : $name;
             
             if ($activity['activity_type'] === 'Follow')
             {
-                $name .= ' followed ' . User::findOrFail($activity->activity_id)->name;
+                $name .= ' <b className="font-bold">followed</b> ' . User::findOrFail($activity->activity_id)->name;
             }
             if ($activity['activity_type'] === 'Lesson')
             {
                 $lesson = Lesson::findOrFail($activity->activity_id);
-                $name .= ' learned ' . Category::findOrFail($lesson->category_id)->title;
+
+                $get_correct_answer = [];
+                foreach ($lesson->answers as $value)
+                {
+                    if ($value['is_correct'])
+                    {
+                        $get_correct_answer[] = $value['is_correct'];
+                    }
+
+                    if ($activity->user_id === Auth::user()->id && $value['is_correct'])
+                    {
+                        $get_all_correct_lessons[] = $value['is_correct'];
+                    }
+                }
+                
+                $name .= ' <b>learned</b> ' . 
+                        count($get_correct_answer)  . ' of ' . 
+                        count($lesson->answers) . ' in ' . 
+                        Category::findOrFail($lesson->category_id)->title;
             }
             
             $activities[] = [
-                'activity' => $name,
+                'activity_title' => $name,
                 'created_at' => $activity->created_at
             ];
         }
 
-        $user  = User::with([
-            'lessons' => [
-                'answers' => [
-                    'question' => [
-                        'category'
-                    ]
-                ]
-            ]
-        ])->findOrFail($id);
-
         return response()->json([
-            'data' => $user,
-            'activities' => $activities,
-            'totalLessons' => $lessonsCount
+            'data' => [
+                'user' => [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'avatar_url' => $user->avatar_url
+                ],
+                'lessons' => [
+                    'count_correct_lessons_answer' => count($get_all_correct_lessons),
+                    'count_lessons_taken' => count($user->lessons)
+                ],
+                'activities' => $activities
+            ]
         ]);
     }
 
