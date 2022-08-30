@@ -57,7 +57,10 @@ class UserPrivilegeController extends Controller
                     }
                 }
                 
-                $name .= ' <b className="font-bold">learned</b> ' . count($get_correct_answer)  . ' of ' . count($lesson->answers) . ' in ' . Category::findOrFail($lesson->category_id)->title;
+                $name .= ' <b>learned</b> ' . 
+                        count($get_correct_answer)  . ' of ' . 
+                        count($lesson->answers) . ' in ' . 
+                        Category::findOrFail($lesson->category_id)->title;
                 
             }
 

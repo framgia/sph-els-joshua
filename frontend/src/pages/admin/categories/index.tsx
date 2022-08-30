@@ -12,7 +12,7 @@ import { adminProtected } from '~/utils/admin-protected'
 import CategoryList from '~/components/admin/CategoryList'
 
 const Categories: NextPage = (): JSX.Element => {
-  const { data: categories, mutate } = useSWR('/api/categories', async () => fetcher('/api/categories'), {
+  const { data: categories, mutate } = useSWR('/api/categories', fetcher, {
     refreshInterval: 1000,
     revalidateOnMount: true
   })

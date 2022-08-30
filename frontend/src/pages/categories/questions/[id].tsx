@@ -39,10 +39,6 @@ const CategoryQuestions: NextPage = (): JSX.Element => {
     getCategoryQuestionsById()
   }, [id])
 
-  useEffect(() => {
-    
-  }, [categoryQuestions])
-
   const {
     register,
     handleSubmit,
@@ -91,7 +87,7 @@ const CategoryQuestions: NextPage = (): JSX.Element => {
 
   useEffect(() => {
     if (categoryQuestions) {
-      const newData = categoryQuestions?.questions?.map(() => {
+      const newData = categoryQuestions.questions?.map(() => {
         return {
           question_id: null,
           choice_id: null,

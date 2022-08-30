@@ -21,7 +21,7 @@ const UserList: NextPage = (): JSX.Element => {
   const { followStatus, handleFollow } = useFollow()
   const { user: author } = useAuth({ middleware: 'auth' })
   
-  const { data: users, mutate } = useSWR('/api/user-privilege', async () => fetcher('/api/user-privilege'), {
+  const { data: users, mutate } = useSWR('/api/user-privilege', fetcher, {
     refreshInterval: 1000,
     revalidateOnMount: true
   })

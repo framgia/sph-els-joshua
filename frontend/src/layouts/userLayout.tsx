@@ -21,7 +21,7 @@ const Layout: React.FC<Props> = ({ children, metaTitle }): JSX.Element => {
   return (
     <>
       <Head>
-        <title>ELearning | {metaTitle}</title>
+        <title key="title">{`ELearning | ${metaTitle}`}</title>
       </Head>
       {!router.pathname.includes('/categories/questions') && <Header user={user} actions={{ logout }} />}
       <main  className={classNames(

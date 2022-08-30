@@ -17,13 +17,15 @@ const UserProfile: NextPage = (): JSX.Element => {
   const { user: author } = useAuth({ middlware: 'auth' }) 
   const { id } = router.query
 
-  const { data: user, mutate } = useSWR(`/api/user-privilege/${id}`, async () => fetcher(`/api/user-privilege/${id}`), {
+  const { data, mutate } = useSWR(`/api/user-privilege/${id}`, fetcher, {
     refreshInterval: 1000,
     revalidateOnMount: true
   })
+  const user = data?.data?.user
+  const activities = data?.data?.activities
 
   return (
-    <Layout metaTitle={`${user ? user?.data?.user?.name : ''}`}>
+    <Layout metaTitle={`${user ? user?.name : ''}`}>
       <section className={classNames(
           'flex flex-col md:flex-row space-y-4 md:space-y-0',
           'md:space-x-4 overflow-hidden pt-5'
@@ -39,7 +41,7 @@ const UserProfile: NextPage = (): JSX.Element => {
         ) : (
           <>
             <ProfileCard 
-              user={user?.data?.user}
+              user={user}
               mutate={mutate} 
               isAuthor={author?.id === id} 
             />
@@ -53,8 +55,8 @@ const UserProfile: NextPage = (): JSX.Element => {
               </div>        
               <div className="pt-2 pb-4 px-6 divide-y space-y-2 max-h-[50vh] overflow-y-auto">
                 <ActivityList 
-                  activities={user?.data?.activities} 
-                  user={user?.data?.user} 
+                  activities={activities} 
+                  user={user} 
                 />
               </div>
             </section>
