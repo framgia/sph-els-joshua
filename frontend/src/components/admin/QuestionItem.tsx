@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { AiTwotoneEdit } from 'react-icons/ai'
 import { AiTwotoneDelete } from 'react-icons/ai'
 
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 
 type Props = {
   [question: string]: any 

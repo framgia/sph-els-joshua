@@ -24,13 +24,13 @@ class UserPrivilegeController extends Controller
         return $this->showAll($users);
     }
 
-    public function show($id)
+    public function show(User $user_privilege)
     {
-        $user = User::with([
+        $user = $user_privilege->with([
             'following', 
             'followers',
             'activity_logs'
-        ])->findOrFail($id);
+        ])->findOrFail($user_privilege->id);
 
         $activities = [];
         foreach($user->activity_logs as $activity)
@@ -86,22 +86,20 @@ class UserPrivilegeController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user_privilege)
     {
-        $user = User::findOrFail($id);
-        
-        $user->fill($request->only([
+        $user_privilege->fill($request->only([
             'name',
             'email'
         ]));
 
-        if ($user->isClean()) {
+        if ($user_privilege->isClean()) {
             return $this->errorResponse('You need to specify any different details to update.', 422);
         }
 
-        $user->save();
+        $user_privilege->save();
 
-        return $this->showOne($user);
+        return $this->showOne($user_privilege);
     }
     
 }

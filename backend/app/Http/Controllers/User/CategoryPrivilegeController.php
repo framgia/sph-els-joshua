@@ -19,13 +19,13 @@ class CategoryPrivilegeController extends Controller
         return $this->showAll($categories);
     }
 
-    public function show($id)
+    public function show(Category $category_privilege)
     {
-        $category  = Category::with([
+        $category  = $category_privilege->with([
             'questions' => [
                 'choices'
             ]
-        ])->findOrFail($id);
+        ])->findOrFail($category_privilege->id);
 
         return $this->showOne($category);
     }

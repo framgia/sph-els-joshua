@@ -9,7 +9,7 @@ import { fetcher } from '~/lib/fetcher'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
 import { ICategory } from '~/data/interfaces'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { CategoryFormValues } from '~/data/types'
 import ValidationError from '~/components/user/ValidationError'
 

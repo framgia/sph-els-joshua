@@ -4,8 +4,8 @@ import { BiMenu } from 'react-icons/bi'
 import { useRouter } from 'next/router'
 
 import { IHeaderLink } from '~/data/interfaces'
-import { classNames } from '~/utils/classNames'
 import { headerLinks } from '~/data/headerLinks'
+import { classNames } from '~/helpers/classNames'
 
 const NavMobile: React.FC = (): JSX.Element => {
   const router = useRouter()

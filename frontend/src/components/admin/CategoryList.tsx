@@ -4,7 +4,7 @@ import Caption from './Caption'
 import TableHead from './Tablehead'
 import { Spinner } from '~/utils/Spinner'
 import CategoryItem from './CategoryItem'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { ICategory, IThead } from '~/data/interfaces'
 
 type Props = {

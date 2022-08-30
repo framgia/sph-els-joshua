@@ -6,23 +6,13 @@ use App\Http\Controllers\User\UploadAvatar;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\User\FollowController;
 use App\Http\Controllers\User\LessonController;
+use App\Http\Controllers\User\ProfileController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\QuestionController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\UserPrivilegeController;
 use App\Http\Controllers\User\CategoryPrivilegeController;
 use App\Http\Controllers\User\UserChangePasswordController;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -42,4 +32,5 @@ Route::middleware(['auth'])->group(function () {
     Route::apiResource('lessons', LessonController::class, ['only' => ['store', 'show']]);
     Route::apiResource('dashboards', DashboardController::class, ['only' => ['index']]);
     Route::apiResource('upload-avatar', UploadAvatar::class, ['only' => ['store']]);
+    Route::apiResource('profiles', ProfileController::class, ['only' => ['index', 'show']]);
 });

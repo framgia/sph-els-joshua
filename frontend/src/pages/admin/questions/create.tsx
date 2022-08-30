@@ -8,22 +8,21 @@ import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import axios from '~/lib/axios'
+import { fetcher } from '~/lib/fetcher'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
-import { classNames } from '~/utils/classNames'
 import UnAuthorized from '~/utils/unauthorized'
+import { classNames } from '~/helpers/classNames'
 import { QuestionFormValues } from '~/data/types'
 import { ICategory, IChoice } from '~/data/interfaces'
 import ChooseFields from '~/components/admin/ChooseFields'
 import AuthValidationErrors from '~/components/AuthValidationErrors'
 
-const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
-
 const QuestionCreate: NextPage = (): JSX.Element => {
   const router = useRouter()
   const [formErrors, setFormErrors]: any[] = useState([])
 
-  const { data: categories } = useSWR('/api/categories', async () => fetcher('/api/categories'), {
+  const { data: categories } = useSWR('/api/categories', fetcher, {
     refreshInterval: 1000,
     revalidateOnMount: true
   })

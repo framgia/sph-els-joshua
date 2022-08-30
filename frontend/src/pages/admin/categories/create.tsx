@@ -7,7 +7,7 @@ import axios from '~/lib/axios'
 import { toast } from 'react-toastify'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { CategoryFormValues } from '~/data/types'
 import AuthValidationErrors from '~/components/AuthValidationErrors'
 

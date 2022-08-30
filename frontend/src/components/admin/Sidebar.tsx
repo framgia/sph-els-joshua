@@ -5,7 +5,7 @@ import { IoLogOut } from 'react-icons/io5'
 
 import { useAuth } from '~/hooks/auth'
 import { ISidebar } from '~/data/interfaces'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { sidebarLinks } from '~/data/sidebarList'
 
 type Props = {

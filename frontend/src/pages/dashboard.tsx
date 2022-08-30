@@ -1,30 +1,45 @@
 import React from 'react'
 import useSWR from 'swr'
 import Link from 'next/link'
-import { NextPage } from 'next'
 import ReactAvatar from 'react-avatar'
 import { AiFillCaretLeft } from 'react-icons/ai'
+import { GetStaticProps, InferGetStaticPropsType, NextPage } from 'next'
 
+import axios from '~/lib/axios'
 import { fetcher } from '~/lib/fetcher'
 import Avatar from '~/components/Avatar'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/userLayout'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { authProtected } from '~/utils/auth-protected'
 import DashboardList from '~/components/user/DashboardList'
 
-const Dashboard: NextPage = (): JSX.Element => {
-  const { data: dashboard } = useSWR('/api/dashboards', fetcher, {
-    refreshInterval: 1000,
-    revalidateOnMount: true
-  })
-  const user = { ...dashboard?.data?.user }
-  const lessons = { ...dashboard?.data?.lessons }
-  const activities = dashboard?.data?.activities
+type Props = {
+  fallbackData: string[]
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  const fallbackData = await fetcher('https://jsonplaceholder.typicode.com/todos/1')
+  return {
+    props: {
+      fallbackData
+    }
+  }
+}
+
+const Dashboard: NextPage<Props> = ({ fallbackData }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
+  // const { data: dashboard } = useSWR('/api/dashboards', fetcher, {
+  //   // refreshInterval: 1000,
+  //   // revalidateOnMount: true
+  // })
+  // const user = { ...dashboard?.data?.user }
+  // const lessons = { ...dashboard?.data?.lessons }
+  // const activities = dashboard?.data?.activities
 
   return (
     <Layout metaTitle="Dashboard"> 
-      <section className={classNames(
+      <pre>{JSON.stringify(fallbackData, null, 2)}</pre>
+      {/* <section className={classNames(
           'flex flex-col md:flex-row space-y-4 md:space-y-0',
           'md:space-x-4 overflow-hidden pt-5'
         )}
@@ -32,10 +47,11 @@ const Dashboard: NextPage = (): JSX.Element => {
         data-aos-delay="300"
         data-aos-duration="300"
       >
-        {!dashboard ? (
-            <div className="flex justify-center w-full py-8">
-              <Spinner className="w-6 h-6 text-red-500" />
-            </div>
+        {dashboard ? (
+            // <div className="flex justify-center w-full py-8">
+            //   <Spinner className="w-6 h-6 text-red-500" />
+            // </div>
+            <pre>{JSON.stringify(fallbackData, null, 2)}</pre>
           ) : (
             <>
               <div  
@@ -109,7 +125,7 @@ const Dashboard: NextPage = (): JSX.Element => {
               </section>
             </>
         )}
-      </section>
+      </section> */}
     </Layout>
   )
 }

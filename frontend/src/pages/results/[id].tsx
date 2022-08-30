@@ -7,7 +7,7 @@ import { BsFillCheckCircleFill } from 'react-icons/bs'
 import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/userLayout'
 import { Spinner } from '~/utils/Spinner'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { authProtected } from '~/utils/auth-protected'
 import { IQuestionAndAnswer } from '~/data/interfaces'
 
