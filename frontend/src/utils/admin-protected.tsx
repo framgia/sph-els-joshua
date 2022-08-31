@@ -22,8 +22,10 @@ export const adminProtected = (Comp: any) => {
     */}
     useEffect(() => {
       const isAuthenticatedAdmin = async () => {
-        if (!admin) router.push('/admin')
-        if (!admin?.is_admin) await logout()
+        if (!admin?.is_admin) {
+          await logout()
+          router.push('/admin')
+        }
       }
       isAuthenticatedAdmin()
     }, [admin])

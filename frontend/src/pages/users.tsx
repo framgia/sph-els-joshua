@@ -12,7 +12,7 @@ import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/userLayout'
 import { IProfile } from '~/data/interfaces'
 import { useFollow } from '~/helpers/follow'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { authProtected } from '~/utils/auth-protected'
 
 const UserList: NextPage = (): JSX.Element => {

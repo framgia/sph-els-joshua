@@ -5,7 +5,7 @@ import { MdWarningAmber } from 'react-icons/md'
 import { RiUserSharedLine } from 'react-icons/ri'
 
 import DialogBox from './../DialogBox'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 
 type Props = {
   isOpen: boolean

@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import ReactAvatar from 'react-avatar'
 import React, { Fragment } from 'react'
 import { IoLogOut } from 'react-icons/io5'
 import { HiMenuAlt4 } from 'react-icons/hi'
@@ -8,8 +9,7 @@ import { Menu, Transition } from '@headlessui/react'
 
 import Avatar from './../Avatar'
 import { IUser } from '~/data/interfaces'
-import { classNames } from '~/utils/classNames'
-import { defaultAvatar } from '~/helpers/defaultAvatar'
+import { classNames } from '~/helpers/classNames'
 
 type Props = {
   admin: IUser
@@ -51,15 +51,19 @@ const Header: React.FC<Props> = (props): JSX.Element => {
                     type="button"
                     className="header-menu-button"
                   >
-                    <Avatar 
-                      width={32} 
-                      height={32} 
-                      url={`${
-                        admin.avatar_url === null ? 
-                        defaultAvatar : 
-                        `${process.env.NEXT_PUBLIC_BACKEND_URL}/${admin.avatar_url}`
-                      }`}
-                    />
+                    {!admin?.avatar_url ? (
+                      <ReactAvatar 
+                        name={admin?.name} 
+                        size="32" 
+                        round="100%" 
+                      />
+                    ) : (
+                      <Avatar 
+                        url={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${admin?.avatar_url}`}
+                        width={32}
+                        height={32}
+                      />
+                    )}
                     <span className="text-sm font-medium">{admin?.name}</span>
                     <BiCaretDown className={`w-4 h-4 ${open && 'rotate-180'}`} />
                   </Menu.Button>
@@ -80,7 +84,7 @@ const Header: React.FC<Props> = (props): JSX.Element => {
                           <button
                             className={classNames(
                               'group header-menu-item',
-                              active ? 'bg-orange-500 text-white' : 'text-gray-500'
+                              active ? 'bg-red-500 text-white' : 'text-gray-500'
                             )}
                           >
                             <IoSettings className="mr-2 h-5 w-5" />
@@ -96,7 +100,7 @@ const Header: React.FC<Props> = (props): JSX.Element => {
                             onClick={logout}
                             className={classNames(
                               'group header-menu-item',
-                              active ? 'bg-orange-500 text-white' : 'text-gray-500'
+                              active ? 'bg-red-500 text-white' : 'text-gray-500'
                             )}
                           >
                             <IoLogOut className="mr-2 h-5 w-5" />

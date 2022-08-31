@@ -3,7 +3,7 @@ import type { NextPage } from 'next'
 import React, { useState } from 'react'
 
 import { useAuth } from '~/hooks/auth'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { SignInUpFormValues } from '~/data/types'
 import SignInUpForm from '~/components/user/SignInUpForm'
 import AuthValidationErrors from '~/components/AuthValidationErrors'

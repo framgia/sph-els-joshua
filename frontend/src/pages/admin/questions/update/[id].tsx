@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import { useSWRConfig } from 'swr'
 import { v4 as uuidv4 } from 'uuid'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
@@ -9,13 +10,14 @@ import axios from '~/lib/axios'
 import { fetcher } from '~/lib/fetcher'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { QuestionFormValues } from '~/data/types'
 import ChooseFields from '~/components/admin/ChooseFields'
 import { ICategory, IChoice, IQuestion } from '~/data/interfaces'
 
 const QuestionUpdate: NextPage = (): JSX.Element => {
   const router = useRouter()
+  const { mutate } = useSWRConfig()
 
   const { id } = router.query
   
@@ -28,10 +30,10 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
 
   useEffect(() => {
     const getQuestionById = async () => {
-      const { category, question } = await fetcher(`/api/questions/${id}`)
-      setCategory(category)
-      setQuestion(question)
-      setChoices(question?.choices)
+      const { data } = await fetcher(`/api/questions/${id}`)
+      setCategory(data?.category)
+      setQuestion(data?.question)
+      setChoices(data?.choices)
     }
     getQuestionById()
   }, [id])
@@ -95,7 +97,8 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
           value,
           choices: newChoices
         })
-        .then(() => {
+        .then(async () => {
+          await mutate('/api/questions')
           toast.success('Updated Category Successfully!')
           router.push('/admin/questions')
         })
@@ -128,7 +131,7 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
                   disabled={isSubmitting}
                   {...register('category_id', { required: 'Category is required' })}
                 >
-                  <option value={category?.id}>{category?.title}</option>
+                  <option defaultValue={category?.id}>{category?.title}</option>
                 </select>
                 {errors?.category_id && <span className="error">{`${errors?.category_id?.message}`}</span>}
               </div>
@@ -155,7 +158,7 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
                   onChange={(e) => setSelectedChoice(e.target.value)}
                 >
                 {choices?.map(({ id, value, is_correct }: IChoice, i: number) => 
-                  <option key={id} value={i+1} selected={is_correct}>{value}</option>
+                  <option key={id} defaultValue={i+1} selected={is_correct}>{value}</option>
                 )}
                 </select>
                 {errors?.choice_id && <span className="error">{`${errors?.choice_id?.message}`}</span>}

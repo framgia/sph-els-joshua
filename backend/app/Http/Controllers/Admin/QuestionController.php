@@ -7,6 +7,8 @@ use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\QuestionChoicesResource;
+use App\Http\Resources\QuestionResource;
 use Illuminate\Support\Facades\DB;
 
 class QuestionController extends Controller
@@ -15,11 +17,7 @@ class QuestionController extends Controller
 
     public function index()
     {
-        $questions = Question::latest()
-                        ->orderBy('id', 'desc')
-                        ->get();
-
-        return $this->showAll($questions);
+        return QuestionResource::collection(Question::latest()->orderByDesc('id')->get());
     }
 
     public function store(Request $request)
@@ -43,20 +41,14 @@ class QuestionController extends Controller
             $newChoices[] = $temp;
         }
 
-        $choiceResult = Choice::insert($newChoices);
+        Choice::insert($newChoices);
         
-        return response()->json([
-            'results' => $choiceResult
-        ]);
+        return new QuestionResource($newQuestion);
     }
 
     public function show(Question $question)
     {
-        return response()->json([
-            'category' => $question->category,
-            'question' => $question,
-            'choices' => $question->choices
-        ], 201);
+        return new QuestionChoicesResource($question);
     }
 
     public function update(Request $request, Question $question)
@@ -66,7 +58,7 @@ class QuestionController extends Controller
         
         $this->updateChoices($request->input('choices'));
 
-        return $this->showOne($question);
+        return new QuestionResource($question);
     }
 
     private function updateChoices(array $choices): void {
@@ -85,15 +77,10 @@ class QuestionController extends Controller
         DB::update("UPDATE choices SET value = $caseValue END, is_correct = $caseIsCorrect END WHERE id IN ($ids)");
     }
 
-    public function edit(Question $choice)
-    {
-        return $this->showOne($choice);
-    }
-
     public function destroy(Question $question)
     {
         $question->delete();
         
-        return $this->showOne($question);
+        return response()->noContent();
     }
 }

@@ -4,7 +4,7 @@ export interface IconName {
   className?: string
 }
 
-export const Spinner: React.FC<IconName> = ({ className }) => {
+export const Spinner: React.FC<IconName> = ({ className }): JSX.Element => {
   return (
     <svg
       className={className}

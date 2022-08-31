@@ -2,7 +2,7 @@ import React from 'react'
 import { TiInfo } from 'react-icons/ti'
 import { IoClose } from 'react-icons/io5'
 
-import { classNames } from "~/utils/classNames"
+import { classNames } from "~/helpers/classNames"
 
 type Props = {
   error: string

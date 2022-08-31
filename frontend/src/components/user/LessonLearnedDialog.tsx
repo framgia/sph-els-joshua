@@ -4,7 +4,7 @@ import { AiFillCloseCircle } from 'react-icons/ai'
 import { BsFillCheckCircleFill } from 'react-icons/bs'
 
 import DialogBox from './../DialogBox'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 
 type Props = {
   isOpen: boolean

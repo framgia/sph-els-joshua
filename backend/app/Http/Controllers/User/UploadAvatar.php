@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -27,8 +28,6 @@ class UploadAvatar extends Controller
             $user->update();
         }
 
-        return response()->json([
-            'data' => $request->avatar_url
-        ]);
+        return new UserResource($user);
     }
 }

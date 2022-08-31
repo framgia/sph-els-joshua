@@ -1,35 +1,29 @@
 import useSWR from 'swr'
 import { NextPage } from 'next'
 import { v4 as uuidv4 } from 'uuid'
-import { AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import axios from '~/lib/axios'
+import { fetcher } from '~/lib/fetcher'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
-import { classNames } from '~/utils/classNames'
-import UnAuthorized from '~/utils/unauthorized'
+import { classNames } from '~/helpers/classNames'
 import { QuestionFormValues } from '~/data/types'
 import { ICategory, IChoice } from '~/data/interfaces'
 import ChooseFields from '~/components/admin/ChooseFields'
 import AuthValidationErrors from '~/components/AuthValidationErrors'
 
-const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
-
 const QuestionCreate: NextPage = (): JSX.Element => {
   const router = useRouter()
   const [formErrors, setFormErrors]: any[] = useState([])
 
-  const { data: categories } = useSWR('/api/categories', async () => fetcher('/api/categories'), {
+  const { data: categories, mutate } = useSWR('/api/categories', fetcher, {
     refreshInterval: 1000,
     revalidateOnMount: true
   })
-
-  if (categories?.status === 419) return <UnAuthorized message={categories?.message} />
-
 
   /**
     * This will partially save your choices data
@@ -99,7 +93,8 @@ const QuestionCreate: NextPage = (): JSX.Element => {
           value,
           choices: newChoices
         })
-        .then(() => {
+        .then(async () => {
+          await mutate()
           toast.success('Added Question Successfully!')
           router.push('/admin/questions')
         })

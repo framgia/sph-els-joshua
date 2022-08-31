@@ -3,12 +3,13 @@
 namespace App\Http\Controllers\User;
 
 use App\Models\User;
+use App\Models\Lesson;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
-use App\Models\Category;
-use App\Models\Lesson;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\UserPrivilegeResource;
 
 class UserPrivilegeController extends Controller
 {
@@ -16,21 +17,21 @@ class UserPrivilegeController extends Controller
 
     public function index()
     {
-        $users = User::with(['following', 'followers'])
-                    ->where('id', '!=', Auth::user()->id)
-                    ->orderBy('id', 'desc')
-                    ->get();
-
-        return $this->showAll($users);
+        return UserPrivilegeResource::collection(
+            User::with(['following', 'followers'])
+                ->whereNot('id', Auth::user()->id)
+                ->orderByDesc('id')
+                ->get()
+            );
     }
 
-    public function show($id)
+    public function show(User $user_privilege)
     {
-        $user = User::with([
+        $user = $user_privilege->with([
             'following', 
             'followers',
             'activity_logs'
-        ])->findOrFail($id);
+        ])->findOrFail($user_privilege->id);
 
         $activities = [];
         foreach($user->activity_logs as $activity)
@@ -86,22 +87,20 @@ class UserPrivilegeController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user_privilege)
     {
-        $user = User::findOrFail($id);
-        
-        $user->fill($request->only([
+        $user_privilege->fill($request->only([
             'name',
             'email'
         ]));
 
-        if ($user->isClean()) {
+        if ($user_privilege->isClean()) {
             return $this->errorResponse('You need to specify any different details to update.', 422);
         }
 
-        $user->save();
+        $user_privilege->save();
 
-        return $this->showOne($user);
+        return $this->showOne($user_privilege);
     }
     
 }

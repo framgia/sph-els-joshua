@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import { useSWRConfig } from 'swr'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import React, { useEffect, useState } from 'react'
@@ -9,12 +10,13 @@ import { fetcher } from '~/lib/fetcher'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
 import { ICategory } from '~/data/interfaces'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { CategoryFormValues } from '~/data/types'
 import ValidationError from '~/components/user/ValidationError'
 
 const CategoryUpdate: NextPage = (): JSX.Element => {
   const router = useRouter()
+  const { mutate } = useSWRConfig()
   const [formError, setFormError]: any = useState()
   const [categoryData, setCategoryData] = useState<ICategory>()
 
@@ -44,7 +46,8 @@ const CategoryUpdate: NextPage = (): JSX.Element => {
     await 
       axios
         .patch(`/api/categories/${id}`, data)
-        .then(() => {
+        .then(async () => {
+          await mutate('/api/categories')
           toast.success('Updated Category Successfully!')
           router.push('/admin/categories')
         })

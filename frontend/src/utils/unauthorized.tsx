@@ -3,7 +3,7 @@ import Image from 'next/image'
 import { NextPage } from 'next'
 
 import { useAuth } from '~/hooks/auth'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 
 type Props = {
   message: string

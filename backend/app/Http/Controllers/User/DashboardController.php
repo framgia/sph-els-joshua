@@ -34,7 +34,7 @@ class DashboardController extends Controller
             
             if ($activity['activity_type'] === 'Follow')
             {
-                $name .= ' <b className="font-bold">followed</b> ' . User::findOrFail($activity->activity_id)->name;
+                $name .= ' <b>followed</b> ' . User::findOrFail($activity->activity_id)->name;
             }
             if ($activity['activity_type'] === 'Lesson')
             {
