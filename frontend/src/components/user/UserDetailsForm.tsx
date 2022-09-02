@@ -8,6 +8,7 @@ import { IUser } from '~/data/interfaces'
 import { Spinner } from '~/utils/Spinner'
 import ValidationError from './ValidationError'
 import { UserDetailsFormValues } from '~/data/types'
+import { styles as global } from '~/twin/global.styles'
 
 type Props = {
   user: IUser
@@ -42,12 +43,16 @@ const UserDetailsForm: React.FC<Props> = ({ user, mutate }): JSX.Element => {
       className="space-y-6" 
       onSubmit={handleSubmit(handleUpdate)}
     >
-      <ValidationError className="mt-4" error={formError} setFormError={setFormError} />
+      <ValidationError 
+        className="mt-4" 
+        error={formError} 
+        setFormError={setFormError} 
+      />
       <div>
-        <label className="form-label">Your name</label>
+        <label css={global.label}>Your name</label>
         <input 
           type="text" 
-          className="form-control" 
+          css={global.form_control}
           defaultValue={user?.name}
           disabled={isSubmitting}
           {...register('name', {
@@ -65,10 +70,10 @@ const UserDetailsForm: React.FC<Props> = ({ user, mutate }): JSX.Element => {
         {errors?.name && <span className="error">{`${errors?.name?.message}`}</span>}
       </div>
       <div>
-        <label className="form-label">Your email</label>
+        <label css={global.label}>Your email</label>
         <input 
           type="email" 
-          className="form-control" 
+          css={global.form_control}
           defaultValue={user?.email}
           disabled={isSubmitting}
           {...register('email', {

@@ -2,7 +2,6 @@ import moment from 'moment'
 import ReactAvatar from 'react-avatar'
 
 import Avatar from './../Avatar'
-import { defaultAvatar } from '~/helpers/defaultAvatar'
 
 type Props = {
   [user: string]: any
@@ -12,11 +11,11 @@ const UserItem: React.FC<Props> = (props): JSX.Element => {
   const { id, name, is_admin, email, avatar_url, created_at } = props
 
   return (
-    <tr className="table-tbody-tr">
-      <td className="table-tbody-td">
+    <tr>
+      <td>
         {id}
       </td>
-      <th scope="row" className="table-tbody-th">
+      <th scope="row">
         {!avatar_url ? (
           <ReactAvatar 
             name={name} 
@@ -34,13 +33,13 @@ const UserItem: React.FC<Props> = (props): JSX.Element => {
           <div className="text-sm font-semibold">{name}</div>
         </div>  
       </th>
-      <td className="table-tbody-td">
+      <td>
         {is_admin ? 'Admin' : 'User'}
       </td>
-      <td className="table-tbody-td">
+      <td>
         {email}
       </td>
-      <td className="table-tbody-td">
+      <td>
         {moment(created_at).format("MMM Do YY")}
       </td>
     </tr>

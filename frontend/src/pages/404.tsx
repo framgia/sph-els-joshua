@@ -1,9 +1,10 @@
+import tw from 'twin.macro'
 import Head from 'next/head'
 import Image from 'next/image'
 import { NextPage } from 'next'
 import { useRouter } from 'next/router'
 
-import { classNames } from '~/helpers/classNames'
+import { styles } from '~/twin/404.styles'
 
 const NotFound: NextPage = (): JSX.Element => {
   const router = useRouter()
@@ -12,18 +13,13 @@ const NotFound: NextPage = (): JSX.Element => {
     <>
       <Head>
         <title>Page Not Found</title>
-        <meta name="description" content="404 page not found" />
+        <meta name="description" content="404 Page Not Found" />
       </Head>
-      <div
-        className={classNames(
-          'flex items-center justify-center px-4 h-screen min-h-screen',
-          'bg-white dark:bg-dark-dim text-gray-800 transition ease-in-out duration-700'
-        )}
-      >
-        <div className="flex flex-col items-center space-y-4">
-          <div className="flex items-center">
-            <h1 className="font-bold text-9xl -mr-6">4</h1>
-            <div className="flex-shrink-0 z-50">
+      <div css={styles.wrapper}>
+        <div css={styles.container}>
+          <div css={tw`flex items-center`}>
+            <h1 css={tw`font-bold text-9xl -mr-6`}>4</h1>
+            <div css={tw`flex-shrink-0 z-50`}>
               <Image
                 src="/img/404.png"
                 alt="Cry Emoji Image"
@@ -34,14 +30,14 @@ const NotFound: NextPage = (): JSX.Element => {
                 layout="intrinsic"
               />
             </div>
-            <h1 className="font-bold text-9xl -ml-8">4</h1>
+            <h1 css={tw`font-bold text-9xl -ml-8`}>4</h1>
           </div>
-          <div className="flex flex-col items-center">
-            <h2 className="text-xl uppercase font-semibold">
+          <div css={tw`flex flex-col items-center`}>
+            <h2 css={tw`text-xl uppercase font-semibold`}>
               Oops! Page not be found
             </h2>
-            <div className="max-w-md text-center">
-              <p className="text-gray-500 text-sm">
+            <div css={tw`max-w-md text-center`}>
+              <p css={tw`text-gray-500 text-sm`}>
                 Sorry but the page you are looking for does not exist, have been removed. name
                 changed or is temporarily unavailable
               </p>
@@ -50,11 +46,7 @@ const NotFound: NextPage = (): JSX.Element => {
           <div>
             <button
               onClick={() => router.push('/')}
-              className={classNames(
-                'px-6 py-3 rounded-full bg-yellow-300 hover:bg-yellow-400 text-white',
-                'font-semibold hover:shadow-xl transition ease-in-out duration-150 focus:outline-none',
-                'transition ease-in-out duration-150'
-              )}
+              css={styles.btn_homepage}
             >
               Back to Homepage
             </button>

@@ -1,13 +1,12 @@
+import React from 'react'
 import Head from 'next/head'
-import { useRouter } from 'next/router'
-import React, { useEffect }from 'react'
 import createPersistedState from 'use-persisted-state'
 
 import { useAuth } from '~/hooks/auth'
 import Header from '~/components/admin/Header'
 import Footer from '~/components/admin/Footer'
 import Sidebar from '~/components/admin/Sidebar'
-import { classNames } from '~/helpers/classNames'
+import { styles } from '~/twin/admin.layout.styles'
 
 type Props = {
   children: React.ReactNode
@@ -15,7 +14,6 @@ type Props = {
 }
 
 const Layout: React.FC<Props> = (props) => {
-  const router = useRouter()
   const { metaTitle, children } = props
 
   const useToggleState = createPersistedState('toggle')
@@ -26,19 +24,6 @@ const Layout: React.FC<Props> = (props) => {
   })
 
   const handleOpen = (): void => setIsOpen((prev: boolean) => prev = !prev)
-  
-  useEffect(() => {
-    const isAuthenticatedAdmin = async () => {
-      if (!admin?.is_admin) {
-        await logout()
-        return null
-      }
-      if (!admin) router.push('/admin')
-    }
-    isAuthenticatedAdmin()
-  }, [admin])
-
-  if (!admin) return null
 
   return (
     <>
@@ -46,16 +31,16 @@ const Layout: React.FC<Props> = (props) => {
         <title>Admin | {metaTitle}</title>
       </Head>
       {/* Admin Header */}
-      <Header admin={admin} actions={{ handleOpen, logout }} />
-      <div className="flex overflow-hidden pt-16 bg-gray-100">
+      <Header 
+        admin={admin} 
+        actions={{ handleOpen, logout }} 
+      />
+      <div css={styles.container}>
         {/* Admin Sidebar */}
         <Sidebar isOpen={isOpen} />
         {/* Main Content */}
-        <div className={classNames(
-          'h-full w-full bg-gray-50 relative overflow-y-auto min-h-screen',
-          isOpen ? 'ml-64' : 'ml-16'
-        )}>
-          <main className="max-w-6xl mx-auto min-h-[80vh] p-5">{children}</main>
+        <div css={styles.wrapper({ isOpen })}>
+          <main css={styles.main}>{children}</main>
           <Footer />
         </div>
       </div>

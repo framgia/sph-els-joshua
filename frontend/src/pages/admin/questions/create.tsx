@@ -1,4 +1,5 @@
 import useSWR from 'swr'
+import tw from 'twin.macro'
 import { NextPage } from 'next'
 import { v4 as uuidv4 } from 'uuid'
 import { toast } from 'react-toastify'
@@ -10,10 +11,12 @@ import axios from '~/lib/axios'
 import { fetcher } from '~/lib/fetcher'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
-import { classNames } from '~/helpers/classNames'
+import Loading from '~/components/Loading'
 import { QuestionFormValues } from '~/data/types'
 import { ICategory, IChoice } from '~/data/interfaces'
+import { styles as global } from '~/twin/global.styles'
 import ChooseFields from '~/components/admin/ChooseFields'
+import { styles } from '~/twin/admin.questions.create.styles'
 import AuthValidationErrors from '~/components/AuthValidationErrors'
 
 const QuestionCreate: NextPage = (): JSX.Element => {
@@ -106,24 +109,24 @@ const QuestionCreate: NextPage = (): JSX.Element => {
 
   return (
     <Layout metaTitle="Questions">
-      <main className="pt-4 px-4">
-        <section className={classNames(
-          'overflow-x-auto relative rounded-2xl shadow-md bg-white',
-          'max-w-lg mx-auto border'
-        )}>
-          {!categories ? (
-             <div className="py-5 flex flex-col justify-center items-center">
-              <Spinner className="w-6 h-6" />
-              <p className="mt-2 text-xs">Loading...</p>
-            </div>
-          ) : (
-            <form className="p-10" onSubmit={handleSubmit(handleSave)}>
-              <h1 className="text-center font-extrabold text-lg text-gray-700">Add Question</h1>
-              <AuthValidationErrors className="mt-4" errors={formErrors} setErrors={setFormErrors} />
-              <div className="mt-3">
-                <label className="form-label">Categories *</label>
+      <main css={styles.main}>
+        <section css={styles.section}>
+          {!categories ? <Loading /> 
+          : (
+            <form 
+              css={global.form}
+              onSubmit={handleSubmit(handleSave)}
+            >
+              <h1 css={global.form_title}>Add Question</h1>
+              <AuthValidationErrors 
+                className="mt-4" 
+                errors={formErrors} 
+                setErrors={setFormErrors} 
+              />
+              <div>
+                <label css={global.label}>Categories *</label>
                 <select 
-                  className="form-control" 
+                  css={global.form_control}
                   tabIndex={1}
                   disabled={isSubmitting}
                   {...register('category_id', { required: 'Category is required' })}
@@ -132,11 +135,11 @@ const QuestionCreate: NextPage = (): JSX.Element => {
                 </select>
                 {errors?.category_id && <span className="error">{`${errors?.category_id?.message}`}</span>}
               </div>
-              <div className="mt-6">
-                <label className="form-label">Question *</label>
+              <div>
+                <label css={global.label}>Question *</label>
                 <input 
                   type="text" 
-                  className="form-control" 
+                  css={global.form_control}
                   placeholder="Write your question"
                   tabIndex={2}
                   disabled={isSubmitting}
@@ -144,10 +147,10 @@ const QuestionCreate: NextPage = (): JSX.Element => {
                 />
                 {errors?.value && <span className="error">{`${errors?.value?.message}`}</span>}
               </div>
-              <div className="mt-3">
-                <label className="form-label">Answer *</label>
+              <div>
+                <label css={global.label}>Answer *</label>
                 <select 
-                  className="form-control" 
+                  css={global.form_control}
                   tabIndex={1}
                   disabled={isSubmitting}
                   {...register('choice_id', { required: 'Right Answer is required'})}
@@ -156,8 +159,8 @@ const QuestionCreate: NextPage = (): JSX.Element => {
                 </select>
                 {errors?.choice_id && <span className="error">{`${errors?.choice_id?.message}`}</span>}
               </div>
-              <div className="mt-6">
-                <label htmlFor="message" className="form-label">Choices *</label>
+              <div>
+                <label css={global.label}>Choices *</label>
                 <ChooseFields
                   choices={choices}
                   actions={{ 
@@ -168,7 +171,7 @@ const QuestionCreate: NextPage = (): JSX.Element => {
                   isSubmitting={isSubmitting}
                 />
               </div>
-              <div className="mt-4 flex justify-end">
+              <div css={tw`flex justify-end`}>
                 <button 
                   type="submit" 
                   disabled={isSubmitting}

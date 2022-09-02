@@ -1,8 +1,10 @@
 import React from 'react'
+import tw from 'twin.macro'
 import moment from 'moment'
 import ReactAvatar from 'react-avatar'
 
 import Avatar from './../Avatar'
+import Loading from './../Loading'
 import { IUser } from '~/data/interfaces'
 
 type Props = {
@@ -13,17 +15,27 @@ type Props = {
   user: IUser
 }
 
+const styles = {
+  activitylist: [
+    tw`
+      pt-2 flex items-center space-x-4
+      [> div]:(text-sm)
+      [> div > div]:(flex items-center space-x-2)
+      [> div > div > span]:(mr-2 line-clamp-2)
+      [> div > span]:(text-xs font-medium text-gray-600)
+    `
+  ]
+}
+
 const ActivityList: React.FC<Props> = ({ activities, user }): JSX.Element => {
   return (
     <>
-      {!activities?.length ? (
-        <div className="pt-2 ">
-          <p className="text-sm text-gray-500">No activities yet.</p>
-        </div>
-      ) : (
+      {!activities?.length 
+      ? <Loading />
+      : (
         <>
           {activities.map(({ activity_title, created_at }, i) => (
-            <div key={i} className="pt-2 flex items-center space-x-4">
+            <div key={i} css={styles.activitylist}>
               {!user?.avatar_url ? (
                 <ReactAvatar 
                   name={user?.name} 
@@ -37,11 +49,11 @@ const ActivityList: React.FC<Props> = ({ activities, user }): JSX.Element => {
                   height={40}
                 />
               )}
-              <div className="text-sm">
-                <div className="flex items-center space-x-2">
-                  <span className="mr-2 line-clamp-2" dangerouslySetInnerHTML={{__html: activity_title }}></span> 
+              <div>
+                <div>
+                  <span dangerouslySetInnerHTML={{__html: activity_title }}></span> 
                 </div>
-                <span className="text-xs font-medium text-gray-600">{moment(created_at).fromNow()}</span>
+                <span>{moment(created_at).fromNow()}</span>
               </div>
             </div>
           ))}

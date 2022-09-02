@@ -4,8 +4,8 @@ import Caption from './Caption'
 import TableHead from './Tablehead'
 import { Spinner } from '~/utils/Spinner'
 import QuestionItem from './QuestionItem'
-import { classNames } from '~/helpers/classNames'
 import { IQuestion, IThead } from '~/data/interfaces'
+import { styles as global } from '~/twin/global.styles'
 
 type Props = {
   questions: IQuestion[] 
@@ -38,10 +38,7 @@ const QuestionList: React.FC<Props> = (props): JSX.Element => {
   ]
 
   return (
-    <table className={classNames(
-      'table max-h-[40vh]',
-      loading ? 'relative min-h-[40vh]' : ''
-    )}>
+    <table css={global.table({ loading })}>
       <Caption
         title="Question Table"
         description="List of all questions"

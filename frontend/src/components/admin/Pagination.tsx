@@ -1,4 +1,5 @@
 import React from 'react'
+import tw from 'twin.macro'
 import ReactPaginate from 'react-paginate'
 
 type Props = {
@@ -10,13 +11,22 @@ type Props = {
   }
 }
 
+const styles = {
+  wrapper: [
+    tw`
+      flex justify-between text-gray-500
+      [> h1]:(text-xs text-gray-600 font-medium)
+    `
+  ]
+}
+
 const Pagination: React.FC<Props> = (props): JSX.Element => {
   const { pageNumber, pageCount, actions, length } = props
   const { changePage } = actions
 
   return (
-    <section className="paginate-section flex justify-between text-gray-500">
-      <h1 className="text-xs text-gray-600 font-medium">Showing {pageNumber + 1} to {pageCount} of {length} results</h1>
+    <section className="paginate-section" css={styles.wrapper}>
+      <h1>Showing {pageNumber + 1} to {pageCount} of {length} results</h1>
       <ReactPaginate
         previousLabel="Previous"
         nextLabel="Next"

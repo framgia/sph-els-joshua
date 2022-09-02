@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 
-import { useAuth } from '~/hooks/auth'
 import { classNames } from '~/helpers/classNames'
 
 type Props = {
@@ -10,15 +10,13 @@ type Props = {
 }
 
 const UnAuthorized: NextPage<Props> = ({ message }): JSX.Element => {
-  const { logout } = useAuth({
-    middleware: 'admin'
-  })
+  const router = useRouter()
 
   return (
     <>
       <Head>
         <title>Page Not Found</title>
-        <meta name="description" content="404 page not found" />
+        <meta name="description" content="409 Page Unauthorized" />
       </Head>
       <div
         className={classNames(
@@ -55,14 +53,14 @@ const UnAuthorized: NextPage<Props> = ({ message }): JSX.Element => {
           </div>
           <div>
             <button
-              onClick={logout}
+              onClick={() => router.push('/admin')}
               className={classNames(
                 'px-6 py-3 rounded-full bg-yellow-300 hover:bg-yellow-400 text-white',
                 'font-semibold hover:shadow-xl transition ease-in-out duration-150 focus:outline-none',
                 'transition ease-in-out duration-150'
               )}
             >
-              Back to Homepage
+              Back to Login
             </button>
           </div>
         </div>

@@ -6,6 +6,7 @@ import axios from '~/lib/axios'
 import { IUser } from '~/data/interfaces'
 import { Spinner } from '~/utils/Spinner'
 import ValidationError from './ValidationError'
+import { styles as global } from '~/twin/global.styles'
 import { UserChangePasswordFormValues } from '~/data/types'
 
 type Props = {
@@ -47,32 +48,36 @@ const UserChangePasswordForm: React.FC<Props> = ({ user }) => {
       className="space-y-6" 
       onSubmit={handleSubmit(handleUpdate)}
     >
-      <ValidationError className="mb-4" error={formError} setFormError={setFormError} />
+      <ValidationError 
+        className="mb-4" 
+        error={formError} 
+        setFormError={setFormError} 
+      />
       <div>
-        <label className="form-label">Current password *</label>
+        <label css={global.label}>Current password *</label>
         <input 
           type="password" 
-          className="form-control" 
+          css={global.form_control}
           disabled={isSubmitting}
           {...register('current_password', { required: 'Current password is required' })}
         />
         {errors?.current_password && <span className="error">{`${errors?.current_password?.message}`}</span>}
       </div>
       <div>
-        <label className="form-label">New password *</label>
+        <label css={global.label}>New password *</label>
         <input 
           type="password" 
-          className="form-control" 
+          css={global.form_control}
           disabled={isSubmitting}
           {...register('new_password', { required: 'New password is required' })}
         />
         {errors?.new_password && <span className="error">{`${errors?.new_password?.message}`}</span>}
       </div>
       <div>
-        <label className="form-label">Confirm password *</label>
+        <label css={global.label}>Confirm password *</label>
         <input 
           type="password" 
-          className="form-control" 
+          css={global.form_control}
           disabled={isSubmitting}
           {...register('confirm_password', { required: 'Confirm password is required' })}
         />

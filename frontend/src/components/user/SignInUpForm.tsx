@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 
 import { Spinner } from '~/utils/Spinner'
 import { SignInUpFormValues } from '~/data/types'
+import { styles as global } from '~/twin/global.styles'
 
 type Props = {
   isLoginPage: boolean
@@ -28,13 +29,13 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
     <form onSubmit={handleSubmit(handleAuthSubmit)}>
       {!isLoginPage && (
         <div>
-          <label htmlFor="name" className="form-label">
+          <label css={global.label}>
             Name
           </label>
           <input
             type="text"
             placeholder=""
-            className="form-control"
+            css={global.form_control}
             disabled={isSubmitting}
             {...register('name', {
               required: 'Name is required',
@@ -53,13 +54,13 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
         </div>
       )}
       <div className="mt-4">
-        <label htmlFor="email" className="form-label">
+        <label css={global.label}>
           Email Address
         </label>
         <input
           type="email"
           placeholder=""
-          className="form-control"
+          css={global.form_control}
           disabled={isSubmitting}
           tabIndex={2}
           {...register('email', {
@@ -74,13 +75,13 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
       </div>
 
       <div className="mt-4">
-        <label htmlFor="password" className="form-label">
+        <label css={global.label}>
           Password
         </label>
         <input
           type="password"
           placeholder=""
-          className="form-control"
+          css={global.form_control}
           disabled={isSubmitting}
           tabIndex={3}
           {...register('password', {

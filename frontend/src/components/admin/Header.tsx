@@ -1,15 +1,16 @@
+import tw from 'twin.macro'
 import Link from 'next/link'
 import ReactAvatar from 'react-avatar'
 import React, { Fragment } from 'react'
 import { IoLogOut } from 'react-icons/io5'
 import { HiMenuAlt4 } from 'react-icons/hi'
-import { IoSettings } from 'react-icons/io5'
 import { BiCaretDown } from 'react-icons/bi'
 import { Menu, Transition } from '@headlessui/react'
 
 import Avatar from './../Avatar'
 import { IUser } from '~/data/interfaces'
 import { classNames } from '~/helpers/classNames'
+import { styles } from '~/twin/admin.header.styles'
 
 type Props = {
   admin: IUser
@@ -19,55 +20,57 @@ type Props = {
   }
 }
 
-const Header: React.FC<Props> = (props): JSX.Element => {
-  const { admin, actions } = props
+const Header: React.FC<Props> = ({ admin, actions }): JSX.Element => {
   const { handleOpen, logout } = actions
 
   return (
-    <header className="header">
-      <main className="header-main">
-        <section className="header-section">
+    <header css={styles.header}>
+      <main css={styles.main}>
+        <section css={styles.section}>
           <button
             type="button"
             onClick={handleOpen}
-            className="btn-menu"
+            css={styles.btn_menu}
           >
-            <HiMenuAlt4 className="w-6 h-6" />
+            <HiMenuAlt4 css={tw`w-6 h-6`} />
           </button>
           <Link href="/admin/users">
-            <a className="text-xl font-bold flex items-center ml-1.5 lg:ml-2.5">
-              <h1 className="self-center whitespace-nowrap">
-                <span className="header-title">ELearning</span> Admin
+            <a>
+              <h1>
+                <span>ELearning</span> Admin
               </h1>
             </a>
           </Link>
         </section>
-        <section className="header-section">
+        <section css={styles.section}>
           <Menu as="div" className="header-menu">
             {({ open }) => (
               <>
-                <div>
-                  <Menu.Button
-                    type="button"
-                    className="header-menu-button"
-                  >
-                    {!admin?.avatar_url ? (
-                      <ReactAvatar 
-                        name={admin?.name} 
-                        size="32" 
-                        round="100%" 
-                      />
-                    ) : (
-                      <Avatar 
-                        url={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${admin?.avatar_url}`}
-                        width={32}
-                        height={32}
-                      />
-                    )}
-                    <span className="text-sm font-medium">{admin?.name}</span>
-                    <BiCaretDown className={`w-4 h-4 ${open && 'rotate-180'}`} />
-                  </Menu.Button>
-                </div>
+                <Menu.Button
+                  type="button"
+                  className="header-menu-button"
+                >
+                  {!admin?.avatar_url ? (
+                    <ReactAvatar 
+                      name={admin?.name} 
+                      size="32" 
+                      round="100%" 
+                    />
+                  ) : (
+                    <Avatar 
+                      url={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${admin?.avatar_url}`}
+                      width={32}
+                      height={32}
+                    />
+                  )}
+                  {admin && <span css={tw`text-sm font-medium`}>{admin?.name}</span>}
+                  <BiCaretDown 
+                    className={classNames(
+                      'w-4 h-4', 
+                      open ? 'rotate-180' : 'rotate-0'
+                    )} 
+                  />
+                </Menu.Button>
                 <Transition
                   as={Fragment}
                   enter="transition ease-out duration-100"
@@ -82,28 +85,11 @@ const Header: React.FC<Props> = (props): JSX.Element => {
                       <Menu.Item>
                         {({ active }) => (
                           <button
-                            className={classNames(
-                              'group header-menu-item',
-                              active ? 'bg-red-500 text-white' : 'text-gray-500'
-                            )}
-                          >
-                            <IoSettings className="mr-2 h-5 w-5" />
-                            Settings
-                          </button>
-                        )}
-                      </Menu.Item>
-                    </div>
-                    <div className="p-1">
-                      <Menu.Item>
-                        {({ active }) => (
-                          <button
                             onClick={logout}
-                            className={classNames(
-                              'group header-menu-item',
-                              active ? 'bg-red-500 text-white' : 'text-gray-500'
-                            )}
+                            className="group header-menu-item"
+                            css={styles.btn_menu_logout({ active })}
                           >
-                            <IoLogOut className="mr-2 h-5 w-5" />
+                            <IoLogOut css={tw`mr-2 h-5 w-5`} />
                             Logout
                           </button>
                         )}

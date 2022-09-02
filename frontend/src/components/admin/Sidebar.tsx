@@ -1,4 +1,5 @@
 import React from 'react'
+import tw from 'twin.macro'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { IoLogOut } from 'react-icons/io5'
@@ -7,6 +8,7 @@ import { useAuth } from '~/hooks/auth'
 import { ISidebar } from '~/data/interfaces'
 import { classNames } from '~/helpers/classNames'
 import { sidebarLinks } from '~/data/sidebarList'
+import { styles } from '~/twin/admin.sidebar.styles'
 
 type Props = {
   isOpen: any
@@ -21,23 +23,17 @@ const Sidebar: React.FC<Props> = (props): JSX.Element => {
   })  
 
   return (
-    <aside className={classNames(
-      'sidebar', isOpen ? 'w-64' : 'w-18'
-    )}>
-      <section className="sidebar-section">
-        <main className="sidebar-main">
-          <nav className="sidebar-nav">
-            <ul className="sidebar-ul">
+    <aside css={styles.sidebar({ isOpen })}>
+      <section css={styles.section}>
+        <main css={styles.main}>
+          <nav css={styles.nav}>
+            <ul css={styles.ul}>
               {sidebarLinks?.map(({ Icon, name, href }: ISidebar, i: number) => (
                 <li key={i}>
                   <Link href={href}>
                     <a
-                      href="#"
-                      className={classNames('group btn-sidebar-link',
-                        router.pathname.includes(href)
-                          ? 'text-red-500 bg-gray-100'
-                          : 'hover:text-red-500 text-gray-600'
-                      )}
+                      className="group"
+                      css={styles.a({ href, router })}
                     >
                       <Icon
                         className={classNames(
@@ -47,25 +43,24 @@ const Sidebar: React.FC<Props> = (props): JSX.Element => {
                             : 'group-hover:text-red-500 text-gray-600'
                         )}
                       />
-                      {isOpen && <span className="ml-3">{name}</span>}
+                      {isOpen && <span css={tw`ml-3`}>{name}</span>}
                     </a>
                   </Link>
                 </li>
               ))}
             </ul>
-            <div className="space-y-2 pt-2">
+            <div css={styles.btn_wrapper}>
               <button
                 type="button"
-                className={classNames(
-                  'group btn-sidebar-link hover:text-red-500',
-                  'text-gray-600 w-full'
-                )}
+                className="group w-full hover:text-red-500"
+                css={styles.a({ router })}
                 onClick={logout}
               >
                 <IoLogOut className={classNames(
-                  'btn-sidebar-logo text-gray-500 group-hover:text-red-500'
+                  'btn-sidebar-logo text-gray-500',
+                  'group-hover:text-red-500'
                 )} />
-                {isOpen && <span className="ml-4">Logout</span>}
+                {isOpen && <span css={tw`ml-4`}>Logout</span>}
               </button>
             </div>
           </nav>

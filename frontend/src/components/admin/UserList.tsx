@@ -4,8 +4,8 @@ import Caption from './Caption'
 import UserItem from './UserItem'
 import TableHead from './Tablehead'
 import { Spinner } from '~/utils/Spinner'
-import { classNames } from '~/helpers/classNames'
 import { IThead, IUser } from '~/data/interfaces'
+import { styles as global } from '~/twin/global.styles'
 
 type Props = {
   users: IUser[]
@@ -34,10 +34,7 @@ const UserList: React.FC<Props> = (props): JSX.Element => {
   ]
 
   return (
-    <table className={classNames(
-      'table max-h-[40vh]',
-      loading ? 'relative min-h-[40vh]' : ''
-    )}>
+    <table css={global.table({ loading })}>
       <Caption
         title="Users Table"
         description="List of all users"
