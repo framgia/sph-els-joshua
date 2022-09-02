@@ -7,6 +7,7 @@ use App\Models\Question;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\QuestionRequest;
 use App\Http\Resources\QuestionChoicesResource;
 use App\Http\Resources\QuestionResource;
 use Illuminate\Support\Facades\DB;
@@ -20,15 +21,8 @@ class QuestionController extends Controller
         return QuestionResource::collection(Question::latest()->orderByDesc('id')->get());
     }
 
-    public function store(Request $request)
+    public function store(QuestionRequest $request)
     {
-        $categoryRules = [
-            'category_id' => 'required',
-            'value' => 'required'
-        ];
-
-        $this->validate($request, $categoryRules);
-
         $newQuestion = Question::create($request->all());
 
         $temp = [];

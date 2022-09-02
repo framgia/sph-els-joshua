@@ -100,7 +100,7 @@ class UserPrivilegeController extends Controller
 
         $user_privilege->save();
 
-        return $this->showOne($user_privilege);
+        return new UserPrivilegeResource($user_privilege);
     }
     
 }

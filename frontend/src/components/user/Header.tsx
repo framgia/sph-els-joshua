@@ -84,7 +84,7 @@ const MenuToggle = ({ user, logout }: { user: IUser, logout: () => void }) => {
               height={32}
             />
           )}
-          <p>{formatName}</p>
+          {user && <p>{formatName}</p>}
         </Menu.Button>
       </div>
       <Transition
