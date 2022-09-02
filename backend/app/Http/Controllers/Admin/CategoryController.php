@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\CategoryRequest;
 use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
@@ -17,15 +18,8 @@ class CategoryController extends Controller
         return CategoryResource::collection(Category::latest()->orderByDesc('id')->get());
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
-        $rules = [
-            'title' => 'required|min:3',
-            'description' => 'required|min:4'
-        ];
-
-        $this->validate($request, $rules);
-
         $category = Category::create($request->all());
 
         return new CategoryResource($category);
@@ -36,13 +30,8 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
-    public function update(Request $request, Category $category)
+    public function update(Category $category)
     {
-        $category->fill($request->only([
-            'title',
-            'description'
-        ]));
-
         if ($category->isClean()) {
             return $this->errorResponse('You need to specify any different value to update.', 422);
         }

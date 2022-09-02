@@ -152,7 +152,7 @@ const QuestionCreate: NextPage = (): JSX.Element => {
                   disabled={isSubmitting}
                   {...register('choice_id', { required: 'Right Answer is required'})}
                 >
-                {choices?.map(({ id, value }: IChoice, i: number) => <option key={id} defaultValue={i+1}>{value}</option>)}
+                {choices?.map(({ id, value }: IChoice, i: number) => <option key={id} value={i+1}>{value}</option>)}
                 </select>
                 {errors?.choice_id && <span className="error">{`${errors?.choice_id?.message}`}</span>}
               </div>

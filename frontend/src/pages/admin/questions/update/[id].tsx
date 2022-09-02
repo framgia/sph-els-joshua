@@ -131,7 +131,7 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
                   disabled={isSubmitting}
                   {...register('category_id', { required: 'Category is required' })}
                 >
-                  <option defaultValue={category?.id}>{category?.title}</option>
+                  <option value={category?.id}>{category?.title}</option>
                 </select>
                 {errors?.category_id && <span className="error">{`${errors?.category_id?.message}`}</span>}
               </div>
@@ -158,7 +158,7 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
                   onChange={(e) => setSelectedChoice(e.target.value)}
                 >
                 {choices?.map(({ id, value, is_correct }: IChoice, i: number) => 
-                  <option key={id} defaultValue={i+1} selected={is_correct}>{value}</option>
+                  <option key={id} value={i+1} selected={is_correct}>{value}</option>
                 )}
                 </select>
                 {errors?.choice_id && <span className="error">{`${errors?.choice_id?.message}`}</span>}

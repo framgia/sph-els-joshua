@@ -33,6 +33,7 @@ const UserChangePasswordForm: React.FC<Props> = ({ user }) => {
               new_password: '',
               confirm_password: ''
             })
+            setFormError()
           toast.success('New Password Updated Successfully!')
         })
         .catch(error => {
