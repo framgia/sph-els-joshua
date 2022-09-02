@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Auth;
 
 class Administrator
 {
@@ -17,7 +18,7 @@ class Administrator
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->is_admin !== 1) {
+        if (! Auth::user()->is_admin) {
             return response()->json([
                 'message' => 'You are not authorized to access this page!', 
                 'status' => 419

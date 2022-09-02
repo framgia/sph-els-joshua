@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import { useSWRConfig } from 'swr'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
@@ -7,12 +8,13 @@ import axios from '~/lib/axios'
 import { toast } from 'react-toastify'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { CategoryFormValues } from '~/data/types'
 import AuthValidationErrors from '~/components/AuthValidationErrors'
 
 const CategoryCreate: NextPage = (): JSX.Element => {
   const router = useRouter()
+  const { mutate } = useSWRConfig()
   const [formErrors, setFormErrors]: any[] = useState([])
 
   const {
@@ -25,7 +27,8 @@ const CategoryCreate: NextPage = (): JSX.Element => {
     await 
       axios
         .post('/api/categories', data)
-        .then(() => {
+        .then(async () => {
+          await mutate('/api/categories')
           toast.success('Added Category Successfully!')
           router.push('/admin/categories')
         })

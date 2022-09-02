@@ -8,7 +8,7 @@ import Nav from './Nav'
 import NavMobile from './NavMobile'
 import Avatar from '~/components/Avatar'
 import { IUser } from '~/data/interfaces'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 
 type Props = {
   user: IUser
@@ -58,6 +58,8 @@ const MenuToggle = ({ user, logout }: { user: IUser, logout: () => void }) => {
     },
   ]
 
+  const formatName = `${user?.name.split(' ').slice(0, -1).join(' ')} ${user?.name.split(' ').slice(-1).join(' ')[0]}.`
+
   return (
     <Menu as="div" className="ml-3 relative">
       <div>
@@ -82,7 +84,7 @@ const MenuToggle = ({ user, logout }: { user: IUser, logout: () => void }) => {
               height={32}
             />
           )}
-          <p>{user?.name}</p>
+          <p>{formatName}</p>
         </Menu.Button>
       </div>
       <Transition

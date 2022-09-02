@@ -24,7 +24,7 @@ const ProfileCard: React.FC<Props> = (props): JSX.Element => {
 
   return (
     <section className="w-full md:w-1/2 min-h-[20vh]">
-      <div className="w-full md:max-w-sm bg-white shadow-sm border rounded-lg py-6">
+      <div className="w-full md:max-w-sm bg-white shadow-primary rounded-lg py-6">
         <div className="flex flex-col items-center pb-3">
             <div className="inline-flex rounded-full shadow-lg">
               {!user?.avatar_url ? (

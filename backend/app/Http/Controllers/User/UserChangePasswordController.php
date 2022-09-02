@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -23,8 +24,6 @@ class UserChangePasswordController extends Controller
 
         $user = User::find(auth()->user()->id)->update(['password'=> Hash::make($request->new_password)]);
         
-        return response()->json([
-            'data' => $user
-        ]);
+        return new UserResource($user);
     }
 }

@@ -5,7 +5,7 @@ import { IoLogOut } from 'react-icons/io5'
 
 import { useAuth } from '~/hooks/auth'
 import { ISidebar } from '~/data/interfaces'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { sidebarLinks } from '~/data/sidebarList'
 
 type Props = {
@@ -35,16 +35,16 @@ const Sidebar: React.FC<Props> = (props): JSX.Element => {
                       href="#"
                       className={classNames('group btn-sidebar-link',
                         router.pathname.includes(href)
-                          ? 'text-orange-500 bg-gray-100'
-                          : 'hover:text-orange-500 text-gray-600'
+                          ? 'text-red-500 bg-gray-100'
+                          : 'hover:text-red-500 text-gray-600'
                       )}
                     >
                       <Icon
                         className={classNames(
                           'btn-sidebar-logo',
                           router.pathname.includes(href)
-                            ? 'text-orange-500'
-                            : 'group-hover:text-orange-500 text-gray-600'
+                            ? 'text-red-500'
+                            : 'group-hover:text-red-500 text-gray-600'
                         )}
                       />
                       {isOpen && <span className="ml-3">{name}</span>}
@@ -57,13 +57,13 @@ const Sidebar: React.FC<Props> = (props): JSX.Element => {
               <button
                 type="button"
                 className={classNames(
-                  'group btn-sidebar-link hover:text-orange-500',
+                  'group btn-sidebar-link hover:text-red-500',
                   'text-gray-600 w-full'
                 )}
                 onClick={logout}
               >
                 <IoLogOut className={classNames(
-                  'btn-sidebar-logo text-gray-500 group-hover:text-orange-500'
+                  'btn-sidebar-logo text-gray-500 group-hover:text-red-500'
                 )} />
                 {isOpen && <span className="ml-4">Logout</span>}
               </button>

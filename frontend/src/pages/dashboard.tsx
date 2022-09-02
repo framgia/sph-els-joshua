@@ -9,7 +9,7 @@ import { fetcher } from '~/lib/fetcher'
 import Avatar from '~/components/Avatar'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/userLayout'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { authProtected } from '~/utils/auth-protected'
 import DashboardList from '~/components/user/DashboardList'
 

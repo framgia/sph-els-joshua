@@ -6,12 +6,12 @@ import { IProfile, IUser } from '~/data/interfaces'
 
 type FollowStatusProps = {
   user: IProfile
-  author: any
+  author: IUser
 }
 
 type HandleFollowProps = {
   user: IProfile
-  author: any
+  author: IUser
   mutate: KeyedMutator<any>
   setLoading: React.Dispatch<React.SetStateAction<boolean>> 
 }
@@ -20,7 +20,7 @@ export const useFollow = () => {
 
   const followStatus = (props: FollowStatusProps): string => {
     const { user, author } = props
-    const current_id: any = user?.followers?.map(({ id }) => id)
+    const current_id = user?.followers?.map(({ id }) => id)
     const filtered_user = current_id.filter((user_id: number) => user_id === author?.id) 
     return !filtered_user.length ? 'Follow' : 'Unfollow'
   }
@@ -29,7 +29,7 @@ export const useFollow = () => {
     const { user, author, mutate, setLoading } = props
   
     setLoading(true)
-    const current_id: any = user?.followers?.map(({ id }) => id)
+    const current_id = user?.followers?.map(({ id }) => id)
     const filtered_user = current_id.filter((user_id: number) => user_id === author?.id) 
   
     if (!!filtered_user.length) {

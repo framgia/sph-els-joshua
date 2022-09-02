@@ -4,7 +4,7 @@ import Caption from './Caption'
 import UserItem from './UserItem'
 import TableHead from './Tablehead'
 import { Spinner } from '~/utils/Spinner'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { IThead, IUser } from '~/data/interfaces'
 
 type Props = {

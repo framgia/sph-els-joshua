@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Models\Category;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -14,11 +14,7 @@ class CategoryController extends Controller
 
     public function index()
     {
-        $categories = Category::latest()
-                        ->orderBy('id', 'desc')
-                        ->get();
-
-        return $this->showAll($categories);
+        return CategoryResource::collection(Category::latest()->orderByDesc('id')->get());
     }
 
     public function store(Request $request)
@@ -30,14 +26,14 @@ class CategoryController extends Controller
 
         $this->validate($request, $rules);
 
-        $newCategory = Category::create($request->all());
+        $category = Category::create($request->all());
 
-        return $this->showOne($newCategory, 201);
+        return new CategoryResource($category);
     }
 
     public function show(Category $category)
     {
-        return $this->showOne($category);
+        return new CategoryResource($category);
     }
 
     public function update(Request $request, Category $category)
@@ -53,13 +49,13 @@ class CategoryController extends Controller
 
         $category->save();
 
-        return $this->showOne($category);
+        return new CategoryResource($category);
     }
 
     public function destroy(Category $category)
     {
         $category->delete();
-        
-        return $this->showOne($category);
+
+        return response()->noContent();
     }
 }

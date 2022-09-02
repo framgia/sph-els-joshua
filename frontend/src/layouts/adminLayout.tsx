@@ -6,8 +6,8 @@ import createPersistedState from 'use-persisted-state'
 import { useAuth } from '~/hooks/auth'
 import Header from '~/components/admin/Header'
 import Footer from '~/components/admin/Footer'
-import { classNames } from '~/utils/classNames'
 import Sidebar from '~/components/admin/Sidebar'
+import { classNames } from '~/helpers/classNames'
 
 type Props = {
   children: React.ReactNode

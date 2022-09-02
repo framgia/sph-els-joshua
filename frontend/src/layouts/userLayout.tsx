@@ -5,7 +5,7 @@ import React, { ReactNode } from 'react'
 import { useAuth } from '~/hooks/auth'
 import Header from '~/components/user/Header'
 import Footer from '~/components/admin/Footer'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 
 type Props = {
   children: ReactNode

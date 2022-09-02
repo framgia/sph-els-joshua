@@ -1,19 +1,17 @@
 import useSWR from 'swr'
 import { NextPage } from 'next'
-import { AxiosResponse } from 'axios'
 import { toast } from 'react-toastify'
 import React, { useState } from 'react'
 
 import axios from '~/lib/axios'
+import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/adminLayout'
 import Pagination from '~/components/admin/Pagination'
 import { adminProtected } from '~/utils/admin-protected'
 import QuestionList from '~/components/admin/QuestionList'
 
-const fetcher = (url: string) => axios.get(url).then((res: AxiosResponse) => res.data)
-
 const Questions: NextPage = (): JSX.Element => {
-  const { data: questions, mutate } = useSWR('/api/questions', async () => fetcher('/api/questions'), {
+  const { data: questions, mutate } = useSWR('/api/questions', fetcher, {
     refreshInterval: 1000,
     revalidateOnMount: true
   })

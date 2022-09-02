@@ -7,7 +7,7 @@ import { useAuth } from '~/hooks/auth'
 import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/userLayout'
 import { Spinner } from '~/utils/Spinner'
-import { classNames } from '~/utils/classNames'
+import { classNames } from '~/helpers/classNames'
 import { authProtected } from '~/utils/auth-protected'
 import ProfileCard from '~/components/user/ProfileCard'
 import ActivityList from '~/components/user/ActivityList'
@@ -46,7 +46,7 @@ const UserProfile: NextPage = (): JSX.Element => {
               isAuthor={author?.id === id} 
             />
             <section 
-              className="w-full overflow-hidden shadow-sm border rounded-lg bg-white"
+              className="w-full overflow-hidden shadow-primary rounded-lg bg-white"
               data-aos="fade-down"
               data-aos-delay="600"
             >

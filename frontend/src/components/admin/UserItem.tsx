@@ -1,4 +1,5 @@
 import moment from 'moment'
+import ReactAvatar from 'react-avatar'
 
 import Avatar from './../Avatar'
 import { defaultAvatar } from '~/helpers/defaultAvatar'
@@ -16,15 +17,19 @@ const UserItem: React.FC<Props> = (props): JSX.Element => {
         {id}
       </td>
       <th scope="row" className="table-tbody-th">
-        <Avatar 
-          width={32}
-          height={32}
-          url={`${
-            avatar_url === null ? 
-            defaultAvatar : 
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/${avatar_url}`
-          }`}
-        />
+        {!avatar_url ? (
+          <ReactAvatar 
+            name={name} 
+            size="32" 
+            round="100%" 
+          />
+        ) : (
+          <Avatar 
+            url={`${process.env.NEXT_PUBLIC_BACKEND_URL}/${avatar_url}`}
+            width={32}
+            height={32}
+          />
+        )}
         <div className="pl-3">
           <div className="text-sm font-semibold">{name}</div>
         </div>  

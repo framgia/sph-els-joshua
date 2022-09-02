@@ -30,13 +30,13 @@ class FollowController extends Controller
         ]);
     }
 
-    public function destroy($id)
+    public function destroy(User $follow)
     {
         $user_relationships = UserRelationship::all();
 
         foreach($user_relationships as $item) 
         {
-            if ($item['following_id'] == $id && $item['follower_id'] == Auth::user()->id) 
+            if ($item['following_id'] == $follow->id && $item['follower_id'] == Auth::user()->id) 
             {
                 $item->delete();
             }
@@ -46,7 +46,7 @@ class FollowController extends Controller
 
         foreach($activity_logs as $item) 
         {
-            if ($item['user_id'] == Auth::user()->id && $item['activity_id'] == $id) 
+            if ($item['user_id'] == Auth::user()->id && $item['activity_id'] == $follow->id) 
             {
                 $item->delete();
             }
