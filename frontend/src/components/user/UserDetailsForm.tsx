@@ -49,7 +49,9 @@ const UserDetailsForm: React.FC<Props> = ({ user, mutate }): JSX.Element => {
         setFormError={setFormError} 
       />
       <div>
-        <label css={global.label}>Your name</label>
+        <label css={global.label}>
+          Your name <span className="text-red-500">*</span>
+        </label>
         <input 
           type="text" 
           css={global.form_control}
@@ -70,7 +72,9 @@ const UserDetailsForm: React.FC<Props> = ({ user, mutate }): JSX.Element => {
         {errors?.name && <span className="error">{`${errors?.name?.message}`}</span>}
       </div>
       <div>
-        <label css={global.label}>Your email</label>
+        <label css={global.label}>
+          Your email <span className="text-red-500">*</span>
+        </label>
         <input 
           type="email" 
           css={global.form_control}

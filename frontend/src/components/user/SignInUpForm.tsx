@@ -30,7 +30,7 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
       {!isLoginPage && (
         <div>
           <label css={global.label}>
-            Name
+            Name <span className="text-red-500">*</span>
           </label>
           <input
             type="text"
@@ -55,7 +55,7 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
       )}
       <div className="mt-4">
         <label css={global.label}>
-          Email Address
+          Email Address <span className="text-red-500">*</span>
         </label>
         <input
           type="email"
@@ -76,7 +76,7 @@ const SignInUpForm: React.FC<Props> = (props): JSX.Element => {
 
       <div className="mt-4">
         <label css={global.label}>
-          Password
+          Password <span className="text-red-500">*</span>
         </label>
         <input
           type="password"

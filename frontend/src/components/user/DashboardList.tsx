@@ -25,22 +25,16 @@ const styles = {
 const DashboardList: React.FC<Props> = ({ activities }): JSX.Element => {
   return (
     <>
-      {!activities 
-      ? <Loading />
-      : (
-        <>
-         {activities?.map(({ activity_title, created_at }, i) => (
-          <div key={i} css={styles.dashboardlist}>
+      {activities?.map(({ activity_title, created_at }, i) => (
+        <div key={i} css={styles.dashboardlist}>
+          <div>
             <div>
-              <div>
-                <span dangerouslySetInnerHTML={{__html: activity_title }}></span>
-              </div>
-              <span>{moment(created_at).fromNow()}</span>
+              <span dangerouslySetInnerHTML={{__html: activity_title }}></span>
             </div>
+            <span>{moment(created_at).fromNow()}</span>
           </div>
-         ))}
-        </>
-      )}
+        </div>
+        ))}
     </>
   )
 }

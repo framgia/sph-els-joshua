@@ -124,7 +124,9 @@ const QuestionCreate: NextPage = (): JSX.Element => {
                 setErrors={setFormErrors} 
               />
               <div>
-                <label css={global.label}>Categories *</label>
+                <label css={global.label}>
+                  Categories <span className="text-red-500">*</span>
+                </label>
                 <select 
                   css={global.form_control}
                   tabIndex={1}
@@ -136,7 +138,9 @@ const QuestionCreate: NextPage = (): JSX.Element => {
                 {errors?.category_id && <span className="error">{`${errors?.category_id?.message}`}</span>}
               </div>
               <div>
-                <label css={global.label}>Question *</label>
+                <label css={global.label}>
+                  Question <span className="text-red-500">*</span>
+                </label>
                 <input 
                   type="text" 
                   css={global.form_control}
@@ -148,7 +152,9 @@ const QuestionCreate: NextPage = (): JSX.Element => {
                 {errors?.value && <span className="error">{`${errors?.value?.message}`}</span>}
               </div>
               <div>
-                <label css={global.label}>Answer *</label>
+                <label css={global.label}>
+                  Answer <span className="text-red-500">*</span>
+                </label>
                 <select 
                   css={global.form_control}
                   tabIndex={1}
@@ -160,7 +166,9 @@ const QuestionCreate: NextPage = (): JSX.Element => {
                 {errors?.choice_id && <span className="error">{`${errors?.choice_id?.message}`}</span>}
               </div>
               <div>
-                <label css={global.label}>Choices *</label>
+                <label css={global.label}>
+                  Choices <span className="text-red-500">*</span>
+                </label>
                 <ChooseFields
                   choices={choices}
                   actions={{ 

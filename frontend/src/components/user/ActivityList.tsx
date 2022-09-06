@@ -31,7 +31,7 @@ const ActivityList: React.FC<Props> = ({ activities, user }): JSX.Element => {
   return (
     <>
       {!activities?.length 
-      ? <Loading />
+      ? <p css={tw`text-sm text-gray-500`}>No activities yet.</p>
       : (
         <>
           {activities.map(({ activity_title, created_at }, i) => (
