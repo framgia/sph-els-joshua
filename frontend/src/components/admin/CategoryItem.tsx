@@ -19,20 +19,20 @@ const CategoryItem: React.FC<Props> = (props): JSX.Element => {
   const { id, title, description, created_at } = category
 
   return (
-    <tr className="table-tbody-tr">
-      <td className="table-tbody-td">
+    <tr>
+      <td>
         {id}
       </td>
-      <td className="table-tbody-td font-medium">
+      <td className="font-medium">
         {title}
       </td>
-      <td className="table-tbody-td">
+      <td>
         <span className="line-clamp-2">{description}</span>
       </td>
-      <td className="table-tbody-td">
+      <td>
         {moment(created_at).format("MMM Do YY")}
       </td>
-      <td className="table-tbody-td">
+      <td>
         <div className={classNames(
           'inline-flex rounded-md'
         )} role="group">

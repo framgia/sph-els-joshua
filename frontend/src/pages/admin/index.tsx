@@ -1,9 +1,10 @@
+import tw from 'twin.macro'
 import Head from 'next/head'
 import type { NextPage } from 'next'
 import React, { useState } from 'react'
 
 import { useAuth } from '~/hooks/auth'
-import { classNames } from '~/helpers/classNames'
+import { styles } from '~/twin/index.styles'
 import { SignInUpFormValues } from '~/data/types'
 import SignInUpForm from '~/components/user/SignInUpForm'
 import AuthValidationErrors from '~/components/AuthValidationErrors'
@@ -30,15 +31,10 @@ const Index: NextPage = (): JSX.Element => {
       <Head>
         <title>{`ELearning Administrator`}</title>
       </Head>
-      <div className="bg-white flex justify-center h-screen">
-        <div
-          className={classNames(
-            'relative hidden bg-cover lg:block lg:w-2/3',
-            'bg-[url(/img/2.jpg)]'
-          )}
-        >
-          <div className="absolute bg-black opacity-10 inset-0"></div>
-          <div className="flex items-center h-full px-20">
+      <section css={styles.wrapper}>
+        <div css={styles.banner}>
+          <div css={styles.banner_filter}></div>
+          <div css={styles.banner_text}>
             <div>
               <h2 className="text-5xl font-bold text-white">Sun* Administrator</h2>
               <p className="max-w-xl mt-3 text-white text-lg">
@@ -47,15 +43,19 @@ const Index: NextPage = (): JSX.Element => {
             </div>
           </div>
         </div>
-        <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
-          <div className="flex-1">
-            <div className="text-center">
-              <h2 className="text-4xl font-bold text-center text-gray-700">Administrator</h2>
-              <p className="mt-3 text-gray-500">only authorized personnel are allowed</p>
+        <div css={styles.auth_form}>
+          <div>
+            <div css={tw`text-center`}>
+              <h2 css={styles.auth_form_h2}>Administrator</h2>
+              <p css={styles.auth_form_p}>only authorized personnel are allowed</p>
             </div>
 
-            <div className="mt-8">
-              <AuthValidationErrors className="mb-4" errors={errors} setErrors={setErrors} />
+            <div css={tw`mt-8`}>
+              <AuthValidationErrors 
+                className="mb-4" 
+                errors={errors} 
+                setErrors={setErrors} 
+              />
               <SignInUpForm 
                 isLoginPage={isLoginPage}
                 actions={{ handleSwitchForm, handleAuthSubmit }}
@@ -63,7 +63,7 @@ const Index: NextPage = (): JSX.Element => {
             </div>
           </div>
         </div>
-      </div>
+      </section>
     </>
   )
 }

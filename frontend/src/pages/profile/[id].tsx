@@ -6,8 +6,8 @@ import { useRouter } from 'next/router'
 import { useAuth } from '~/hooks/auth'
 import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/userLayout'
-import { Spinner } from '~/utils/Spinner'
-import { classNames } from '~/helpers/classNames'
+import Loading from '~/components/Loading'
+import { styles } from '~/twin/profile.styles'
 import { authProtected } from '~/utils/auth-protected'
 import ProfileCard from '~/components/user/ProfileCard'
 import ActivityList from '~/components/user/ActivityList'
@@ -26,19 +26,15 @@ const UserProfile: NextPage = (): JSX.Element => {
 
   return (
     <Layout metaTitle={`${user ? user?.name : ''}`}>
-      <section className={classNames(
-          'flex flex-col md:flex-row space-y-4 md:space-y-0',
-          'md:space-x-4 overflow-hidden pt-5'
-        )}
+      <main 
+        css={styles.main}
         data-aos="fade-up"
         data-aos-delay="300"
         data-aos-duration="300"
       >
-        {!user ? (
-          <div className="flex justify-center w-full py-8">
-            <Spinner className="w-6 h-6 text-red-500" />
-          </div>
-        ) : (
+        {!user 
+        ? <Loading /> 
+        : (
           <>
             <ProfileCard 
               user={user}
@@ -46,14 +42,14 @@ const UserProfile: NextPage = (): JSX.Element => {
               isAuthor={author?.id === id} 
             />
             <section 
-              className="w-full overflow-hidden shadow-primary rounded-lg bg-white"
+              css={styles.section}
               data-aos="fade-down"
               data-aos-delay="600"
             >
-              <div className="py-4 px-6 border-b">
-                <h1 className="font-bold">Activities</h1>
+              <div css={styles.card_title}>
+                <h1>Activities</h1>
               </div>        
-              <div className="pt-2 pb-4 px-6 divide-y space-y-2 max-h-[50vh] overflow-y-auto">
+              <div css={styles.card_content}>
                 <ActivityList 
                   activities={activities} 
                   user={user} 
@@ -62,7 +58,7 @@ const UserProfile: NextPage = (): JSX.Element => {
             </section>
           </>
         )}
-      </section>
+      </main>
     </Layout>
   )
 }

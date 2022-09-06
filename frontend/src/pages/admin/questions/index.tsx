@@ -6,6 +6,7 @@ import React, { useState } from 'react'
 import axios from '~/lib/axios'
 import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/adminLayout'
+import { styles } from '~/twin/global.styles'
 import Pagination from '~/components/admin/Pagination'
 import { adminProtected } from '~/utils/admin-protected'
 import QuestionList from '~/components/admin/QuestionList'
@@ -44,8 +45,8 @@ const Questions: NextPage = (): JSX.Element => {
 
   return (
     <Layout metaTitle="Categories">
-      <main className="pt-4 px-4">
-        <section className="overflow-x-auto relative shadow-md sm:rounded-lg">
+      <main css={styles.admin_main}>
+        <section css={styles.admin_section}>
           <QuestionList 
             questions={displayQuestions} 
             loading={loading} 

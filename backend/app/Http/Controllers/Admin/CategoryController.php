@@ -30,8 +30,13 @@ class CategoryController extends Controller
         return new CategoryResource($category);
     }
 
-    public function update(Category $category)
+    public function update(Category $category, Request $request)
     {
+        $category->fill($request->only([
+            'title',
+            'description'
+        ]));
+
         if ($category->isClean()) {
             return $this->errorResponse('You need to specify any different value to update.', 422);
         }

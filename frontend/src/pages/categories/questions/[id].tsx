@@ -9,8 +9,10 @@ import { useAuth } from '~/hooks/auth'
 import { fetcher } from '~/lib/fetcher'
 import Layout from '~/layouts/userLayout'
 import { Spinner } from '~/utils/Spinner'
+import Loading from '~/components/Loading'
 import { authProtected } from '~/utils/auth-protected'
 import { ICategoryQuestion, IChoice } from '~/data/interfaces'
+import { styles } from '~/twin/categories.questions.index.styles'
 import { convertIndexToAlphabet } from '~/helpers/convertIndexToAlphabet'
 
 type IHandleChange = {
@@ -45,15 +47,13 @@ const CategoryQuestions: NextPage = (): JSX.Element => {
     formState: { isSubmitting }
   } = useForm()
 
-  const handleSave = async (data: any): Promise<void> => {
+  const handleSave = async (): Promise<void> => {
     const message = confirm('Are you sure you want to your answer?')
       if (message) {
-
         const lessons = {
           user_id: author?.id,
           category_id: id
         }
-
         await 
           axios
             .post('/api/lessons', { 
@@ -100,28 +100,29 @@ const CategoryQuestions: NextPage = (): JSX.Element => {
 
   return (
     <Layout metaTitle={categoryQuestions?.title}>
-      {!categoryQuestions ? (
-          <div className="flex justify-center w-full py-8">
-            <Spinner className="w-6 h-6 text-red-500" />
-          </div>
-        ) : (
+      {!categoryQuestions 
+      ? <Loading />
+      : (
           <>
-            <div className="pt-5 pb-4 bg-white rounded-md shadow-primary">
-              <h1 className="text-2xl font-bold text-red-500 text-center">"{categoryQuestions?.title}"</h1>
+            <div css={styles.category_title}>
+              <h1>"{categoryQuestions?.title}"</h1>
             </div>
-            <form onSubmit={handleSubmit(handleSave)} className="mt-4 bg-white px-8 py-4 rounded-md shadow-primary">
-              <div className="divide-y divide-gray-100">
+            <form 
+              onSubmit={handleSubmit(handleSave)} 
+              css={styles.question_form}
+            >
+              <div>
                 {categoryQuestions?.questions.map((question: ICategoryQuestion, questionIdx: number) => (
-                  <div key={questionIdx} className="flex flex-col pb-10 pt-4">
-                    <div className="flex items-start flex-col md:flex-row">
-                      <div className="md:w-1/2 flex flex-col">
-                        <label className="text-lg font-semibold">{questionIdx+1}. {question?.value}</label>
+                  <div key={questionIdx} css={styles.question_wrapper}>
+                    <div>
+                      <div>
+                        <label>{questionIdx+1}. {question?.value}</label>
                       </div>
-                      <div className="mt-3 md:mt-0 md:w-1/2 space-y-4">
+                      <div css={styles.choices_container}>
                         {question?.choices?.map((choice: IChoice, idx: number) => (
-                          <div key={idx} className="flex space-x-2 items-center">
-                            <span className="font-medium">{convertIndexToAlphabet(idx+1) + ". "}</span>
-                            <div className="flex items-center">
+                          <div key={idx} css={styles.choices_wrapper}>
+                            <span>{convertIndexToAlphabet(idx+1) + ". "}</span>
+                            <div>
                               <input 
                                 required
                                 type="radio" 
@@ -136,7 +137,7 @@ const CategoryQuestions: NextPage = (): JSX.Element => {
                                   questionIdx: questionIdx
                                 })}
                               />
-                              <label className="ml-2 text-sm font-medium">
+                              <label>
                                 {choice?.value}
                               </label>
                             </div>
@@ -146,7 +147,7 @@ const CategoryQuestions: NextPage = (): JSX.Element => {
                     </div>
                   </div>
                 ))}
-                <div className="pt-4 flex justify-end">
+                <div css={styles.btn_wrapper}>
                   <button 
                     type="submit" 
                     disabled={isSubmitting}

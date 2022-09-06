@@ -9,10 +9,10 @@ ELearning App is built with modern technologies using `Next.js` / `TypeScript` /
 ## Main Features
 
 - 📓 User can login and register
-- ⚙ Administrator for manipulating data like categories and questions
+- ⚙ Administrator can manipulating data like categories and questions
 - 📸 User can upload profile photo
-- 🔖 User can take the quizzes based on the category he/she chooses
-- 🔔 Receive their own activies and other user activities
+- 🔖 User can take the quizzes based on the categories provided
+- 🔔 Can view their own activities and their following user activities
 - ✅ Follow and Unfollow User
 
 ### Technologies Used

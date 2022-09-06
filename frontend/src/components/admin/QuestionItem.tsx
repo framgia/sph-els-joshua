@@ -19,20 +19,20 @@ const QuestionItem: React.FC<Props> = (props): JSX.Element => {
   const { id, category_id, value, created_at } = question
 
   return (
-    <tr className="table-tbody-tr">
-      <td className="table-tbody-td">
+    <tr>
+      <td>
         {id}
       </td>
       <td className="table-tbody-td font-medium">
         {category_id}
       </td>
-      <td className="table-tbody-td">
+      <td>
         {value}
       </td>
-      <td className="table-tbody-td">
+      <td>
         {moment(created_at).format("MMM Do YY")}
       </td>
-      <td className="table-tbody-td">
+      <td>
         <div className={classNames(
           'inline-flex rounded-md'
         )} role="group">

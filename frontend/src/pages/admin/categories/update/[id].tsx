@@ -1,3 +1,4 @@
+import tw from 'twin.macro'
 import { NextPage } from 'next'
 import { useSWRConfig } from 'swr'
 import { useRouter } from 'next/router'
@@ -9,9 +10,11 @@ import { toast } from 'react-toastify'
 import { fetcher } from '~/lib/fetcher'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
+import Loading from '~/components/Loading'
 import { ICategory } from '~/data/interfaces'
-import { classNames } from '~/helpers/classNames'
 import { CategoryFormValues } from '~/data/types'
+import { styles as global } from '~/twin/global.styles'
+import { styles } from '~/twin/admin.questions.create.styles'
 import ValidationError from '~/components/user/ValidationError'
 
 const CategoryUpdate: NextPage = (): JSX.Element => {
@@ -59,51 +62,49 @@ const CategoryUpdate: NextPage = (): JSX.Element => {
 
   return (
     <Layout metaTitle="Category Update">
-      <main className="pt-4 px-4">
-        <section className={classNames(
-          'overflow-x-auto relative rounded-2xl shadow-md bg-white',
-          'max-w-lg mx-auto border'
-        )}>
-          {!categoryData ? (
-            <div className="py-5 flex flex-col justify-center items-center">
-              <Spinner className="w-6 h-6" />
-              <p className="mt-2 text-xs">Loading...</p>
-            </div>
-          ) : (
-            <form className="p-10" onSubmit={handleSubmit(handleUpdate)}>
-              <h1 className="form-title">Update Category</h1>
-              <ValidationError className="mt-4" error={formError} setFormError={setFormError} />
-              <div className="mt-5">
-                <label className="form-label">Title *</label>
+      <main css={styles.main}>
+        <section css={styles.section}>
+          {!categoryData ? <Loading /> 
+          : (
+            <form css={global.form} onSubmit={handleSubmit(handleUpdate)}>
+              <h1 css={global.form_title}>Update Category</h1>
+              <ValidationError 
+                className="mt-4" 
+                error={formError} 
+                setFormError={setFormError} 
+              />
+              <div>
+                <label css={global.label}>
+                  Title <span className="text-red-500">*</span>
+                </label>
                 <input 
                   type="text" 
-                  className="form-control" 
-                  placeholder="Title" 
-                  {...register('title', { required: 'Title is required' })}
                   tabIndex={1}
+                  placeholder="Title" 
                   disabled={isSubmitting}
+                  css={global.form_control}
                   defaultValue={categoryData?.title}
+                  {...register('title', { required: 'Title is required' })}
                 />
                 {errors?.title && <span className="error">{`${errors?.title?.message}`}</span>}
               </div>
-              <div className="mt-5">
-                <label className="form-label">Description *</label>
+              <div>
+                <label css={global.label}>Description <span className="text-red-500">*</span></label>
                 <textarea 
                   rows={8} 
-                  className="form-control" 
-                  placeholder="Description"
-                  {...register('description', { required: 'Description is required' })}
                   tabIndex={2}
                   disabled={isSubmitting}
+                  css={global.form_control}
+                  placeholder="Description"
                   defaultValue={categoryData?.description}
+                  {...register('description', { required: 'Description is required' })}
                 >
                 </textarea>
                 {errors?.description && <span className="error">{`${errors?.description?.message}`}</span>}
               </div>
-              <div className="mt-4 flex justify-end">
+              <div css={tw`flex justify-end`}>
                 <button 
                   type="submit" 
-                  tabIndex={3}
                   disabled={isSubmitting}
                   className="btn-success px-10 py-3"
                 >

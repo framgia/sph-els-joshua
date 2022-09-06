@@ -1,7 +1,9 @@
+import tw from 'twin.macro'
 import { FiPlus } from 'react-icons/fi'
 import { GrFormSubtract } from 'react-icons/gr'
 
 import { IChoice } from '~/data/interfaces'
+import { styles as global } from '~/twin/global.styles'
 import { convertIndexToAlphabet } from '~/helpers/convertIndexToAlphabet'
 
 type ChooseProps = {
@@ -14,6 +16,23 @@ type ChooseProps = {
   isSubmitting: boolean
 }
 
+const styles = {
+  wrapper: [
+    tw`flex items-center space-x-1 space-y-2`
+  ],
+  input_fields: [
+    tw`
+      relative flex items-center flex-1
+      [> div]:(absolute flex items-center px-4 pt-2)
+      [> div > span]:(font-bold text-green-500 pr-3 border-r)
+      [> input]:(pl-12)
+    `
+  ],
+  btn_options: [
+    tw`inline-flex rounded-md shadow-sm`
+  ]
+}
+
 const ChooseFields: React.FC<ChooseProps> = (props): JSX.Element => {
   const { choices, actions, isSubmitting } = props
   const {handleChangeInput, handleAddField, handleRemoveField } = actions
@@ -21,10 +40,11 @@ const ChooseFields: React.FC<ChooseProps> = (props): JSX.Element => {
   return choices?.map((choice: IChoice, i: number) => (
     <div
       key={choice?.id}
-      className="flex items-center space-x-1 space-y-2">
-      <div className="relative flex items-center flex-1">
-        <div className="absolute flex items-center px-4 pt-2">
-          <span className="font-bold text-green-500 pr-3 border-r">{convertIndexToAlphabet(i+1)}</span>
+      css={styles.wrapper}
+    >
+      <div css={styles.input_fields}>
+        <div>
+          <span>{convertIndexToAlphabet(i+1)}</span>
         </div>
         <input
           type="text"
@@ -33,10 +53,10 @@ const ChooseFields: React.FC<ChooseProps> = (props): JSX.Element => {
           disabled={isSubmitting}
           value={choice?.value}
           onChange={(event) => handleChangeInput(choice?.id, event)}
-          className="form-control pl-12"
+          css={global.form_control}
         />
       </div>
-      <div className="inline-flex rounded-md shadow-sm" role="group">
+      <div css={styles.btn_options} role="group">
         <button 
           type="button" 
           className="btn-default rounded-l-sm"

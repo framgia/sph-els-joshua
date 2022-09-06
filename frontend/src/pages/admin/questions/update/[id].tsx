@@ -1,3 +1,4 @@
+import tw from 'twin.macro'
 import { NextPage } from 'next'
 import { useSWRConfig } from 'swr'
 import { v4 as uuidv4 } from 'uuid'
@@ -10,9 +11,11 @@ import axios from '~/lib/axios'
 import { fetcher } from '~/lib/fetcher'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
-import { classNames } from '~/helpers/classNames'
+import Loading from '~/components/Loading'
 import { QuestionFormValues } from '~/data/types'
+import { styles as global } from '~/twin/global.styles'
 import ChooseFields from '~/components/admin/ChooseFields'
+import { styles } from '~/twin/admin.questions.create.styles'
 import { ICategory, IChoice, IQuestion } from '~/data/interfaces'
 
 const QuestionUpdate: NextPage = (): JSX.Element => {
@@ -110,23 +113,18 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
 
   return (
     <Layout metaTitle="Category Update">
-      <main className="pt-4 px-4">
-        <section className={classNames(
-          'overflow-x-auto relative rounded-2xl shadow-md bg-white',
-          'max-w-lg mx-auto border'
-        )}>
-          {(!category && !question) ? (
-            <div className="py-5 flex flex-col justify-center items-center">
-              <Spinner className="w-6 h-6" />
-              <p className="mt-2 text-xs">Loading...</p>
-            </div>
-          ) : (
-            <form className="p-10" onSubmit={handleSubmit(handleUpdate)}>
-              <h1 className="form-title">Update Question</h1>
-              <div className="mt-3">
-                <label className="form-label">Category *</label>
+      <main css={styles.main}>
+        <section css={styles.section}>
+          {(!category && !question) ? <Loading />  
+          : (
+            <form css={global.form} onSubmit={handleSubmit(handleUpdate)}>
+              <h1 css={global.form_title}>Update Question</h1>
+              <div>
+                <label css={global.label}>
+                  Category <span className="text-red-500">*</span>
+                </label>
                 <select 
-                  className="form-control" 
+                  css={global.form_control} 
                   tabIndex={1}
                   disabled={isSubmitting}
                   {...register('category_id', { required: 'Category is required' })}
@@ -135,11 +133,13 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
                 </select>
                 {errors?.category_id && <span className="error">{`${errors?.category_id?.message}`}</span>}
               </div>
-              <div className="mt-6">
-                <label className="form-label">Question *</label>
+              <div>
+                <label css={global.label}>
+                  Question <span className="text-red-500">*</span>
+                </label>
                 <input 
                   type="text" 
-                  className="form-control" 
+                  css={global.form_control} 
                   placeholder="Write your question"
                   tabIndex={2}
                   disabled={isSubmitting}
@@ -148,10 +148,12 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
                 />
                 {errors?.value && <span className="error">{`${errors?.value?.message}`}</span>}
               </div>
-              <div className="mt-3">
-                <label className="form-label">Answer *</label>
+              <div>
+                <label css={global.label}>
+                  Answer <span className="text-red-500">*</span>
+                </label>
                 <select 
-                  className="form-control" 
+                  css={global.form_control} 
                   tabIndex={1}
                   disabled={isSubmitting}
                   {...register('choice_id', { required: 'Right Answer is required'})}
@@ -163,8 +165,10 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
                 </select>
                 {errors?.choice_id && <span className="error">{`${errors?.choice_id?.message}`}</span>}
               </div>
-              <div className="mt-6">
-                <label htmlFor="message" className="form-label">Choices *</label>
+              <div>
+                <label css={global.label}>
+                  Choices <span className="text-red-500">*</span>
+                </label>
                 <ChooseFields
                   choices={choices}
                   actions={{ 
@@ -175,10 +179,9 @@ const QuestionUpdate: NextPage = (): JSX.Element => {
                   isSubmitting={isSubmitting}
                 />
               </div>
-              <div className="mt-4 flex justify-end">
+              <div css={tw`flex justify-end`}>
                 <button 
                   type="submit" 
-                  tabIndex={3}
                   disabled={isSubmitting}
                   className="btn-success px-10 py-3"
                 >

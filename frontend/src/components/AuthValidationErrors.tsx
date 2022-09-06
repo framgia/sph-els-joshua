@@ -1,4 +1,5 @@
 import React from 'react'
+import tw from 'twin.macro'
 import { TiInfo } from 'react-icons/ti'
 import { IoClose } from 'react-icons/io5'
 
@@ -10,6 +11,18 @@ type Props = {
   className?: string
 }
 
+const styles = {
+  wrapper: [
+    tw`flex p-4 mb-4 bg-red-100 border-t-4`,
+    tw`
+      border-red-500 dark:bg-red-200
+      [> div]:(ml-3 inline-flex flex-col)
+      [> div > ul]:(flex flex-col)
+      [> div > ul > li]:(text-sm font-medium text-red-700)
+    `
+  ]
+}
+
 const AuthValidationErrors: React.FC<Props> = (props): JSX.Element => { 
   const { errors, className, setErrors } = props
 
@@ -19,19 +32,16 @@ const AuthValidationErrors: React.FC<Props> = (props): JSX.Element => {
     <>
       {(errors?.length > 0) && (
         <div 
-          className={classNames(
-            'flex p-4 mb-4 bg-red-100 border-t-4',
-            'border-red-500 dark:bg-red-200',
-            `${className}`
-          )} 
+          className={className} 
+          css={styles.wrapper}
           role="alert"
         >
             <TiInfo className="flex-shrink-0 w-5 h-5 text-red-700" />
-            <div className="ml-3 inline-flex flex-col">
+            <div>
               {errors?.map((error: string, i: number) => (
-                  <ul key={i} className="flex flex-col">
-                    <li className="text-sm font-medium text-red-700">{error}</li>
-                  </ul>
+                <ul key={i}>
+                  <li>{error}</li>
+                </ul>
               ))}
             </div>
             <button 

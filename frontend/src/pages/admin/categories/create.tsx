@@ -1,15 +1,17 @@
+import tw from 'twin.macro'
 import { NextPage } from 'next'
 import { useSWRConfig } from 'swr'
 import React, { useState } from 'react'
 import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
+import { styles as global } from '~/twin/global.styles'
 
 import axios from '~/lib/axios'
 import { toast } from 'react-toastify'
 import { Spinner } from '~/utils/Spinner'
 import Layout from '~/layouts/adminLayout'
-import { classNames } from '~/helpers/classNames'
 import { CategoryFormValues } from '~/data/types'
+import { styles } from '~/twin/admin.questions.create.styles'
 import AuthValidationErrors from '~/components/AuthValidationErrors'
 
 const CategoryCreate: NextPage = (): JSX.Element => {
@@ -40,43 +42,47 @@ const CategoryCreate: NextPage = (): JSX.Element => {
 
   return (
     <Layout metaTitle="Category Create">
-      <main className="pt-4 px-4">
-        <section className={classNames(
-          'overflow-x-auto relative rounded-2xl shadow-md bg-white',
-          'max-w-lg mx-auto border'
-        )}>
-          <form className="p-10" onSubmit={handleSubmit(handleSave)}>
-            <h1 className="form-title">Create Category</h1>
-            <AuthValidationErrors className="mt-4" errors={formErrors} setErrors={setFormErrors} />
-            <div className="mt-5">
-              <label className="form-label">Title *</label>
+      <main css={styles.main}>
+        <section css={styles.section}>
+          <form css={global.form} onSubmit={handleSubmit(handleSave)}>
+            <h1 css={global.form_title}>Create Category</h1>
+            <AuthValidationErrors 
+              className="mt-4" 
+              errors={formErrors} 
+              setErrors={setFormErrors} 
+            />
+            <div>
+              <label css={global.label}>
+                Title <span className="text-red-500">*</span>
+              </label>
               <input 
                 type="text" 
-                className="form-control" 
+                tabIndex={1}
                 placeholder="Title" 
                 disabled={isSubmitting}
+                css={global.form_control}
                 {...register('title', { required: 'Title is required' })}
-                tabIndex={1}
               />
               {errors?.title && <span className="error">{`${errors?.title?.message}`}</span>}
             </div>
-            <div className="mt-5">
-              <label className="form-label">Description *</label>
+            <div>
+              <label css={global.label}>
+                Description <span className="text-red-500">*</span>
+              </label>
               <textarea 
                 rows={8} 
-                className="form-control" 
-                placeholder="Description"
-                disabled={isSubmitting}
-                {...register('description', { required: 'Description is required' })}
                 tabIndex={2}
+                disabled={isSubmitting}
+                css={global.form_control}
+                placeholder="Description"
+                {...register('description', { required: 'Description is required' })}
               >
               </textarea>
               {errors?.description && <span className="error">{`${errors?.description?.message}`}</span>}
             </div>
-            <div className="mt-4 flex justify-end">
+            <div css={tw`flex justify-end`}>
               <button 
                 type="submit" 
-                tabIndex={3}
                 disabled={isSubmitting}
                 className="btn-success px-10 py-3"
               >

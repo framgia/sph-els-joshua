@@ -1,3 +1,4 @@
+import tw from 'twin.macro'
 import Link from 'next/link'
 import ReactAvatar from 'react-avatar'
 import { useRouter } from 'next/router'
@@ -9,6 +10,7 @@ import NavMobile from './NavMobile'
 import Avatar from '~/components/Avatar'
 import { IUser } from '~/data/interfaces'
 import { classNames } from '~/helpers/classNames'
+import { styles } from '~/twin/user.header.styles'
 
 type Props = {
   user: IUser
@@ -20,23 +22,22 @@ type Props = {
 const Header: React.FC<Props> = ({ user, actions: { logout } }): JSX.Element => {
   const Logo = '/img/logo.png'
   return (
-    <header className="bg-white py-5 px-5 shadow-primary transition-all duration-500">
-      <div className="flex items-center justify-between max-w-6xl mx-auto">
-        <div className="flex items-center">
+    <header css={styles.header}>
+      <div css={styles.container}>
+        <div css={styles.nav}>
           <Link href="/dashboard">
             <a>
               <img 
                 src={Logo} 
-                className="h-6"
                 alt=""
               />
             </a>
           </Link>
-          <div className='hidden lg:flex'>
+          <div>
             <Nav />
           </div>
         </div>
-        <div className='flex items-center'>
+        <div css={styles.toggle}>
           <MenuToggle user={user} logout={logout} />
           <NavMobile />
         </div>

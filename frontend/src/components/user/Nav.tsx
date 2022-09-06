@@ -1,20 +1,39 @@
 import React from 'react'
+import tw from 'twin.macro'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { NextRouter, useRouter } from 'next/router'
 
 import { IHeaderLink } from '~/data/interfaces'
 import { headerLinks } from '~/data/headerLinks'
 
+type StyleProps = {
+ router: NextRouter
+ href: string
+}
+
+const styles = {
+  nav: [
+    tw`
+      ml-[70px]
+      [> ul]:(flex gap-x-[42px])
+    `
+  ],
+  a: ({ router, href }: StyleProps) => [
+    router.pathname.includes(href) && tw`text-red-500 font-bold`,
+    tw`cursor-pointer`
+  ]
+}
+
 const Nav: React.FC = (): JSX.Element => {
   const router = useRouter()
-
+  
   return (
-    <nav className='ml-[70px]'>
-      <ul className='flex gap-x-[42px]'>
+    <nav css={styles.nav}>
+      <ul>
         {headerLinks.map(({ name, href }: IHeaderLink, i: number) => (
           <li key={i}>
             <Link href={href}>
-              <a className={router.pathname.includes(href) ? 'text-red-500 font-bold' : ''}>{name}</a>
+              <a css={styles.a({ router, href })}>{name}</a>
             </Link>
           </li>
         ))}
