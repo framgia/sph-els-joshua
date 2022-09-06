@@ -16,7 +16,7 @@ type ChooseProps = {
   isSubmitting: boolean
 }
 
-const styles ={
+const styles = {
   wrapper: [
     tw`flex items-center space-x-1 space-y-2`
   ],

@@ -74,7 +74,9 @@ const CategoryUpdate: NextPage = (): JSX.Element => {
                 setFormError={setFormError} 
               />
               <div>
-                <label css={global.label}>Title *</label>
+                <label css={global.label}>
+                  Title <span className="text-red-500">*</span>
+                </label>
                 <input 
                   type="text" 
                   tabIndex={1}
@@ -87,7 +89,7 @@ const CategoryUpdate: NextPage = (): JSX.Element => {
                 {errors?.title && <span className="error">{`${errors?.title?.message}`}</span>}
               </div>
               <div>
-                <label css={global.label}>Description *</label>
+                <label css={global.label}>Description <span className="text-red-500">*</span></label>
                 <textarea 
                   rows={8} 
                   tabIndex={2}

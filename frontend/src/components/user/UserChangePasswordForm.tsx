@@ -54,7 +54,9 @@ const UserChangePasswordForm: React.FC<Props> = ({ user }) => {
         setFormError={setFormError} 
       />
       <div>
-        <label css={global.label}>Current password *</label>
+        <label css={global.label}>
+          Current password <span className="text-red-500">*</span>
+        </label>
         <input 
           type="password" 
           css={global.form_control}
@@ -64,7 +66,9 @@ const UserChangePasswordForm: React.FC<Props> = ({ user }) => {
         {errors?.current_password && <span className="error">{`${errors?.current_password?.message}`}</span>}
       </div>
       <div>
-        <label css={global.label}>New password *</label>
+        <label css={global.label}>
+          New password <span className="text-red-500">*</span>
+        </label>
         <input 
           type="password" 
           css={global.form_control}
@@ -74,7 +78,9 @@ const UserChangePasswordForm: React.FC<Props> = ({ user }) => {
         {errors?.new_password && <span className="error">{`${errors?.new_password?.message}`}</span>}
       </div>
       <div>
-        <label css={global.label}>Confirm password *</label>
+        <label css={global.label}>
+          Confirm password <span className="text-red-500">*</span>
+        </label>
         <input 
           type="password" 
           css={global.form_control}
