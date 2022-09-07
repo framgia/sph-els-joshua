@@ -1,7 +1,14 @@
 import useSWR from 'swr'
 import React from 'react'
-import { NextPage } from 'next'
 import { useRouter } from 'next/router'
+import { ParsedUrlQuery } from 'querystring'
+import { 
+  GetStaticPaths, 
+  GetStaticProps, 
+  GetStaticPropsContext, 
+  InferGetStaticPropsType, 
+  NextPage 
+} from 'next'
 
 import { useAuth } from '~/hooks/auth'
 import { fetcher } from '~/lib/fetcher'
@@ -12,27 +19,59 @@ import { authProtected } from '~/utils/auth-protected'
 import ProfileCard from '~/components/user/ProfileCard'
 import ActivityList from '~/components/user/ActivityList'
 
-const UserProfile: NextPage = (): JSX.Element => {
+type Props = {
+  prefetchedData: string[]
+}
+
+interface IParams extends ParsedUrlQuery {
+  id: string
+}
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const data = await fetcher('/api/profiles')
+  return {
+    paths: data?.map(({ id }: IParams) => ({
+      params: {
+        id
+      }
+    })),
+    fallback: true
+  }
+}
+
+export const getStaticProps: GetStaticProps = async (context: GetStaticPropsContext) => {
+  const { id } = context.params as IParams
+  const { data } = await fetcher(`/api/profiles/${id}`)
+ return {
+  props: {
+    prefetchedData: data
+  }
+ }
+}
+
+const UserProfile: NextPage<Props> = ({ prefetchedData }: InferGetStaticPropsType<typeof getStaticProps>): JSX.Element => {
   const router = useRouter()
   const { user: author } = useAuth({ middlware: 'auth' }) 
   const { id } = router.query
 
-  const { data, mutate } = useSWR(`/api/user-privilege/${id}`, fetcher, {
-    refreshInterval: 1000,
-    revalidateOnMount: true
-  })
-  const user = data?.data?.user
-  const activities = data?.data?.activities
+  // const { data, mutate } = useSWR(`/api/profiles/${id}`, fetcher, {
+  //   refreshInterval: 1000,
+  //   revalidateOnMount: true
+  // })
+  // const user = data?.data?.user
+  // const activities = data?.data?.activities
 
   return (
-    <Layout metaTitle={`${user ? user?.name : ''}`}>
+    // {`${user ? user?.name : ''}`}
+    <Layout metaTitle=""> 
       <main 
         css={styles.main}
         data-aos="fade-up"
         data-aos-delay="300"
         data-aos-duration="300"
       >
-        {!user 
+        <pre>{JSON.stringify(prefetchedData, null, 2)}</pre>
+        {/* {!user 
         ? <Loading /> 
         : (
           <>
@@ -57,7 +96,7 @@ const UserProfile: NextPage = (): JSX.Element => {
               </div>
             </section>
           </>
-        )}
+        )} */}
       </main>
     </Layout>
   )
