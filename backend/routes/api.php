@@ -8,6 +8,7 @@ use App\Http\Controllers\User\FollowController;
 use App\Http\Controllers\User\LessonController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\QuestionController;
+use App\Http\Controllers\Public\ProfileController;
 use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\UserPrivilegeController;
 use App\Http\Controllers\User\CategoryPrivilegeController;
@@ -32,3 +33,5 @@ Route::middleware(['auth'])->group(function () {
     Route::apiResource('dashboards', DashboardController::class, ['only' => ['index']]);
     Route::apiResource('upload-avatar', UploadAvatar::class, ['only' => ['store']]);
 });
+
+Route::apiResource('profiles', ProfileController::class, ['only' => ['index', 'show']]);
